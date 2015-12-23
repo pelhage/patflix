@@ -1,5 +1,71 @@
+* {
+	padding: 0;
+	margin: 0;
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+  	-moz-user-select: none;     /* Firefox all */
+  	-ms-user-select: none;      /* IE 10+ */
+  	user-select: none;          /* Likely future */      
+
+}
 html, body {
 	background: #141414;
 	font-family: 'Helvetica Nueue', Helvetica, sans-serif;
 	color: #999999;
+	font-size: 15px;
+}
+#main {
+	margin: 0 auto;
+}
+h2 {
+	margin: 0 0 0.5rem 3.33rem;
+	font-size: 1.2rem;
+}
+section {
+	margin-bottom: 3.5rem;
+	overflow: hidden;
+	
+}
+ul {
+	max-width: 100%;
+/*	overflow-x: scroll;
+	overflow-y: hidden;
+	overflow: hidden;*/
+	padding-left: 50px;
+	list-style-type: none;
+	white-space:nowrap;
+	animation: 1s;
+	-webkit-transition: all 1s ease-in-out;
+	-moz-transition: all 1s ease-in-out;
+	-o-transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
+
+}
+li {
+	display: inline-block;
+	max-width: 210px;
+	margin-right: 0.4rem;
+}
+ul img {
+	display: block;
+	max-width: 100%;
+}
+.left-button, .right-button {
+	position: absolute;
+	top: 0;
+	height: 100%;
+	background: #fff;
+	width: 50px;
+	opacity: 0;
+}
+.left-button:hover, .right-button:hover {
+	opacity: 0.5;
+}
+.carousel-container {
+	position: relative;
+}
+.left-button {
+	left: 0;
+}
+.right-button {
+	right: 0;
 }

@@ -64,7 +64,7 @@ var data = {
 		{ 
 			"id": "7Pq-S557XQU",
 			"title": "Humans Need Not Apply - CGP Grey",
-			"category": ["Science"]
+			"category": ["Science", "Technology"]
 		},
 		{ 
 			"id": "YTuElM6T50w",
@@ -74,7 +74,7 @@ var data = {
 		{ 
 			"id": "UrOZllbNarw",
 			"title": "Why Shouldn't I Work for the NSA? (Good Will Hunting)",
-			"category": []
+			"category": ["Social Critique"]
 		},
 		{ 
 			"id": "jNhtbmXzIaM",
@@ -147,8 +147,8 @@ var data = {
 			"category": ["Inspirational", "Social Critique"]
 		},
 		{
-			"id": "",
-			"title": "",
+			"id": "pnv5iKB2hl4",
+			"title": "The Worst-Designed Thing You've Never Noticed | Roman Mars | TED Talks",
 			"category": []
 		},
 		{
