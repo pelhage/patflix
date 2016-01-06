@@ -7,7 +7,7 @@ module.exports = React.createClass({
       return <VideoItem video={video} key={video.id} />
     });
     return <div className="row">
-      <h2>{this.props.category}</h2>
+      <span className="h2">{this.props.category}</span>
       <div className="row__inner">
         {list}
       </div>
@@ -15,14 +15,14 @@ module.exports = React.createClass({
   },
 
   findVideos: function() {
-    var videoObjs = [];
+    var videosArr = [];
 
     for (var i = 0, len = this.props.videos.length; i < len; i++) {
       if (this.props.videos[i].category.indexOf(this.props.category) > -1) {
-        videoObjs.push(this.props.videos[i]);
+        videosArr.push(this.props.videos[i]);
       } 
     }
-    return videoObjs;
+    return videosArr;
   }
 
 });
