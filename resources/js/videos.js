@@ -45,12 +45,13 @@
 			carouselHeader.appendChild(headerText);
 			
 			/* The List of Videos to Display in Carousel */
-			var videoList = document.createElement('ul');
+			var videoList = document.createElement('div');
+			videoList.className = 'videos-row';
 			for (var i = 0, len = carouselObj.videos.length; i < len; i++) {
 				var video = carouselObj.videos[i];
 
-				var listItem = document.createElement('li');
-
+				var listItem = document.createElement('div');
+				listItem.className = 'video-thumb';
 				var itemThumbnail = document.createElement('img');
 				// itemThumbnail.src = 'http://img.youtube.com/vi/'+ video.id +'/0.jpg';
 				itemThumbnail.src = 'http://img.youtube.com/vi/'+ video.id +'/mqdefault.jpg';
@@ -74,19 +75,38 @@
 			/* The Buttons That Will Let User Scroll Through List */
 			var leftButton = document.createElement('div');
 			leftButton.className = 'left-button';
+
 			leftButton.addEventListener('click', function() {
-				var elementMargin = videoList.style.marginLeft;
-				var currentMargin = parseInt(elementMargin, 10) || 0;
-				videoList.style.marginLeft = currentMargin + 345 + "px";
+				
+				var elMargin = videoList.style.left;
+				var currentMargin = parseInt(elMargin, 10) || 0;
+				if (currentMargin + 345 > 0) {
+					return false;
+				}
+				
+				videoList.style.left = currentMargin + 345 + "px";
 			});
+
 
 			var rightButton = document.createElement('div');
 			rightButton.className = 'right-button';
 
-			rightButton.addEventListener('click', function() { 
-				var elementMargin = videoList.style.marginLeft;
-				var currentMargin = parseInt(elementMargin, 10) || 0;
-				videoList.style.marginLeft = currentMargin - 345 + "px";
+			rightButton.addEventListener('click', function(e) { 
+				var elMargin = videoList.style.left;
+				var currentMargin = parseInt(elMargin, 10) || 0;
+				console.log('Video width: ', videoList.offsetWidth);
+				console.log('Window width: ', section.offsetWidth);
+				console.log('currentMargin: ', currentMargin);
+				if ((videoList.offsetWidth + currentMargin) <= section.offsetWidth) {
+					console.log('Dont do it!!');
+					videoList.style.left = section.offsetWidth - videoList.offsetWidth;
+					return false;
+				}
+				if (currentMargin <= 0 && videoList.offsetWidth < section.offsetWidth) {
+					return false
+				}
+				
+				videoList.style.left = currentMargin - 345 + "px";
 			});
 
 			/* Append The Carousel Elements to Its Container */
@@ -114,6 +134,7 @@
 		return {
 			initialize: initialize
 		}
+
 	})();
 
 	VideoCarousel.initialize();

@@ -21,15 +21,17 @@ h2 {
 	font-size: 1.2rem;
 }
 section {
-	margin-bottom: 3.5rem;
-	overflow: hidden;
-	
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	margin-bottom: 3.5rem;	
 }
-ul {
-	max-width: 100%;
-/*	overflow-x: scroll;
-	overflow-y: hidden;
-	overflow: hidden;*/
+.carousel-container {
+	position: relative;
+}
+.videos-row {
+	position: relative;
+	display: block;
 	padding-left: 50px;
 	list-style-type: none;
 	white-space:nowrap;
@@ -38,30 +40,31 @@ ul {
 	-moz-transition: all 1s ease-in-out;
 	-o-transition: all 1s ease-in-out;
 	transition: all 1s ease-in-out;
-
+	border: 1px solid red;
 }
-li {
+
+.video-thumb {
 	display: inline-block;
-	max-width: 210px;
+	width: 210px;
 	margin-right: 0.4rem;
 }
-ul img {
+.video-thumb img {
 	display: block;
 	max-width: 100%;
 }
-.left-button, .right-button {
+.left-button, 
+.right-button {
 	position: absolute;
 	top: 0;
 	height: 100%;
 	background: #fff;
 	width: 50px;
 	opacity: 0;
+	z-index: 1000;
 }
-.left-button:hover, .right-button:hover {
+.left-button:hover, 
+.right-button:hover {
 	opacity: 0.5;
-}
-.carousel-container {
-	position: relative;
 }
 .left-button {
 	left: 0;
