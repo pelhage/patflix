@@ -1,9 +1,4 @@
-module.exports = {
-	"featured": {
-		"id": "4PN5JJDh78I",
-		"title": "Carl Sagan - You Are Here (Pale Blue Dot)",
-		"category": ["Astronomy", "Science"]
-	},
+var data = {
 	"categories": ["Education", "Science", "Astronomy", "Drama", "Comedy"],
 	"videos": [
 		{

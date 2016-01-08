@@ -8,7 +8,7 @@
 
 body,
 html {
-  padding: 0 10px;
+  padding: 0;
   margin: 0;
   font-family: 'Open Sans', sans-serif;
   background: #141414;
@@ -166,3 +166,46 @@ a:hover {
 .tile:hover ~ .tile {
   -webkit-transform: translate3d(250px, 0, 0);
   transform: translate3d(250px, 0, 0); }
+
+.hero-row {
+  position: relative;
+  height: 575px; }
+
+.hero {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000; }
+
+.hero-image {
+  position: absolute;
+  height: 100%;
+  right: 0;
+  top: 0;
+  z-index: 1; }
+
+.vignette {
+  background-image: linear-gradient(to right, #000 0, transparent 33%, transparent 100%);
+  width: 72%;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2; }
+
+.hero-info {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3; }
+
+.hero-details {
+  position: absolute;
+  left: 4%;
+  top: 26%;
+  width: 35%;
+  z-index: 3; }

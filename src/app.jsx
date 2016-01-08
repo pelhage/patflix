@@ -1,10 +1,13 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Hero = require('./hero.jsx');
 var VideoRow = require('./video-row');
 var VideoData = require('./video-data');
+
 var App = React.createClass({
   render: function() {
     return <div className="contain">
+      <Hero featured={this.props.featured} />
       <h1>CSS Netflix Video Carousel</h1>
       <VideoRow videos={this.props.videos} category="Astronomy" />
       <VideoRow videos={this.props.videos} category="Comedy" />
