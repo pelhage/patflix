@@ -9,8 +9,8 @@ module.exports = React.createClass({
       dots: false,
       infinite: true,
       speed: 500,
-      slidesToShow: 3,
-      slidesToScroll: 1
+      slidesToShow: 6,
+      slidesToScroll: 6
     };
     var list = this.findVideos().map(function(video) {
       return <VideoItem video={video} key={video.id} />
@@ -18,7 +18,7 @@ module.exports = React.createClass({
     return (
       <div className="row">
         <span className="h2">{this.props.category}</span>
-        <Slider className="row__inner" {...settings}>
+        <Slider {...settings}>
           {list}
         </Slider>
       </div>
