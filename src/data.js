@@ -101,6 +101,11 @@ var data = {
 			"title": "Why? - Louis C.K.",
 			"category": ["Comedy"]
 		},
+		{
+			"id": "ofnSojq-vqI",
+			"title": "Killing Them Softly - Dave Chappelle",
+			"category": ["Comedy"]
+		},
 		{ 
 			"id": "xSSDeesUUsU",
 			"title": "Louis C.K. Hates Twitter - Conan on TBS",
