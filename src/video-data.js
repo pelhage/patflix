@@ -1,11 +1,16 @@
 module.exports = {
-	"featured": {
-		"id": "4PN5JJDh78I",
-		"title": "Carl Sagan - You Are Here (Pale Blue Dot)",
-		"category": ["Astronomy", "Science"]
-	},
+	"featured": { 
+			"id": "OX0OARBqBp0",
+			"title": "Alan Watts - The Story of the Chinese Farmer",
+			"category": ["Spirituality"]
+		},
 	"categories": ["Education", "Science", "Astronomy", "Drama", "Comedy"],
 	"videos": [
+		{
+			"id": "ofnSojq-vqI",
+			"title": "Killing Them Softly - Dave Chappelle",
+			"category": ["Comedy"]
+		},
 		{
 			"id": "4PN5JJDh78I",
 			"title": "Carl Sagan - You Are Here (Pale Blue Dot)",

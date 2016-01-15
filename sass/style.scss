@@ -5,6 +5,7 @@
 }
 .h2 {
   font-size: 1.2rem;
+  font-weight: bold;
 }
 
 body,
@@ -35,9 +36,28 @@ html {
 * {
   box-sizing: border-box;
 }
+nav {
+  position: fixed;
+  top: 0;
+  display: flex;
+  height: 75px;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  width: 100%;
+  span {
+    position: relative;
+    top: 10px;
+    left: 10px;
+    color: #E50914;
+    font-size: 2rem;
+  }
+}
 h1,
 p {
   text-align: center;
+}
+h1 {
+  color: #fff;
 }
 p {
   width: 100%;
@@ -61,14 +81,21 @@ a:hover {
   width: 100%;
 }
 .container {
-  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
 }
 .row {
   // overflow: scroll;
-  width: 100%;
+  // width: 100%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+
   .h2 {
     margin-bottom: -70.3125px;
   }
+}
+.slick-track, .slick-list {
+  height: 122px;
 }
 .slick-list2 {
   -webkit-transition: 450ms transform;
@@ -77,12 +104,15 @@ a:hover {
   // white-space: nowrap;
   margin: 70.3125px 0;
 }
+.slick-slide {
+  // background: green;
+  // margin-right: 10px;
+}
 .tile {
   position: relative;
   display: inline-block;
   // width: 250px;
-  height: 140.625px;
-  margin-right: 10px;
+  margin-right: 5px;
   font-size: 20px;
   cursor: pointer;
   -webkit-transition: 450ms all;
@@ -91,7 +121,7 @@ a:hover {
           transform-origin: center left;
 }
 .tile__img {
-  width: 220px;
+  width: 100%;
   height: 123px;
   -o-object-fit: cover;
      object-fit: cover;
@@ -172,15 +202,24 @@ a:hover {
 //   -webkit-transform: translate3d(250px, 0, 0);
 //           transform: translate3d(250px, 0, 0);   
 // }
+
+.row:hover {
+  .slick-prev, .slick-next {
+    opacity: 0.5;
+  }
+}
 .slick-prev, .slick-next {
   position: absolute;
+  margin-top: 0;
   top: 0;
   height: 100%;
   bottom: 0;
-  background: #fff;
-  width: 25px;
+  background: #333;
+  opacity: 0.1;
+  width: 50px;
   &:hover {
-    background: #ffffff;
+    background: #333;
+    opacity: 0.5;
   }
 }
 .slick-prev {
@@ -191,7 +230,8 @@ a:hover {
 }
 .hero-row {
   position: relative;
-  height: 575px;
+  padding-bottom: 40%;
+  margin-bottom: 20px;
 }
   .hero {
     position: absolute;
@@ -231,4 +271,19 @@ a:hover {
         top: 26%;
         width: 35%;
         z-index: 3;
+      }
+    .play-hero {
+      position: absolute;
+      top: 50%;
+      right: 300px;
+      display: block;
+      width: 100px;
+      height: 100px;
+      z-index: 3;
+    }
+      .play-button {
+        display: block;
+        border-radius: 50%;
+        border: 4px solid #fff;
+        height: 100%
       }

@@ -99,7 +99,7 @@ var data = {
 		{ 
 			"id": "4u2ZsoYWwJA",
 			"title": "Why? - Louis C.K.",
-			"category": ["Comedy"]
+			"category": ["Poop"]
 		},
 		{
 			"id": "ofnSojq-vqI",

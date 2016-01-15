@@ -13,7 +13,18 @@ module.exports = React.createClass({
       slidesToScroll: 6
     };
     var list = this.findVideos().map(function(video) {
-      return <VideoItem video={video} key={video.id} />
+      return <div>
+        <div className="tile">
+          <div className="tile__media">
+            <img className="tile__img" src={"http://img.youtube.com/vi/"+ video.id + "/0.jpg"}  />
+          </div>
+          <div className="tile__details">
+            <div className="tile__title">
+              {video.title}
+            </div>
+          </div>
+        </div>
+      </div>
     });
     return (
       <div className="row">

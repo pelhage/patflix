@@ -10,11 +10,13 @@ var App = React.createClass({
 
     return (
       <div className="contain">
+        <nav><span>PATFLIX</span></nav>
         <Hero featured={this.props.featured} />
-        <h1>CSS Netflix Video Carousel</h1>
         <VideoRow videos={this.props.videos} category="Astronomy" />
         <VideoRow videos={this.props.videos} category="Comedy" />
         <VideoRow videos={this.props.videos} category="Spirituality" />
+        <VideoRow videos={this.props.videos} category="Success" />
+        <VideoRow videos={this.props.videos} category="Comedy" />
       </div>
     );
   }
@@ -22,3 +24,5 @@ var App = React.createClass({
 
 var element = React.createElement(App, VideoData);
 ReactDOM.render(element, document.querySelector('.container'));
+
+/*       */
