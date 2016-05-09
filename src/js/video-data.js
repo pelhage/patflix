@@ -1,9 +1,10 @@
 module.exports = {
 	"featured": { 
-			"id": "OX0OARBqBp0",
-			"title": "Alan Watts - The Story of the Chinese Farmer",
-			"category": ["Spirituality"]
-		},
+		"id": "OX0OARBqBp0",
+		"title": "Alan Watts - The Story of the Chinese Farmer",
+		"category": ["Spirituality"],
+		"description": " "
+	},
 	"categories": ["Education", "Science", "Astronomy", "Drama", "Comedy"],
 	"videos": [
 		{
@@ -26,11 +27,11 @@ module.exports = {
 			"title": "Carl Sagan - The Frontier Is Everywhere",
 			"category": ["Astronomy", "Science"]
 		},
-		{ 
-			"id": "Kv3MQgja2Bw",
-			"title": "Neil deGrasse Tyson Blows Your Mind",
-			"category": ["Astronomy", "Science"]
-		},
+		// { 
+		// 	"id": "Kv3MQgja2Bw",
+		// 	"title": "Neil deGrasse Tyson Blows Your Mind",
+		// 	"category": ["Astronomy", "Science"]
+		// }, //
 		{ 
 			"id": "QAa2O_8wBUQ",
 			"title": "What is Dark Matter and Dark Energy?",

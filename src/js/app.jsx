@@ -7,6 +7,7 @@ var VideoData = require('./video-data');
 
 var App = React.createClass({
   render: function() {
+    var libID = window.location.pathname.split('/')[1];
 
     return (
       <div className="contain">

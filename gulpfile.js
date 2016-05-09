@@ -33,7 +33,7 @@ var notify = function(error) {
 };
 
 var bundler = watchify(browserify({
-  entries: ['./src/app.jsx'],
+  entries: ['./src/js/app.jsx'],
   transform: [reactify],
   extensions: ['.jsx', '.js'],
   debug: true,
@@ -47,7 +47,7 @@ function bundle() {
     .bundle()
     .on('error', notify)
     .pipe(source('main.js'))
-    .pipe(gulp.dest('./'))
+    .pipe(gulp.dest('./dist'))
 }
 bundler.on('update', bundle);
 
@@ -73,10 +73,10 @@ gulp.task('serve', function(done) {
 });
 
 gulp.task('sass', function () {
-  gulp.src('./sass/**/*.scss')
+  gulp.src('./src/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('style.css'))
-    .pipe(gulp.dest('./'));
+    .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('default', ['build', 'serve', 'sass', 'watch']);
