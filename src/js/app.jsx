@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 var Hero = require('./hero.jsx');
 var VideoRow = require('./video-row');
 var VideoData = require('./video-data');
-
+var Upload = require('./upload');
 
 var App = React.createClass({
   render: function() {
@@ -18,6 +18,7 @@ var App = React.createClass({
         <VideoRow videos={this.props.videos} category="Spirituality" />
         <VideoRow videos={this.props.videos} category="Success" />
         <VideoRow videos={this.props.videos} category="Comedy" />
+        <Upload />
       </div>
     );
   }
@@ -25,5 +26,6 @@ var App = React.createClass({
 
 var element = React.createElement(App, VideoData);
 ReactDOM.render(element, document.querySelector('.container'));
+
 
 /*       */
