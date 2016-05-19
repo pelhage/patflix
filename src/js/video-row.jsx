@@ -1,6 +1,6 @@
 var React = require('react');
 var Slider = require('react-slick');
-var VideoItem = require('./video-item');
+var VideoItem = require('./video-item.jsx');
 
 module.exports = React.createClass({
   render: function() {

@@ -3,32 +3,34 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "webpack:dev": "webpack -d --watch",
+    "webpack:build": "webpack -p",
+    "scss": "node-sass -w --output-style compressed -o dist/css src/scss",
+    "dev": "run-p scss webpack:dev server",
+    "server": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-core": "^6.9.0",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
     "body-parser": "^1.15.1",
-    "browserify": "^9.0.3",
     "express": "^4.13.4",
-    "gulp": "^3.8.11",
-    "gulp-concat": "^2.5.2",
-    "gulp-react": "^3.0.1",
-    "gulp-sass": "^2.0.1",
-    "gulp-server-livereload": "^1.3.0",
-    "gulp-util": "^3.0.4",
-    "gulp-watch": "^4.2.4",
     "hashids": "1.0.2",
     "mongodb": "^2.1.18",
-    "node-notifier": "^4.2.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
-    "reactify": "^1.1.0",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^2.4.0"
+    "sass-loader": "^3.2.0",
+    "webpack": "^1.13.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "node-sass": "^3.7.0",
+    "npm-run-all": "^2.1.1",
+    "react-hot-loader": "^1.3.0",
+    "style-loader": "^0.13.1"
   }
 }
