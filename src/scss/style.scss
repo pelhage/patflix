@@ -1,3 +1,5 @@
+$primary: #2E97F0;
+
 #main {
   margin: 0 auto;
   overflow: hidden;
@@ -47,7 +49,7 @@ nav {
     position: relative;
     top: 10px;
     left: 10px;
-    color: #E50914;
+    color: $primary;
     font-size: 2rem;
   }
 }
@@ -289,78 +291,74 @@ a:hover {
 
 
 
-/*** I JUST COPIED THIS...... ***/
-* {
-  padding: 0;
-  margin: 0;
-  -webkit-user-select: none;  /* Chrome all / Safari all */
-    -moz-user-select: none;     /* Firefox all */
-    -ms-user-select: none;      /* IE 10+ */
-    user-select: none;          /* Likely future */      
 
+/* Video Uploading Component */
+.upload-container {
+  padding: 10px;
+  width: 450px;
+  
+  h2 {
+    font-weight: 400;
+    color: #fff;
+  }
+  p {
+    margin: 0 0 10px 0;
+    text-align: left;
+  }
 }
-html, body {
-  background: #141414;
-  font-family: 'Helvetica Nueue', Helvetica, sans-serif;
-  color: #999999;
-  font-size: 15px;
+.video-is-valid {
+  margin-left: 10px;
+  color: #64BF25;
 }
-#main {
-  margin: 0 auto;
+.video-is-not-valid {
+  margin-left: 10px;
+  color: #E50914;
 }
-h2 {
-  margin: 0 0 0.5rem 3.33rem;
-  font-size: 1.2rem;
+.upload-video__input-container {
+  margin-bottom: 20px;
 }
-section {
-  margin-left: auto;
-  margin-right: auto;
+  .upload-video__label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #fff;
+  }
+.upload-video__checkbox {
+  margin-right: 15px;
+}
+.upload-video__input, .upload-video_textarea {
   display: block;
-  margin-bottom: 3.5rem;  
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+  padding: 15px;
+  font-size: 1rem;
+  background: #2B2B2B;
+  color: #ddddd1;
 }
-.carousel-container {
-  position: relative;
-}
-.videos-row {
-  position: relative;
-  display: block;
-  padding-left: 50px;
-  list-style-type: none;
-  white-space:nowrap;
-  animation: 1s;
-  -webkit-transition: all 1s ease-in-out;
-  -moz-transition: all 1s ease-in-out;
-  -o-transition: all 1s ease-in-out;
-  transition: all 1s ease-in-out;
-  border: 1px solid red;
-}
-
-.video-thumb {
+.upload-video__button {
   display: inline-block;
-  width: 210px;
-  margin-right: 0.4rem;
+  border: none;
+  padding: 10px 15px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  font-weight: 400;
+  background: #333;
+  color: #fff;
+  
+  &:hover {
+    background: lighten(#333, 10);
+    cursor: pointer;
+  }
+  &.margin-right {
+    margin-right: 15px;
+  }
 }
-.video-thumb img {
-  display: block;
-  max-width: 100%;
-}
-.left-button, 
-.right-button {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  background: #fff;
-  width: 50px;
-  opacity: 0;
-  z-index: 1000;
-}
-.left-button:hover, 
-.right-button:hover {
-  opacity: 0.5;
-}
-.left-button {
-  left: 0;
-}
-.right-button {
-  right: 0;
+.upload-video__button--primary {
+  background: $primary;
+  
+  &:hover {
+    background: lighten($primary, 5);
+  }
 }

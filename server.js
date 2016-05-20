@@ -12,7 +12,6 @@ var hashids = new Hashids("NaCl for patflix video player", 0);
 // for parsing application/json
 app.use(bodyParser.json());
 
-
 // Global database variables
 var MONGODB_URI = 'mongodb://localhost:27017/massdrop';
 var db;

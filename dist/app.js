@@ -22522,6 +22522,8 @@
 
 	'use strict';
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	var React = __webpack_require__(/*! react */ 1);
 	
 	module.exports = React.createClass({
@@ -22563,6 +22565,7 @@
 	  handleDescriptionChange: function handleDescriptionChange(e) {
 	    this.setState({ description: e.target.value });
 	  },
+	  handleCategoryChange: function handleCategoryChange(e) {},
 	  addVideoToLib: function addVideoToLib() {
 	    // Copy state & push to library's array
 	    var videosArr = this.state.videos.slice();
@@ -22585,61 +22588,107 @@
 	    }
 	  },
 	  render: function render() {
+	    var isValid;
+	    if (this.state.valid) {
+	      isValid = React.createElement(
+	        'span',
+	        { className: 'video-is-valid' },
+	        '✔'
+	      );
+	    } else if (this.state.id.length < 1) {
+	      isValid = '';
+	    } else {
+	      isValid = React.createElement(
+	        'span',
+	        { className: 'video-is-not-valid' },
+	        '✘'
+	      );
+	    }
 	    return React.createElement(
 	      'div',
 	      { className: 'upload-container' },
+	      React.createElement(
+	        'h2',
+	        null,
+	        'Add Videos to Your Library'
+	      ),
 	      React.createElement(
 	        'form',
 	        { className: 'upload-video' },
 	        React.createElement(
 	          'div',
-	          null,
+	          { className: 'upload-video__input-container' },
 	          React.createElement(
-	            'div',
-	            null,
-	            React.createElement(
-	              'label',
-	              { htmlFor: 'ytkey' },
-	              'Youtube Key:'
-	            )
+	            'label',
+	            { className: 'upload-video__label', htmlFor: 'ytURL' },
+	            'YouTube URL',
+	            isValid
 	          ),
-	          React.createElement('input', { type: 'text', placeholder: 'Youtube ID', value: this.state.id, onChange: this.handleIdChange }),
-	          this.state.valid && React.createElement(
-	            'span',
-	            null,
-	            'VALID'
+	          React.createElement('input', {
+	            id: 'ytURL',
+	            className: 'upload-video__input',
+	            type: 'text',
+	            value: this.state.id,
+	            onChange: this.handleIdChange })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'upload-video__input-container' },
+	          React.createElement('input', { className: 'upload-video__checkbox', id: 'isFeatured', type: 'checkbox' }),
+	          React.createElement(
+	            'label',
+	            { htmlFor: 'isFeatured' },
+	            'Feature this video in your library'
 	          )
 	        ),
 	        React.createElement(
 	          'div',
-	          null,
+	          { className: 'upload-video__input-container' },
 	          React.createElement(
-	            'div',
-	            null,
-	            React.createElement(
-	              'label',
-	              { htmlFor: 'description' },
-	              'Description:'
-	            )
+	            'label',
+	            { className: 'upload-video__label', htmlFor: 'description' },
+	            'Description'
 	          ),
-	          React.createElement('textarea', { value: this.state.description, id: 'description', onChange: this.handleDescriptionChange })
+	          React.createElement(
+	            'p',
+	            null,
+	            'Write a short summary of what this video is about.'
+	          ),
+	          React.createElement('textarea', {
+	            className: 'upload-video_textarea',
+	            id: 'description',
+	            value: this.state.description,
+	            onChange: this.handleDescriptionChange })
 	        ),
 	        React.createElement(
 	          'div',
-	          null,
+	          { className: 'upload-video__input-container' },
 	          React.createElement(
-	            'div',
-	            null,
-	            React.createElement(
-	              'label',
-	              { htmlFor: 'categories' },
-	              'Categories:'
-	            )
+	            'label',
+	            { className: 'upload-video__label', htmlFor: 'categories' },
+	            'Categories'
 	          ),
-	          React.createElement('textarea', { value: this.state.categories, id: 'categories', onChange: this.handleDescriptionChange })
+	          React.createElement('textarea', _defineProperty({
+	            className: 'upload-video_textarea',
+	            value: this.state.categories,
+	            id: 'categories',
+	            onChange: this.handleDescriptionChange
+	          }, 'className', 'upload-video__input'))
 	        ),
-	        React.createElement('input', { type: 'button', onClick: this.addVideoToLib, value: 'Add Vid to Lib' }),
-	        React.createElement('input', { onClick: this.handleSubmit, type: 'button', value: 'Save Lib' })
+	        React.createElement(
+	          'div',
+	          { className: 'upload-video__input-container' },
+	          React.createElement('input', {
+	            className: 'upload-video__button margin-right',
+	            type: 'button',
+	            onClick: this.addVideoToLib,
+	            value: 'Add to Library' }),
+	          React.createElement('input', {
+	            className: 'upload-video__button upload-video__button--primary',
+	            onClick: this.handleSubmit,
+	            type: 'button',
+	            value: 'Save Library' })
+	        )
 	      )
 	    );
 	  }
