@@ -61,7 +61,7 @@
 	
 	  render: function render() {
 	    var libID = window.location.pathname.split('/')[1];
-	
+	    console.log("hello");
 	    return React.createElement(
 	      'div',
 	      { className: 'contain' },
@@ -22529,6 +22529,7 @@
 	module.exports = React.createClass({
 	  displayName: 'exports',
 	
+	
 	  getInitialState: function getInitialState() {
 	    return {
 	      id: '',
@@ -22538,6 +22539,7 @@
 	      isSaved: false
 	    };
 	  },
+	
 	  handleSubmit: function handleSubmit() {
 	    var library = this.state.videos;
 	    // Options for API Call
@@ -22558,14 +22560,16 @@
 	      console.log(err);
 	    });
 	  },
+	
 	  handleIdChange: function handleIdChange(e) {
 	    this.setState({ valid: this.validateYoutubeID(e.target.value) });
 	    this.setState({ id: e.target.value });
 	  },
+	
 	  handleDescriptionChange: function handleDescriptionChange(e) {
 	    this.setState({ description: e.target.value });
 	  },
-	  handleCategoryChange: function handleCategoryChange(e) {},
+	
 	  addVideoToLib: function addVideoToLib() {
 	    // Copy state & push to library's array
 	    var videosArr = this.state.videos.slice();
@@ -22578,6 +22582,7 @@
 	    this.state.id = '';
 	    this.state.description = '';
 	  },
+	
 	  validateYoutubeID: function validateYoutubeID(url) {
 	    var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
 	    var match = url.match(regExp);
@@ -22587,6 +22592,7 @@
 	      return false;
 	    }
 	  },
+	
 	  render: function render() {
 	    var isValid;
 	    if (this.state.valid) {

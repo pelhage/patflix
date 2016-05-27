@@ -16,7 +16,6 @@ First `cd` into the project and install the dependencies:
 `npm install`
 
 To get working on the project, run the dev processes (webpack bundling, scss compiling, nodemon):
-
-`npm start dev`
+`npm run dev`
 
 The process will run on `localhost:3000`

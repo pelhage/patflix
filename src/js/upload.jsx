@@ -1,6 +1,7 @@
 var React = require('react');
 
 module.exports = React.createClass({
+
   getInitialState: function() {
     return {
       id: '',
@@ -10,6 +11,7 @@ module.exports = React.createClass({
       isSaved: false,
     };
   },
+
   handleSubmit: function() {
     var library = this.state.videos;
     // Options for API Call
@@ -30,16 +32,16 @@ module.exports = React.createClass({
       console.log(err);
     });
   },
+
   handleIdChange: function(e) {
     this.setState({valid: this.validateYoutubeID(e.target.value)});
     this.setState({id: e.target.value});
   },
+
   handleDescriptionChange: function(e) {
     this.setState({description: e.target.value});
   },
-  handleCategoryChange: function(e) {
 
-  },
   addVideoToLib: function() {
     // Copy state & push to library's array
     var videosArr = this.state.videos.slice();
@@ -52,6 +54,7 @@ module.exports = React.createClass({
     this.state.id = '';
     this.state.description = '';
   },
+
   validateYoutubeID: function(url) {
     var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(regExp);
@@ -61,6 +64,7 @@ module.exports = React.createClass({
       return false;
     }
   },
+
   render: function() {
     var isValid;
     if (this.state.valid) {
@@ -124,7 +128,6 @@ module.exports = React.createClass({
             type="button" 
             value="Save Library" />
         </div>
-
       </form>
     </div>
   }
