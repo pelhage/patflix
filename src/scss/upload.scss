@@ -1,0 +1,57 @@
+/* Video Uploading Component */
+.upload-container {
+  padding: 10px;
+  width: 450px;
+  
+  h2 {
+    font-weight: 400;
+    color: #fff;
+  }
+  p {
+    margin: 0 0 10px 0;
+    text-align: left;
+  }
+}
+.video-is-valid {
+  margin-left: 10px;
+  color: #64BF25;
+}
+.video-is-not-valid {
+  margin-left: 10px;
+  color: #E50914;
+}
+.upload-video__input-container {
+  margin-bottom: 20px;
+}
+  .upload-video__label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #fff;
+  }
+.upload-video__checkbox {
+  margin-right: 15px;
+}
+.upload-video__input, .upload-video_textarea {
+  display: block;
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+  padding: 15px;
+  font-size: 1rem;
+  background: #2B2B2B;
+  color: #ddddd1;
+}
+
+.upload-video__button {
+  @extend .btn;
+}
+
+.upload-video__button--primary {
+  @extend .btn-primary;
+}
+
+.no-class {
+  color: #fff;
+}

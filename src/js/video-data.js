@@ -1,9 +1,9 @@
 module.exports = {
 	"featured": { 
 		"id": "OX0OARBqBp0",
-		"title": "Alan Watts - The Story of the Chinese Farmer",
+		"title": "The Story of the Chinese Farmer",
 		"category": ["Spirituality"],
-		"description": " "
+		"description": "This story might change your perspective on how to judge events in life."
 	},
 	"categories": ["Education", "Science", "Astronomy", "Drama", "Comedy"],
 	"videos": [

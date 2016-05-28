@@ -1,0 +1,72 @@
+.hero-row {
+  position: relative;
+  padding-bottom: 40%;
+  margin-bottom: 20px;
+}
+  .hero {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+  }
+    .hero-image {
+      position: absolute;
+      height: 100%;
+      right: 0;
+      top: 0;
+      z-index: 1;
+    }
+    .vignette {
+      background-image: linear-gradient(to right,#000 0,transparent 33%,transparent 100%);
+      width: 72%;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 2;
+    }
+    .hero-info {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 3; 
+    }
+      .hero-details {
+        position: absolute;
+        left: 4%;
+        top: 26%;
+        width: 35%;
+        z-index: 3;
+      }
+        .hero-details__title {
+          font-size: 2.4rem;
+          font-weight: 300;
+          line-height: 1.5;
+          vertical-align: bottom;
+          text-transform: uppercase;
+        }
+        .hero-details__description {
+          font-size: 1.4rem;
+          line-height: 1.5;
+          font-weight: 300;
+          margin-bottom: 40px;
+        }
+    .play-hero {
+      position: absolute;
+      top: 50%;
+      right: 300px;
+      display: block;
+      width: 100px;
+      height: 100px;
+      z-index: 3;
+    }
+      .play-button {
+        display: block;
+        border-radius: 50%;
+        border: 4px solid #fff;
+        height: 100%
+      }

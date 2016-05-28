@@ -20183,7 +20183,7 @@
 	      React.createElement(
 	        "div",
 	        { className: "hero" },
-	        React.createElement("img", { className: "hero-image", src: "http://img.youtube.com/vi/" + this.props.featured.id + "/maxresdefault.jpg" }),
+	        React.createElement("img", { className: "hero-image", src: "https://img.youtube.com/vi/" + this.props.featured.id + "/maxresdefault.jpg" }),
 	        React.createElement("div", { className: "vignette" }),
 	        React.createElement(
 	          "div",
@@ -20193,20 +20193,25 @@
 	            { className: "hero-details" },
 	            React.createElement(
 	              "h1",
-	              null,
+	              { className: "hero-details__title" },
 	              this.props.featured.title
 	            ),
 	            React.createElement(
 	              "p",
-	              null,
+	              { className: "hero-details__description" },
 	              this.props.featured.description
+	            ),
+	            React.createElement(
+	              "div",
+	              null,
+	              React.createElement(
+	                "a",
+	                { className: "upload-video__button upload-video__button--primary",
+	                  href: "https://youtube.com/watch?v=" + this.props.featured.id },
+	                "▶ Play"
+	              )
 	            )
 	          )
-	        ),
-	        React.createElement(
-	          "div",
-	          { className: "play-hero" },
-	          React.createElement("div", { className: "play-button" })
 	        )
 	      )
 	    );
@@ -22383,9 +22388,9 @@
 	module.exports = {
 		"featured": {
 			"id": "OX0OARBqBp0",
-			"title": "Alan Watts - The Story of the Chinese Farmer",
+			"title": "The Story of the Chinese Farmer",
 			"category": ["Spirituality"],
-			"description": " "
+			"description": "This story might change your perspective on how to judge events in life."
 		},
 		"categories": ["Education", "Science", "Astronomy", "Drama", "Comedy"],
 		"videos": [{
