@@ -1,6 +1,4 @@
 .row {
-  // overflow: scroll;
-  // width: 100%;
   margin-top: 40px;
   margin-bottom: 40px;
 
@@ -9,23 +7,12 @@
   }
 }
 .slick-track, .slick-list {
-  height: 122px;
+  height: 170px;
 }
-.slick-list2 {
-  -webkit-transition: 450ms transform;
-  transition: 450ms transform;
-  font-size: 0;
-  // white-space: nowrap;
-  margin: 70.3125px 0;
-}
-.slick-slide {
-  // background: green;
-  // margin-right: 10px;
-}
+
 .tile {
   position: relative;
   display: inline-block;
-  // width: 250px;
   margin-right: 5px;
   font-size: 20px;
   cursor: pointer;
@@ -36,7 +23,7 @@
 }
 .tile__img {
   width: 100%;
-  height: 123px;
+  height: 170px;
   -o-object-fit: cover;
      object-fit: cover;
 }

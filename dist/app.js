@@ -20240,8 +20240,8 @@
 	      dots: false,
 	      infinite: true,
 	      speed: 500,
-	      slidesToShow: 6,
-	      slidesToScroll: 6
+	      slidesToShow: 5,
+	      slidesToScroll: 5
 	    };
 	    var list = this.findVideos().map(function (video) {
 	      return React.createElement(
@@ -20295,13 +20295,6 @@
 	  }
 	
 	});
-	
-	// <div className="row">
-	//   <span className="h2">{this.props.category}</span>
-	//   <div className="row__inner">
-	//     {list}
-	//   </div>
-	// </div>
 
 /***/ },
 /* 161 */
