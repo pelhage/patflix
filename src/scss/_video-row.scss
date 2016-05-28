@@ -85,24 +85,6 @@
   bottom: 0;
   padding: 10px;
 }
-.slick-list2:hover {
-  -webkit-transform: translate3d(-125px, 0, 0);
-          transform: translate3d(-125px, 0, 0);
-}
-.slick-list2:hover .tile {
-  // opacity: 0.3;
-  opacity: 1.0;
-}
-.slick-list2:hover .tile:hover {
-  -webkit-transform: scale(2);
-          transform: scale(2);
-  opacity: 1;
-  z-index: 1000;
-}
-// .tile:hover ~ .tile {
-//   -webkit-transform: translate3d(250px, 0, 0);
-//           transform: translate3d(250px, 0, 0);   
-// }
 
 .row:hover {
   .slick-prev, .slick-next {
