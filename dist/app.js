@@ -61,7 +61,7 @@
 	
 	  render: function render() {
 	    var libID = window.location.pathname.split('/')[1];
-	    console.log("hello");
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'contain' },
@@ -20172,7 +20172,6 @@
 	
 	  findVideos: function findVideos() {
 	    var videosArr = [];
-	    console.log(this.props.featured);
 	    this.props.featured.forEach(function (item) {
 	      videosArr.push(item);
 	    });
@@ -20181,44 +20180,48 @@
 	
 	  render: function render() {
 	    var settings = {
-	      arrows: true,
-	      dots: false,
+	      dots: true,
 	      infinite: true,
 	      speed: 500,
 	      slidesToShow: 1,
+	      fade: true,
 	      slidesToScroll: 1
 	    };
 	
 	    var list = this.findVideos().map(function (video) {
 	      return React.createElement(
 	        'div',
-	        { className: 'hero' },
-	        React.createElement('img', { className: 'hero-image', src: "https://img.youtube.com/vi/" + video.id + "/maxresdefault.jpg" }),
-	        React.createElement('div', { className: 'vignette' }),
+	        { className: 'hero-row' },
 	        React.createElement(
 	          'div',
-	          { className: 'hero-info' },
+	          { className: 'hero' },
+	          React.createElement('img', { className: 'hero-image', src: "https://img.youtube.com/vi/" + video.id + "/sddefault.jpg" }),
+	          React.createElement('div', { className: 'vignette' }),
 	          React.createElement(
 	            'div',
-	            { className: 'hero-details' },
-	            React.createElement(
-	              'h1',
-	              { className: 'hero-details__title' },
-	              video.title
-	            ),
-	            React.createElement(
-	              'p',
-	              { className: 'hero-details__description' },
-	              video.description
-	            ),
+	            { className: 'hero-info' },
 	            React.createElement(
 	              'div',
-	              null,
+	              { className: 'hero-details' },
 	              React.createElement(
-	                'a',
-	                { className: 'upload-video__button upload-video__button--primary',
-	                  href: "https://youtube.com/watch?v=" + video.id },
-	                '▶ Play'
+	                'h1',
+	                { className: 'hero-details__title' },
+	                video.title
+	              ),
+	              React.createElement(
+	                'p',
+	                { className: 'hero-details__description' },
+	                video.description
+	              ),
+	              React.createElement(
+	                'div',
+	                null,
+	                React.createElement(
+	                  'a',
+	                  { className: 'upload-video__button upload-video__button--primary',
+	                    href: "https://youtube.com/watch?v=" + video.id },
+	                  '▶ Play'
+	                )
 	              )
 	            )
 	          )
@@ -20228,7 +20231,7 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'hero-row' },
+	      { className: 'hero-wrapper' },
 	      React.createElement(
 	        Slider,
 	        settings,
@@ -20237,6 +20240,31 @@
 	    );
 	  }
 	});
+	
+	/**
+
+	var list = this.findVideos().map(function(video) {
+	  return (
+	<div className="hero-row">
+	  <div className="hero">
+	    <img className="hero-image" src={"https://img.youtube.com/vi/"+ video.id + "/0.jpg"} />
+	    <div className="vignette"></div>
+	    <div className="hero-info">
+	      <div className="hero-details">
+	        <h1 className="hero-details__title">{video.title}</h1>
+	        <p className="hero-details__description">{video.description}</p>
+	        <div>
+	          <a className="upload-video__button upload-video__button--primary"
+	             href={"https://youtube.com/watch?v="+ video.id}>
+	             ▶ Play
+	          </a>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	  </div>);
+	});
+	**/
 
 /***/ },
 /* 160 */
@@ -22402,10 +22430,23 @@
 	
 	module.exports = {
 		"featured": [{
+			"id": "iG9CE55wbtY",
+			"title": "Do Schools Kill Creativity?",
+			"category": [""],
+			"description": "Sir Ken Robinson makes an entertaining and profoundly \
+												moving case for creating an education system that \
+												nurtures (rather than undermines) creativity."
+		}, {
 			"id": "OX0OARBqBp0",
 			"title": "The Story of the Chinese Farmer",
 			"category": ["Spirituality"],
 			"description": "This story might change your perspective on how to judge events in life."
+		}, {
+			"id": "YTuElM6T50w",
+			"title": "Be The Hero of Your Own Movie",
+			"category": ["Success", "Motivation", "Philosophy"],
+			"description": "If your life was a movie and it started now, what would the hero of your \
+												life's movie do right now? Joe Rogan says do those things."
 		}],
 		"categories": ["Education", "Science", "Astronomy", "Drama", "Comedy"],
 		"videos": [{

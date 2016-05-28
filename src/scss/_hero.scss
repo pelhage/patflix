@@ -1,8 +1,57 @@
+.hero-wrapper {
+  
+  .slick-prev, .slick-next {
+    position: absolute;
+    margin-top: 0;
+    top: 0;
+    height: 100%;
+    bottom: 0;
+    opacity: 1.0;
+    width: 50px;
+    &:hover {
+      opacity: 1.0;
+    }
+  }
+  .slick-prev {
+    left: 0;
+  }
+  .slick-next {
+    right: 0;
+  }
+
+  .slick-dots {
+    bottom: 20px;
+    // li:first-child {
+    //   margin-left: 
+    // }
+    li {
+      margin: 0;
+    }
+    button {
+      height: 30px;
+    }
+    button:before {
+      top: 8px;
+      left: 4px;
+      width: 12px;
+      height: 12px;
+      content: '';
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0.5;
+
+    }
+    .slick-active button:before {
+      opacity: 1.0;
+    }
+  }
+}
 .hero-row {
   position: relative;
-  padding-bottom: 40%;
+  padding-bottom: 10%;
   margin-bottom: 20px;
 }
+
   .hero {
     position: absolute;
     top: 0;
@@ -20,7 +69,7 @@
     }
     .vignette {
       background-image: linear-gradient(to right,#000 0,transparent 33%,transparent 100%);
-      width: 72%;
+      width: 54%;
       height: 100%;
       position: absolute;
       right: 0;
@@ -63,6 +112,7 @@
       width: 100px;
       height: 100px;
       z-index: 3;
+      background: orange;
     }
       .play-button {
         display: block;

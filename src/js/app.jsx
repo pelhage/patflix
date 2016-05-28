@@ -8,7 +8,7 @@ var Upload = require('./upload.jsx');
 var App = React.createClass({
   render: function() {
     var libID = window.location.pathname.split('/')[1];
-    console.log("hello");
+
     return (
       <div className="contain">
         <nav><span>PATFLIX</span></nav>

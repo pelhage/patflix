@@ -1,10 +1,27 @@
 module.exports = {
-	"featured": [{ 
-		"id": "OX0OARBqBp0",
-		"title": "The Story of the Chinese Farmer",
-		"category": ["Spirituality"],
-		"description": "This story might change your perspective on how to judge events in life."
-	}],
+	"featured": [
+		{
+			"id": "iG9CE55wbtY",
+			"title": "Do Schools Kill Creativity?",
+			"category": [""],
+			"description": "Sir Ken Robinson makes an entertaining and profoundly \
+											moving case for creating an education system that \
+											nurtures (rather than undermines) creativity."
+		},
+		{
+			"id": "OX0OARBqBp0",
+			"title": "The Story of the Chinese Farmer",
+			"category": ["Spirituality"],
+			"description": "This story might change your perspective on how to judge events in life."
+		},
+		{ 
+			"id": "YTuElM6T50w",
+			"title": "Be The Hero of Your Own Movie",
+			"category": ["Success", "Motivation", "Philosophy"],
+			"description": "If your life was a movie and it started now, what would the hero of your \
+											life's movie do right now? Joe Rogan says do those things."
+		},
+	],
 	"categories": ["Education", "Science", "Astronomy", "Drama", "Comedy"],
 	"videos": [
 		{
