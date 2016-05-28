@@ -1,3 +1,7 @@
+
+@charset "UTF-8";
+
+
 .hero-wrapper {
   
   .slick-prev, .slick-next {
@@ -12,11 +16,22 @@
       opacity: 1.0;
     }
   }
+  .slick-next, .slick-prev {
+    &:before {
+      font-size: 38px;  
+    }
+  }
   .slick-prev {
     left: 0;
+    &:before {
+      content: '<';
+    }
   }
   .slick-next {
     right: 0;
+    &:before {
+      content: '>'
+    }
   }
 
   .slick-dots {
