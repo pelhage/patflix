@@ -1,10 +1,10 @@
 module.exports = {
-	"featured": { 
+	"featured": [{ 
 		"id": "OX0OARBqBp0",
 		"title": "The Story of the Chinese Farmer",
 		"category": ["Spirituality"],
 		"description": "This story might change your perspective on how to judge events in life."
-	},
+	}],
 	"categories": ["Education", "Science", "Astronomy", "Drama", "Comedy"],
 	"videos": [
 		{

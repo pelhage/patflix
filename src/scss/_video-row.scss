@@ -5,9 +5,35 @@
   .h2 {
     margin-bottom: -70.3125px;
   }
-}
-.slick-track, .slick-list {
-  height: 170px;
+
+  .slick-track, .slick-list {
+    height: 170px;
+  }
+  .slick-prev, .slick-next {
+    position: absolute;
+    margin-top: 0;
+    top: 0;
+    height: 100%;
+    bottom: 0;
+    background: #333;
+    opacity: 0.1;
+    width: 50px;
+    &:hover {
+      background: #333;
+      opacity: 0.5;
+    }
+  }
+  .slick-prev {
+    left: 0;
+  }
+  .slick-next {
+    right: 0;
+  }
+  &:hover {
+    .slick-prev, .slick-next {
+      opacity: 0.5;
+    }
+  }
 }
 
 .tile {
@@ -84,30 +110,4 @@
   position: absolute;
   bottom: 0;
   padding: 10px;
-}
-
-.row:hover {
-  .slick-prev, .slick-next {
-    opacity: 0.5;
-  }
-}
-.slick-prev, .slick-next {
-  position: absolute;
-  margin-top: 0;
-  top: 0;
-  height: 100%;
-  bottom: 0;
-  background: #333;
-  opacity: 0.1;
-  width: 50px;
-  &:hover {
-    background: #333;
-    opacity: 0.5;
-  }
-}
-.slick-prev {
-  left: 0;
-}
-.slick-next {
-  right: 0;
 }

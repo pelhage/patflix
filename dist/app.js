@@ -20161,12 +20161,23 @@
   \*************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 1);
+	var Slider = __webpack_require__(/*! react-slick */ 161);
 	
 	module.exports = React.createClass({
-	  displayName: "exports",
+	  displayName: 'exports',
+	
+	
+	  findVideos: function findVideos() {
+	    var videosArr = [];
+	    console.log(this.props.featured);
+	    this.props.featured.forEach(function (item) {
+	      videosArr.push(item);
+	    });
+	    return videosArr;
+	  },
 	
 	  render: function render() {
 	    var settings = {
@@ -20177,42 +20188,51 @@
 	      slidesToShow: 1,
 	      slidesToScroll: 1
 	    };
-	    return React.createElement(
-	      "div",
-	      { className: "hero-row" },
-	      React.createElement(
-	        "div",
-	        { className: "hero" },
-	        React.createElement("img", { className: "hero-image", src: "https://img.youtube.com/vi/" + this.props.featured.id + "/maxresdefault.jpg" }),
-	        React.createElement("div", { className: "vignette" }),
+	
+	    var list = this.findVideos().map(function (video) {
+	      return React.createElement(
+	        'div',
+	        { className: 'hero' },
+	        React.createElement('img', { className: 'hero-image', src: "https://img.youtube.com/vi/" + video.id + "/maxresdefault.jpg" }),
+	        React.createElement('div', { className: 'vignette' }),
 	        React.createElement(
-	          "div",
-	          { className: "hero-info" },
+	          'div',
+	          { className: 'hero-info' },
 	          React.createElement(
-	            "div",
-	            { className: "hero-details" },
+	            'div',
+	            { className: 'hero-details' },
 	            React.createElement(
-	              "h1",
-	              { className: "hero-details__title" },
-	              this.props.featured.title
+	              'h1',
+	              { className: 'hero-details__title' },
+	              video.title
 	            ),
 	            React.createElement(
-	              "p",
-	              { className: "hero-details__description" },
-	              this.props.featured.description
+	              'p',
+	              { className: 'hero-details__description' },
+	              video.description
 	            ),
 	            React.createElement(
-	              "div",
+	              'div',
 	              null,
 	              React.createElement(
-	                "a",
-	                { className: "upload-video__button upload-video__button--primary",
-	                  href: "https://youtube.com/watch?v=" + this.props.featured.id },
-	                "▶ Play"
+	                'a',
+	                { className: 'upload-video__button upload-video__button--primary',
+	                  href: "https://youtube.com/watch?v=" + video.id },
+	                '▶ Play'
 	              )
 	            )
 	          )
 	        )
+	      );
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'hero-row' },
+	      React.createElement(
+	        Slider,
+	        settings,
+	        list
 	      )
 	    );
 	  }
@@ -20233,6 +20253,18 @@
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
+	
+	
+	  findVideos: function findVideos() {
+	    var videosArr = [];
+	
+	    for (var i = 0, len = this.props.videos.length; i < len; i++) {
+	      if (this.props.videos[i].category.indexOf(this.props.category) > -1) {
+	        videosArr.push(this.props.videos[i]);
+	      }
+	    }
+	    return videosArr;
+	  },
 	
 	  render: function render() {
 	    var settings = {
@@ -20267,6 +20299,7 @@
 	        )
 	      );
 	    });
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'row' },
@@ -20281,17 +20314,6 @@
 	        list
 	      )
 	    );
-	  },
-	
-	  findVideos: function findVideos() {
-	    var videosArr = [];
-	
-	    for (var i = 0, len = this.props.videos.length; i < len; i++) {
-	      if (this.props.videos[i].category.indexOf(this.props.category) > -1) {
-	        videosArr.push(this.props.videos[i]);
-	      }
-	    }
-	    return videosArr;
 	  }
 	
 	});
@@ -22379,12 +22401,12 @@
 	"use strict";
 	
 	module.exports = {
-		"featured": {
+		"featured": [{
 			"id": "OX0OARBqBp0",
 			"title": "The Story of the Chinese Farmer",
 			"category": ["Spirituality"],
 			"description": "This story might change your perspective on how to judge events in life."
-		},
+		}],
 		"categories": ["Education", "Science", "Astronomy", "Drama", "Comedy"],
 		"videos": [{
 			"id": "ofnSojq-vqI",
