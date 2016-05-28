@@ -19,13 +19,18 @@ module.exports = React.createClass({
       speed: 500,
       slidesToShow: 1,
       fade: true,
+      draggable: false,
       slidesToScroll: 1
     };
 
     var list = this.findVideos().map(function(video) {
+      var imageStyle = {
+        'backgroundImage': 'url(https://img.youtube.com/vi/'+ video.id + '/hqdefault.jpg)',
+        'backgroundSize': 'cover'
+      };
       return (<div className="hero-row">
         <div className="hero">
-          <img className="hero-image" src={"https://img.youtube.com/vi/"+ video.id + "/sddefault.jpg"} />
+          <div className="hero-image" style={imageStyle}></div>
           <div className="vignette"></div>
           <div className="hero-info">
             <div className="hero-details">

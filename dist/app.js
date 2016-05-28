@@ -20185,17 +20185,22 @@
 	      speed: 500,
 	      slidesToShow: 1,
 	      fade: true,
+	      draggable: false,
 	      slidesToScroll: 1
 	    };
 	
 	    var list = this.findVideos().map(function (video) {
+	      var imageStyle = {
+	        'backgroundImage': 'url(https://img.youtube.com/vi/' + video.id + '/hqdefault.jpg)',
+	        'backgroundSize': 'cover'
+	      };
 	      return React.createElement(
 	        'div',
 	        { className: 'hero-row' },
 	        React.createElement(
 	          'div',
 	          { className: 'hero' },
-	          React.createElement('img', { className: 'hero-image', src: "https://img.youtube.com/vi/" + video.id + "/sddefault.jpg" }),
+	          React.createElement('div', { className: 'hero-image', style: imageStyle }),
 	          React.createElement('div', { className: 'vignette' }),
 	          React.createElement(
 	            'div',
@@ -22437,16 +22442,16 @@
 												moving case for creating an education system that \
 												nurtures (rather than undermines) creativity."
 		}, {
-			"id": "OX0OARBqBp0",
-			"title": "The Story of the Chinese Farmer",
-			"category": ["Spirituality"],
-			"description": "This story might change your perspective on how to judge events in life."
-		}, {
 			"id": "YTuElM6T50w",
 			"title": "Be The Hero of Your Own Movie",
 			"category": ["Success", "Motivation", "Philosophy"],
 			"description": "If your life was a movie and it started now, what would the hero of your \
 												life's movie do right now? Joe Rogan says do those things."
+		}, {
+			"id": "OX0OARBqBp0",
+			"title": "The Story of the Chinese Farmer",
+			"category": ["Spirituality"],
+			"description": "This story might change your perspective on how to judge events in life."
 		}],
 		"categories": ["Education", "Science", "Astronomy", "Drama", "Comedy"],
 		"videos": [{
