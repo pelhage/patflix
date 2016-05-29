@@ -28195,14 +28195,6 @@
 	  displayName: 'exports',
 	
 	
-	  findVideos: function findVideos() {
-	    var videosArr = [];
-	    this.props.featured.forEach(function (item) {
-	      videosArr.push(item);
-	    });
-	    return videosArr;
-	  },
-	
 	  render: function render() {
 	    var settings = {
 	      dots: true,
@@ -28214,7 +28206,8 @@
 	      slidesToScroll: 1
 	    };
 	
-	    var list = this.findVideos().map(function (video) {
+	    var list = this.props.featured.map(function (video) {
+	
 	      var imageStyle = {
 	        'backgroundImage': 'url(https://img.youtube.com/vi/' + video.id + '/hqdefault.jpg)',
 	        'backgroundSize': 'cover'
@@ -28270,31 +28263,6 @@
 	    );
 	  }
 	});
-	
-	/**
-
-	var list = this.findVideos().map(function(video) {
-	  return (
-	<div className="hero-row">
-	  <div className="hero">
-	    <img className="hero-image" src={"https://img.youtube.com/vi/"+ video.id + "/0.jpg"} />
-	    <div className="vignette"></div>
-	    <div className="hero-info">
-	      <div className="hero-details">
-	        <h1 className="hero-details__title">{video.title}</h1>
-	        <p className="hero-details__description">{video.description}</p>
-	        <div>
-	          <a className="upload-video__button upload-video__button--primary"
-	             href={"https://youtube.com/watch?v="+ video.id}>
-	             ▶ Play
-	          </a>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
-	  </div>);
-	});
-	**/
 
 /***/ },
 /* 254 */
