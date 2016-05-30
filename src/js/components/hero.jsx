@@ -1,6 +1,9 @@
 var React = require('react');
 var Slider = require('react-slick');
 
+var Router = require('react-router');
+var Link = Router.Link;
+
 module.exports = React.createClass({
   
 
@@ -30,10 +33,10 @@ module.exports = React.createClass({
               <h1 className="hero-details__title">{video.title}</h1>
               <p className="hero-details__description">{video.description}</p>
               <div>
-                <a className="upload-video__button upload-video__button--primary"
-                   href={"https://youtube.com/watch?v="+ video.id}>
+                <Link className="upload-video__button upload-video__button--primary"
+                   to={"/playback/"+ video.id}>
                    ▶ Play
-                </a>
+                </Link>
               </div>
             </div>
           </div>

@@ -1,6 +1,8 @@
 var React = require('react');
 var Slider = require('react-slick');
 
+var Router = require('react-router');
+var Link = Router.Link;
 
 module.exports = React.createClass({
 
@@ -22,7 +24,7 @@ module.exports = React.createClass({
       slidesToScroll: 5
     };
     var list = this.findVideos().map(function(video) {
-      return <div>
+      return <div><Link to={"playback/"+video.id}>
         <div className="tile">
           <div className="tile__media">
             <img className="tile__img" src={"http://img.youtube.com/vi/"+ video.id + "/0.jpg"}  />
@@ -32,7 +34,7 @@ module.exports = React.createClass({
               {video.title}
             </div>
           </div>
-        </div>
+        </div></Link>
       </div>
     });
 
