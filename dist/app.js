@@ -20139,17 +20139,13 @@
 	var hashHistory = ReactRouter.hashHistory;
 	/* Component Declarations */
 	var Main = __webpack_require__(/*! ./components/main.jsx */ 221);
-	var Upload = __webpack_require__(/*! ./components/upload.jsx */ 247);
+	/* var Upload = require('./components/upload.jsx'); */
 	var Playback = __webpack_require__(/*! ./components/playback.jsx */ 248);
 	
 	module.exports = React.createElement(
 	  Router,
 	  { history: hashHistory },
-	  React.createElement(
-	    Route,
-	    { path: '/', component: Main },
-	    React.createElement(Route, { path: '/upload', component: Upload })
-	  ),
+	  React.createElement(Route, { path: '/', component: Main }),
 	  React.createElement(Route, { path: '/playback/:videoid', component: Playback })
 	);
 
@@ -25986,7 +25982,7 @@
 	    var list = this.props.featured.map(function (video) {
 	
 	      var imageStyle = {
-	        'backgroundImage': 'url(https://img.youtube.com/vi/' + video.id + '/0.jpg)',
+	        'backgroundImage': 'url(https://img.youtube.com/vi/' + video.id + '/sddefault.jpg)',
 	        'backgroundSize': 'cover'
 	      };
 	      return React.createElement(
@@ -28176,7 +28172,7 @@
 		}, {
 			"id": "pfw2Qf1VfJo",
 			"title": "This is Water",
-			"category": ["success"],
+			"category": ["Success", "Spirituality"],
 			"description": "This talk by the late David Foster Wallace might just \
 												change the way you see the tiny, sometimes annoying, \
 												details of life."
@@ -28194,28 +28190,66 @@
 		}],
 		"categories": ["Education", "Science", "Astronomy", "Drama", "Comedy"],
 		"videos": [{
+			"id": "ejc5zic4q2A",
+			"title": "what. (Bo Burnham FULL SHOW)",
+			"category": ["Comedy"]
+		}, {
 			"id": "ofnSojq-vqI",
 			"title": "Killing Them Softly - Dave Chappelle",
 			"category": ["Comedy"]
+		}, {
+			"id": "LTWwY8Ok5I0",
+			"title": "Plato's Allegory of the Cave",
+			"category": ["Philosophy", "Spirituality"]
 		}, {
 			"id": "4PN5JJDh78I",
 			"title": "Carl Sagan - You Are Here (Pale Blue Dot)",
 			"category": ["Astronomy", "Science"]
 		}, {
+			"id": "OKY6BGcx37k",
+			"title": "Talking Funny",
+			"category": ["Comedy"]
+		}, {
 			"id": "9D05ej8u-gU",
 			"title": "Neil deGrasse Tyson - The Most Astounding Fact",
 			"category": ["Astronomy", "Science"]
 		}, {
+			"id": "KFwBH2fb2E0",
+			"title": "Louis CK - Of Course But Maybe",
+			"category": ["Comedy"]
+		}, {
+			"id": "pfw2Qf1VfJo",
+			"title": "This is Water",
+			"category": ["Success", "Spirituality"]
+		}, {
+			"id": "yu7n0XzqtfA",
+			"title": "The Stoics",
+			"category": ["Philosophy", "Spirituality"]
+		}, {
+			"id": "vH0nP4NzS9M",
+			"title": "Arnold Schwarzenegger - Who do YOU want to be in life?",
+			"category": ["Success", "Inspirational", "Motivational"]
+		}, {
+			"id": "45mMioJ5szc",
+			"title": "Michael Jordan - Failure",
+			"category": ["Success"]
+		}, {
+			"id": "Yh9IGY2U2dQ",
+			"title": "Michael Jordan - Become Legendary #1",
+			"category": ["Success", "Motivational", "Motivation", "Inspirational"]
+		}, {
+			"id": "GTq5xSo_jP4",
+			"title": "Michael Jordan - Become Legendary #2",
+			"category": ["Success", "Motivational", "Motivation", "Inspirational"]
+		}, {
+			"id": "9zSVu76AX3I",
+			"title": "Michael Jordan - Maybe It's My Fault",
+			"category": ["Success"]
+		}, {
 			"id": "oY59wZdCDo0",
 			"title": "Carl Sagan - The Frontier Is Everywhere",
 			"category": ["Astronomy", "Science"]
-		},
-		// {
-		// 	"id": "Kv3MQgja2Bw",
-		// 	"title": "Neil deGrasse Tyson Blows Your Mind",
-		// 	"category": ["Astronomy", "Science"]
-		// }, //
-		{
+		}, {
 			"id": "QAa2O_8wBUQ",
 			"title": "What is Dark Matter and Dark Energy?",
 			"category": ["Astronomy", "Science"]
@@ -28234,7 +28268,7 @@
 		}, {
 			"id": "YMDu3JdQ8Ow",
 			"title": "Alan Watts - What is Wrong With Our Culture",
-			"category": []
+			"category": ["Spirituality", "Philosophy"]
 		}, {
 			"id": "E1oZhEIrer4",
 			"title": "Nobody Tells This To Beginners - Ira Glass",
@@ -28272,12 +28306,24 @@
 			"title": "ALEC BALDWIN GLENGARRY GLEN ROSS ALWAYS BE CLOSING FULL SPEECH",
 			"category": []
 		}, {
-			"id": "bvlSxCC0wVg",
-			"title": "Louis CK - Of Course But Maybe",
-			"category": ["Comedy"]
-		}, {
 			"id": "4u2ZsoYWwJA",
 			"title": "Why? - Louis C.K.",
+			"category": ["Comedy"]
+		}, {
+			"id": "kYfNvmF0Bqw",
+			"title": "Steve Jobs - Interview",
+			"category": ["Success", "Inspirational", "Motivation", "Motivational"]
+		}, {
+			"id": "Kj_48pHuXWo",
+			"title": "Steve Jobs Rare Interview (1990)",
+			"category": ["Success"]
+		}, {
+			"id": "aUaZS1pHNAA",
+			"title": "Dave Chappelle HBO Special",
+			"category": ["Comedy"]
+		}, {
+			"id": "yzh7RtIJKZk",
+			"title": "Louis C.K. Monologue - SNL",
 			"category": ["Comedy"]
 		}, {
 			"id": "xSSDeesUUsU",
@@ -28315,197 +28361,41 @@
 			"id": "SXE4_DCMmYM",
 			"title": "Charlie Chaplin's Epic Speech in The Great Dictator",
 			"category": ["Inspirational", "Social Critique"]
-		}]
+		}, {
+			"id": "D1R-jKKp3NA",
+			"title": "Stay Hungry, Stay Foolish - Steve Jobs Stanford Commencement Speech",
+			"category": ["Inspirational", "Motivational", "Success"]
+		}, {
+			"id": "8Xtly-dpBeA",
+			"title": "Carl Sagan - The Gift of Apollo",
+			"category": ["Astronomy"]
+		}
+	
+		// {
+		// 	"id": "",
+		// 	"title": "",
+		// 	"category": []
+		// },
+		// {
+		// 	"id": "",
+		// 	"title": "",
+		// 	"category": []
+		// },
+		// {
+		// 	"id": "",
+		// 	"title": "",
+		// 	"category": []
+		// },
+		// {
+		// 	"id": "",
+		// 	"title": "",
+		// 	"category": []
+		// }
+		]
 	};
 
 /***/ },
-/* 247 */
-/*!**************************************!*\
-  !*** ./src/js/components/upload.jsx ***!
-  \**************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	var React = __webpack_require__(/*! react */ 1);
-	
-	module.exports = React.createClass({
-	  displayName: 'exports',
-	
-	
-	  getInitialState: function getInitialState() {
-	    return {
-	      id: '',
-	      description: '',
-	      videos: [],
-	      valid: false,
-	      isSaved: false
-	    };
-	  },
-	
-	  handleSubmit: function handleSubmit() {
-	    var library = this.state.videos;
-	    // Options for API Call
-	    var options = {
-	      method: 'post',
-	      headers: new Headers({ "Content-Type": "application/json" }),
-	      body: JSON.stringify({
-	        library: library,
-	        password: "Nerd"
-	      })
-	    };
-	    // Make API Call to Save Library
-	    fetch('/l', options).then(function (response) {
-	      response.text().then(function (text) {
-	        console.log(text);
-	      });
-	    }).catch(function (err) {
-	      console.log(err);
-	    });
-	  },
-	
-	  handleIdChange: function handleIdChange(e) {
-	    this.setState({ valid: this.validateYoutubeID(e.target.value) });
-	    this.setState({ id: e.target.value });
-	  },
-	
-	  handleDescriptionChange: function handleDescriptionChange(e) {
-	    this.setState({ description: e.target.value });
-	  },
-	
-	  addVideoToLib: function addVideoToLib() {
-	    // Copy state & push to library's array
-	    var videosArr = this.state.videos.slice();
-	    videosArr.push({
-	      id: this.state.id,
-	      description: this.state.description
-	    });
-	    // Update state with new library, & reset forms
-	    this.setState({ videos: videosArr });
-	    this.state.id = '';
-	    this.state.description = '';
-	  },
-	
-	  validateYoutubeID: function validateYoutubeID(url) {
-	    var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-	    var match = url.match(regExp);
-	    if (match && match[2].length == 11) {
-	      return match[2];
-	    } else {
-	      return false;
-	    }
-	  },
-	
-	  render: function render() {
-	    var isValid;
-	    if (this.state.valid) {
-	      isValid = React.createElement(
-	        'span',
-	        { className: 'video-is-valid' },
-	        '✔'
-	      );
-	    } else if (this.state.id.length < 1) {
-	      isValid = '';
-	    } else {
-	      isValid = React.createElement(
-	        'span',
-	        { className: 'video-is-not-valid' },
-	        '✘'
-	      );
-	    }
-	    return React.createElement(
-	      'div',
-	      { className: 'upload-container' },
-	      React.createElement(
-	        'h2',
-	        null,
-	        'Add Videos to Your Library'
-	      ),
-	      React.createElement(
-	        'form',
-	        { className: 'upload-video' },
-	        React.createElement(
-	          'div',
-	          { className: 'upload-video__input-container' },
-	          React.createElement(
-	            'label',
-	            { className: 'upload-video__label', htmlFor: 'ytURL' },
-	            'YouTube URL',
-	            isValid
-	          ),
-	          React.createElement('input', {
-	            id: 'ytURL',
-	            className: 'upload-video__input',
-	            type: 'text',
-	            value: this.state.id,
-	            onChange: this.handleIdChange })
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'upload-video__input-container' },
-	          React.createElement('input', { className: 'upload-video__checkbox', id: 'isFeatured', type: 'checkbox' }),
-	          React.createElement(
-	            'label',
-	            { htmlFor: 'isFeatured' },
-	            'Feature this video in your library'
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'upload-video__input-container' },
-	          React.createElement(
-	            'label',
-	            { className: 'upload-video__label', htmlFor: 'description' },
-	            'Description'
-	          ),
-	          React.createElement(
-	            'p',
-	            null,
-	            'Write a short summary of what this video is about.'
-	          ),
-	          React.createElement('textarea', {
-	            className: 'upload-video_textarea',
-	            id: 'description',
-	            value: this.state.description,
-	            onChange: this.handleDescriptionChange })
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'upload-video__input-container' },
-	          React.createElement(
-	            'label',
-	            { className: 'upload-video__label', htmlFor: 'categories' },
-	            'Categories'
-	          ),
-	          React.createElement('textarea', _defineProperty({
-	            className: 'upload-video_textarea',
-	            value: this.state.categories,
-	            id: 'categories',
-	            onChange: this.handleDescriptionChange
-	          }, 'className', 'upload-video__input'))
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'upload-video__input-container' },
-	          React.createElement('input', {
-	            className: 'upload-video__button margin-right',
-	            type: 'button',
-	            onClick: this.addVideoToLib,
-	            value: 'Add to Library' }),
-	          React.createElement('input', {
-	            className: 'upload-video__button upload-video__button--primary',
-	            onClick: this.handleSubmit,
-	            type: 'button',
-	            value: 'Save Library' })
-	        )
-	      )
-	    );
-	  }
-	});
-
-/***/ },
+/* 247 */,
 /* 248 */
 /*!****************************************!*\
   !*** ./src/js/components/playback.jsx ***!

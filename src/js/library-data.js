@@ -11,7 +11,7 @@ module.exports = {
 		{
 			"id": "pfw2Qf1VfJo",
 			"title": "This is Water",
-			"category": ["success"],
+			"category": ["Success", "Spirituality"],
 			"description": "This talk by the late David Foster Wallace might just \
 											change the way you see the tiny, sometimes annoying, \
 											details of life."
@@ -33,30 +33,80 @@ module.exports = {
 	"categories": ["Education", "Science", "Astronomy", "Drama", "Comedy"],
 	"videos": [
 		{
+			"id": "ejc5zic4q2A",
+			"title": "what. (Bo Burnham FULL SHOW)",
+			"category": ["Comedy"]
+		},
+		{
 			"id": "ofnSojq-vqI",
 			"title": "Killing Them Softly - Dave Chappelle",
 			"category": ["Comedy"]
+		},
+		{
+			"id": "LTWwY8Ok5I0",
+			"title": "Plato's Allegory of the Cave",
+			"category": ["Philosophy", "Spirituality"]
 		},
 		{
 			"id": "4PN5JJDh78I",
 			"title": "Carl Sagan - You Are Here (Pale Blue Dot)",
 			"category": ["Astronomy", "Science"]
 		},
+		{
+			"id": "OKY6BGcx37k",
+			"title": "Talking Funny",
+			"category": ["Comedy"]
+		},
 		{ 
 			"id": "9D05ej8u-gU",
 			"title": "Neil deGrasse Tyson - The Most Astounding Fact",
 			"category": ["Astronomy", "Science"]
+		},
+		{
+			"id": "KFwBH2fb2E0",
+			"title": "Louis CK - Of Course But Maybe",
+			"category": ["Comedy"]
+		},
+		{
+			"id": "pfw2Qf1VfJo",
+			"title": "This is Water",
+			"category": ["Success", "Spirituality"]
+		},
+		{
+			"id": "yu7n0XzqtfA",
+			"title": "The Stoics",
+			"category": ["Philosophy", "Spirituality"]
+		},
+		{
+			"id": "vH0nP4NzS9M",
+			"title": "Arnold Schwarzenegger - Who do YOU want to be in life?",
+			"category": ["Success", "Inspirational", "Motivational"]
+		},
+		{
+			"id": "45mMioJ5szc",
+			"title": "Michael Jordan - Failure",
+			"category": ["Success"]
+		},
+		{
+			"id": "Yh9IGY2U2dQ",
+			"title": "Michael Jordan - Become Legendary #1",
+			"category": ["Success", "Motivational", "Motivation", "Inspirational"]
+		},
+		{
+			"id": "GTq5xSo_jP4",
+			"title": "Michael Jordan - Become Legendary #2",
+			"category": ["Success", "Motivational", "Motivation", "Inspirational"]
+		},
+		{
+			"id": "9zSVu76AX3I",
+			"title": "Michael Jordan - Maybe It's My Fault",
+			"category": ["Success"]
 		},
 		{ 
 			"id": "oY59wZdCDo0",
 			"title": "Carl Sagan - The Frontier Is Everywhere",
 			"category": ["Astronomy", "Science"]
 		},
-		// { 
-		// 	"id": "Kv3MQgja2Bw",
-		// 	"title": "Neil deGrasse Tyson Blows Your Mind",
-		// 	"category": ["Astronomy", "Science"]
-		// }, //
 		{ 
 			"id": "QAa2O_8wBUQ",
 			"title": "What is Dark Matter and Dark Energy?",
@@ -80,7 +130,7 @@ module.exports = {
 		{ 
 			"id": "YMDu3JdQ8Ow",
 			"title": "Alan Watts - What is Wrong With Our Culture",
-			"category": []
+			"category": ["Spirituality", "Philosophy"]
 		},
 		{ 
 			"id": "E1oZhEIrer4",
@@ -128,13 +178,28 @@ module.exports = {
 			"category": []
 		},
 		{ 
-			"id": "bvlSxCC0wVg",
-			"title": "Louis CK - Of Course But Maybe",
-			"category": ["Comedy"]
-		},
-		{ 
 			"id": "4u2ZsoYWwJA",
 			"title": "Why? - Louis C.K.",
+			"category": ["Comedy"]
+		},
+		{
+			"id": "kYfNvmF0Bqw",
+			"title": "Steve Jobs - Interview",
+			"category": ["Success", "Inspirational", "Motivation", "Motivational"]
+		},
+		{
+			"id": "Kj_48pHuXWo",
+			"title": "Steve Jobs Rare Interview (1990)",
+			"category": ["Success"]
+		},
+		{
+			"id": "aUaZS1pHNAA",
+			"title": "Dave Chappelle HBO Special",
+			"category": ["Comedy"]
+		}, 
+		{
+			"id": "yzh7RtIJKZk",
+			"title": "Louis C.K. Monologue - SNL",
 			"category": ["Comedy"]
 		},
 		{ 
@@ -182,11 +247,17 @@ module.exports = {
 			"title": "Charlie Chaplin's Epic Speech in The Great Dictator",
 			"category": ["Inspirational", "Social Critique"]
 		},
-		// {
-		// 	"id": "",
-		// 	"title": "",
-		// 	"category": []
-		// },
+		{
+			"id": "D1R-jKKp3NA",
+			"title": "Stay Hungry, Stay Foolish - Steve Jobs Stanford Commencement Speech",
+			"category": ["Inspirational", "Motivational", "Success"]
+		},
+		{
+			"id": "8Xtly-dpBeA",
+			"title": "Carl Sagan - The Gift of Apollo",
+			"category": ["Astronomy"]
+		}
+
 		// {
 		// 	"id": "",
 		// 	"title": "",

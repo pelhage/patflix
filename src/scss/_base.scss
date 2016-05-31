@@ -30,6 +30,7 @@ nav {
   position: fixed;
   top: 0;
   display: flex;
+  padding: 0 40px;
   height: 75px;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1000;
@@ -39,7 +40,8 @@ nav {
     top: 10px;
     left: 10px;
     color: $primary;
-    font-size: 2rem;
+    font-size: 3.2rem;
+    font-family: "graphique";
   }
 }
 h1 {
