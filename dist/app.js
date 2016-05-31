@@ -20140,12 +20140,16 @@
 	/* Component Declarations */
 	var Main = __webpack_require__(/*! ./components/main.jsx */ 221);
 	/* var Upload = require('./components/upload.jsx'); */
-	var Playback = __webpack_require__(/*! ./components/playback.jsx */ 248);
-	
+	var Playback = __webpack_require__(/*! ./components/playback.jsx */ 247);
+	var About = __webpack_require__(/*! ./components/about.jsx */ 248);
 	module.exports = React.createElement(
 	  Router,
 	  { history: hashHistory },
-	  React.createElement(Route, { path: '/', component: Main }),
+	  React.createElement(
+	    Route,
+	    { path: '/', component: Main },
+	    React.createElement(Route, { path: '/about', component: About })
+	  ),
 	  React.createElement(Route, { path: '/playback/:videoid', component: Playback })
 	);
 
@@ -25899,15 +25903,16 @@
 	  render: function render() {
 	    return React.createElement(
 	      'nav',
-	      null,
+	      { className: 'nav' },
 	      React.createElement(
 	        Link,
-	        { to: '/' },
-	        React.createElement(
-	          'span',
-	          null,
-	          'PATFLIX'
-	        )
+	        { className: 'nav__item nav__item--brand', to: '/' },
+	        'PATFLIX'
+	      ),
+	      React.createElement(
+	        Link,
+	        { className: 'nav__item nav__item--pull-right', to: '/about' },
+	        'About Patflix'
 	      )
 	    );
 	  }
@@ -28394,8 +28399,7 @@
 	};
 
 /***/ },
-/* 247 */,
-/* 248 */
+/* 247 */
 /*!****************************************!*\
   !*** ./src/js/components/playback.jsx ***!
   \****************************************/
@@ -28435,10 +28439,54 @@
 	
 		render: function render() {
 			return React.createElement('iframe', { style: this.state.style,
-				src: "http://www.youtube.com/embed/" + this.props.params.videoid,
+				src: "http://www.youtube.com/embed/" + this.props.params.videoid + "?autoplay=1",
 				frameBorder: '0',
 				allowFullScreen: true });
 		}
+	});
+
+/***/ },
+/* 248 */
+/*!*************************************!*\
+  !*** ./src/js/components/about.jsx ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(/*! react */ 1);
+	
+	module.exports = React.createClass({
+	  displayName: "exports",
+	
+	
+	  render: function render() {
+	
+	    return React.createElement(
+	      "div",
+	      { className: "container container--medium" },
+	      React.createElement(
+	        "h1",
+	        null,
+	        "Upload Your Own Netflix-Like Video Library"
+	      ),
+	      React.createElement(
+	        "p",
+	        null,
+	        "I created Patflix as a way to share my selection of Youtube videos with the world."
+	      ),
+	      React.createElement(
+	        "p",
+	        null,
+	        "All content is pulled in dynamically by category and by youtube ID, and then presented in Netflix-like fashion."
+	      ),
+	      React.createElement(
+	        "p",
+	        null,
+	        "The next iteration of Patflix already in progress will have an interface allowing for other people to upload \\ Youtube links and then share their library via a URL."
+	      )
+	    );
+	  }
 	});
 
 /***/ }

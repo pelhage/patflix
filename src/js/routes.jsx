@@ -8,11 +8,12 @@ var hashHistory = ReactRouter.hashHistory;
 var Main = require('./components/main.jsx');
 /* var Upload = require('./components/upload.jsx'); */
 var Playback = require('./components/playback.jsx');
-
+var About = require('./components/about.jsx');
 module.exports = (
   <Router history={hashHistory}>
     <Route path="/" component={Main}>
     	{/* <Route path="/upload" component={Upload} /> */}
+    	<Route path="/about" component={About} />
     </Route>
     <Route path="/playback/:videoid" component={Playback} />
   </Router>

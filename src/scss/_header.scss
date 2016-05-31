@@ -1,0 +1,27 @@
+nav {
+  position: fixed;
+  top: 0;
+  display: flex;
+  padding: 0 40px;
+  height: 75px;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  width: 100%;
+}
+.nav {
+	display: flex;
+	align-items: center;
+}
+	.nav__item {
+		color: #fff;
+		font-size: 1.3rem;
+		font-weight: 300;
+	}
+	.nav__item--pull-right {
+	  margin-left: auto;
+	}
+	.nav__item--brand {
+	  color: $primary;
+	  font-size: 3.2rem;
+	  font-family: "graphique";
+	}
