@@ -13,7 +13,7 @@ module.exports = (
   <Router history={hashHistory}>
     <Route path="/" component={Main}>
     	<Route path="/upload" component={Upload} />
-    	<Route path="/playback/:videoid" component={Playback} />
     </Route>
+    <Route path="/playback/:videoid" component={Playback} />
   </Router>
 );

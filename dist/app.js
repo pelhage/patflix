@@ -20148,9 +20148,9 @@
 	  React.createElement(
 	    Route,
 	    { path: '/', component: Main },
-	    React.createElement(Route, { path: '/upload', component: Upload }),
-	    React.createElement(Route, { path: '/playback/:videoid', component: Playback })
-	  )
+	    React.createElement(Route, { path: '/upload', component: Upload })
+	  ),
+	  React.createElement(Route, { path: '/playback/:videoid', component: Playback })
 	);
 
 /***/ },
