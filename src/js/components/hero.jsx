@@ -15,7 +15,8 @@ module.exports = React.createClass({
       slidesToShow: 1,
       fade: true,
       draggable: false,
-      slidesToScroll: 1
+      slidesToScroll: 1,
+      autoplay: true
     };
 
     var list = this.props.featured.map(function(video) {
