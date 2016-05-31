@@ -24,7 +24,6 @@ module.exports = React.createClass({
 			height: window.innerHeight + 'px'
 			}
 		});
-    console.log(this.state.style);
   },
 
 	render: function() {
