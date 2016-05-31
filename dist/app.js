@@ -26222,7 +26222,7 @@
 	      mounted: true
 	    });
 	    var lazyLoadedList = [];
-	    for (var i = 0; i < this.props.children.length; i++) {
+	    for (var i = 0; i < _react2['default'].Children.count(this.props.children); i++) {
 	      if (i >= this.state.currentSlide && i < this.state.currentSlide + this.props.slidesToShow) {
 	        lazyLoadedList.push(i);
 	      }
@@ -26251,14 +26251,19 @@
 	      window.detachEvent('onresize', this.onWindowResized);
 	    }
 	    if (this.state.autoPlayTimer) {
-	      window.clearTimeout(this.state.autoPlayTimer);
+	      window.clearInterval(this.state.autoPlayTimer);
 	    }
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	    if (this.props.slickGoTo != nextProps.slickGoTo) {
-	      this.setState({ currentSlide: nextProps.slickGoTo });
+	      this.changeSlide({
+	        message: 'index',
+	        index: nextProps.slickGoTo,
+	        currentSlide: this.state.currentSlide
+	      });
+	    } else {
+	      this.update(nextProps);
 	    }
-	    this.update(nextProps);
 	  },
 	  componentDidUpdate: function componentDidUpdate() {
 	    this.adaptHeight();
@@ -26321,7 +26326,7 @@
 	
 	    return _react2['default'].createElement(
 	      'div',
-	      { className: className },
+	      { className: className, onMouseEnter: this.onInnerSliderEnter, onMouseLeave: this.onInnerSliderLeave },
 	      _react2['default'].createElement(
 	        'div',
 	        {
@@ -26365,6 +26370,10 @@
 	
 	var _trackHelper = __webpack_require__(/*! ./trackHelper */ 229);
 	
+	var _helpers = __webpack_require__(/*! ./helpers */ 232);
+	
+	var _helpers2 = _interopRequireDefault(_helpers);
+	
 	var _objectAssign = __webpack_require__(/*! object-assign */ 231);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
@@ -26372,19 +26381,28 @@
 	var EventHandlers = {
 	  // Event handler for previous and next
 	  changeSlide: function changeSlide(options) {
-	    var indexOffset, slideOffset, unevenOffset, targetSlide;
+	    var indexOffset, previousInt, slideOffset, unevenOffset, targetSlide;
 	    unevenOffset = this.state.slideCount % this.props.slidesToScroll !== 0;
 	    indexOffset = unevenOffset ? 0 : (this.state.slideCount - this.state.currentSlide) % this.props.slidesToScroll;
 	
 	    if (options.message === 'previous') {
 	      slideOffset = indexOffset === 0 ? this.props.slidesToScroll : this.props.slidesToShow - indexOffset;
 	      targetSlide = this.state.currentSlide - slideOffset;
+	      if (this.props.lazyLoad) {
+	        previousInt = this.state.currentSlide - slideOffset;
+	        targetSlide = previousInt === -1 ? this.state.slideCount - 1 : previousInt;
+	      }
 	    } else if (options.message === 'next') {
 	      slideOffset = indexOffset === 0 ? this.props.slidesToScroll : indexOffset;
 	      targetSlide = this.state.currentSlide + slideOffset;
 	    } else if (options.message === 'dots') {
 	      // Click on dots
 	      targetSlide = options.index * options.slidesToScroll;
+	      if (targetSlide === options.currentSlide) {
+	        return;
+	      }
+	    } else if (options.message === 'index') {
+	      targetSlide = options.index;
 	      if (targetSlide === options.currentSlide) {
 	        return;
 	      }
@@ -26511,6 +26529,16 @@
 	      this.setState({
 	        trackStyle: (0, _trackHelper.getTrackAnimateCSS)((0, _objectAssign2['default'])({ left: currentLeft }, this.props, this.state))
 	      });
+	    }
+	  },
+	  onInnerSliderEnter: function onInnerSliderEnter(e) {
+	    if (this.props.autoplay && this.props.pauseOnHover) {
+	      this.pause();
+	    }
+	  },
+	  onInnerSliderLeave: function onInnerSliderLeave(e) {
+	    if (this.props.autoplay && this.props.pauseOnHover) {
+	      this.autoPlay();
 	    }
 	  }
 	};
@@ -26818,7 +26846,7 @@
 	    var targetLeft, currentLeft;
 	    var callback;
 	
-	    if (this.state.currentSlide === index) {
+	    if (this.props.waitForAnimate && this.state.animating) {
 	      return;
 	    }
 	
@@ -26954,7 +26982,7 @@
 	
 	      this.setState({
 	        animating: true,
-	        currentSlide: targetSlide,
+	        currentSlide: currentSlide,
 	        trackStyle: (0, _trackHelper.getTrackAnimateCSS)((0, _objectAssign2['default'])({ left: targetLeft }, this.props, this.state))
 	      }, function () {
 	        _reactLibReactTransitionEvents2['default'].addEndEventListener(_ReactDOM2['default'].findDOMNode(this.refs.track), callback);
@@ -26986,15 +27014,26 @@
 	  autoPlay: function autoPlay() {
 	    var _this2 = this;
 	
+	    if (this.state.autoPlayTimer) {
+	      return;
+	    }
 	    var play = function play() {
 	      if (_this2.state.mounted) {
-	        _this2.slideHandler(_this2.state.currentSlide + _this2.props.slidesToScroll);
+	        var nextIndex = _this2.props.rtl ? _this2.state.currentSlide - _this2.props.slidesToScroll : _this2.state.currentSlide + _this2.props.slidesToScroll;
+	        _this2.slideHandler(nextIndex);
 	      }
 	    };
 	    if (this.props.autoplay) {
-	      window.clearTimeout(this.state.autoPlayTimer);
 	      this.setState({
-	        autoPlayTimer: window.setTimeout(play, this.props.autoplaySpeed)
+	        autoPlayTimer: window.setInterval(play, this.props.autoplaySpeed)
+	      });
+	    }
+	  },
+	  pause: function pause() {
+	    if (this.state.autoPlayTimer) {
+	      window.clearInterval(this.state.autoPlayTimer);
+	      this.setState({
+	        autoPlayTimer: null
 	      });
 	    }
 	  }
@@ -27202,6 +27241,7 @@
 	    infinite: true,
 	    initialSlide: 0,
 	    lazyLoad: false,
+	    pauseOnHover: false,
 	    responsive: null,
 	    rtl: false,
 	    slide: 'div',
@@ -27215,7 +27255,7 @@
 	    useCSS: true,
 	    variableWidth: false,
 	    vertical: false,
-	    // waitForAnimate: true,
+	    waitForAnimate: true,
 	    afterChange: null,
 	    beforeChange: null,
 	    edgeEvent: null,
@@ -27318,7 +27358,6 @@
 	
 	  if (spec.rtl) {
 	    index = spec.slideCount - 1 - spec.index;
-	    console.log();
 	  } else {
 	    index = spec.index;
 	  }
@@ -27326,7 +27365,7 @@
 	  slickCloned = index < 0 || index >= spec.slideCount;
 	  if (spec.centerMode) {
 	    centerOffset = Math.floor(spec.slidesToShow / 2);
-	    slickCenter = spec.currentSlide === index;
+	    slickCenter = (index - spec.currentSlide) % spec.slideCount === 0;
 	    if (index > spec.currentSlide - centerOffset - 1 && index <= spec.currentSlide + centerOffset) {
 	      slickActive = true;
 	    }
@@ -27359,6 +27398,11 @@
 	  return style;
 	};
 	
+	var getKey = function getKey(child, fallbackKey) {
+	  // key could be a zero
+	  return child.key === null || child.key === undefined ? fallbackKey : child.key;
+	};
+	
 	var renderSlides = function renderSlides(spec) {
 	  var key;
 	  var slides = [];
@@ -27384,7 +27428,7 @@
 	    }
 	
 	    slides.push(_react2['default'].cloneElement(child, {
-	      key: index,
+	      key: 'original' + getKey(child, index),
 	      'data-index': index,
 	      className: cssClasses,
 	      style: (0, _objectAssign2['default'])({}, child.props.style || {}, childStyle)
@@ -27397,9 +27441,9 @@
 	      if (index >= count - infiniteCount) {
 	        key = -(count - index);
 	        preCloneSlides.push(_react2['default'].cloneElement(child, {
-	          key: key,
+	          key: 'cloned' + getKey(child, key),
 	          'data-index': key,
-	          className: getSlideClasses((0, _objectAssign2['default'])({ index: key }, spec)),
+	          className: cssClasses,
 	          style: (0, _objectAssign2['default'])({}, child.props.style || {}, childStyle)
 	        }));
 	      }
@@ -27407,9 +27451,9 @@
 	      if (index < infiniteCount) {
 	        key = count + index;
 	        postCloneSlides.push(_react2['default'].cloneElement(child, {
-	          key: key,
+	          key: 'cloned' + getKey(child, key),
 	          'data-index': key,
-	          className: getSlideClasses((0, _objectAssign2['default'])({ index: key }, spec)),
+	          className: cssClasses,
 	          style: (0, _objectAssign2['default'])({}, child.props.style || {}, childStyle)
 	        }));
 	      }
@@ -27505,7 +27549,7 @@
 	        _react2['default'].createElement(
 	          'button',
 	          { onClick: _this.clickHandler.bind(_this, dotOptions) },
-	          i
+	          i + 1
 	        )
 	      );
 	    });
@@ -27562,7 +27606,6 @@
 	
 	    var prevArrowProps = {
 	      key: '0',
-	      ref: 'previous',
 	      'data-role': 'none',
 	      className: (0, _classnames2['default'])(prevClasses),
 	      style: { display: 'block' },
@@ -27571,7 +27614,7 @@
 	    var prevArrow;
 	
 	    if (this.props.prevArrow) {
-	      prevArrow = _react2['default'].createElement(this.props.prevArrow, prevArrowProps);
+	      prevArrow = _react2['default'].cloneElement(this.props.prevArrow, prevArrowProps);
 	    } else {
 	      prevArrow = _react2['default'].createElement(
 	        'button',
@@ -27615,7 +27658,6 @@
 	
 	    var nextArrowProps = {
 	      key: '1',
-	      ref: 'next',
 	      'data-role': 'none',
 	      className: (0, _classnames2['default'])(nextClasses),
 	      style: { display: 'block' },
@@ -27625,7 +27667,7 @@
 	    var nextArrow;
 	
 	    if (this.props.nextArrow) {
-	      nextArrow = _react2['default'].createElement(this.props.nextArrow, nextArrowProps);
+	      nextArrow = _react2['default'].cloneElement(this.props.nextArrow, nextArrowProps);
 	    } else {
 	      nextArrow = _react2['default'].createElement(
 	        'button',
