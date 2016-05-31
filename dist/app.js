@@ -25908,11 +25908,6 @@
 	          null,
 	          'PATFLIX'
 	        )
-	      ),
-	      React.createElement(
-	        Link,
-	        { to: '/upload' },
-	        'Upload'
 	      )
 	    );
 	  }
@@ -28368,6 +28363,10 @@
 		}, {
 			"id": "8Xtly-dpBeA",
 			"title": "Carl Sagan - The Gift of Apollo",
+			"category": ["Astronomy"]
+		}, {
+			"id": "7ImvlS8PLIo",
+			"title": "'A Universe From Nothing' by Lawrence Krauss",
 			"category": ["Astronomy"]
 		}
 	
