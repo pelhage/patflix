@@ -21,7 +21,7 @@ module.exports = React.createClass({
     var list = this.props.featured.map(function(video) {
 
       var imageStyle = {
-        'backgroundImage': 'url(https://img.youtube.com/vi/'+ video.id + '/hqdefault.jpg)',
+        'backgroundImage': 'url(https://img.youtube.com/vi/'+ video.id +'/hqdefault.jpg)',
         'backgroundSize': 'cover'
       };
       return (<div className="hero-row">

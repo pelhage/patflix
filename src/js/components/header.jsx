@@ -6,8 +6,7 @@ module.exports = React.createClass({
   render: function() {
     return (<nav>
     	<Link to="/"><span>PATFLIX</span></Link>
-    	<Link to="/">Home</Link>
-    	<Link to="/upload">Upload</Link>
+    	<span className="pull-right"><Link to="/upload">Upload</Link></span>
   	</nav>);
   }
 });

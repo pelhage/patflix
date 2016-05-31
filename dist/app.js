@@ -25914,14 +25914,13 @@
 	        )
 	      ),
 	      React.createElement(
-	        Link,
-	        { to: '/' },
-	        'Home'
-	      ),
-	      React.createElement(
-	        Link,
-	        { to: '/upload' },
-	        'Upload'
+	        'span',
+	        { className: 'pull-right' },
+	        React.createElement(
+	          Link,
+	          { to: '/upload' },
+	          'Upload'
+	        )
 	      )
 	    );
 	  }
@@ -28117,7 +28116,7 @@
 	        null,
 	        React.createElement(
 	          Link,
-	          { to: "playback/" + video.id },
+	          { to: "/playback/" + video.id },
 	          React.createElement(
 	            'div',
 	            { className: 'tile' },
@@ -28507,25 +28506,44 @@
   \****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 1);
 	
 	module.exports = React.createClass({
-		displayName: "exports",
+		displayName: 'exports',
+	
 	
 		validateID: function validateID() {
 			return true;
 		},
+	
+		getInitialState: function getInitialState() {
+			return { style: {
+					width: window.innerWidth + 'px',
+					height: window.innerHeight + 'px'
+				}
+			};
+		},
+	
+		componentDidMount: function componentDidMount() {
+			window.addEventListener('resize', this.handleResize);
+		},
+	
+		handleResize: function handleResize() {
+			this.setState({ style: {
+					width: window.innerWidth + 'px',
+					height: window.innerHeight + 'px'
+				}
+			});
+			console.log(this.state.style);
+		},
+	
 		render: function render() {
-			return React.createElement(
-				"div",
-				{ className: "videoWrapper" },
-				React.createElement("iframe", {
-					src: "http://www.youtube.com/embed/" + this.props.params.videoid,
-					frameborder: "0",
-					allowFullScreen: true })
-			);
+			return React.createElement('iframe', { style: this.state.style,
+				src: "http://www.youtube.com/embed/" + this.props.params.videoid,
+				frameBorder: '0',
+				allowFullScreen: true });
 		}
 	});
 
