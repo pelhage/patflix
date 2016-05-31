@@ -25914,13 +25914,9 @@
 	        )
 	      ),
 	      React.createElement(
-	        'span',
-	        { className: 'pull-right' },
-	        React.createElement(
-	          Link,
-	          { to: '/upload' },
-	          'Upload'
-	        )
+	        Link,
+	        { to: '/upload' },
+	        'Upload'
 	      )
 	    );
 	  }
@@ -25952,8 +25948,7 @@
 	      React.createElement(VideoRow, { videos: this.props.videos, category: 'Astronomy' }),
 	      React.createElement(VideoRow, { videos: this.props.videos, category: 'Comedy' }),
 	      React.createElement(VideoRow, { videos: this.props.videos, category: 'Spirituality' }),
-	      React.createElement(VideoRow, { videos: this.props.videos, category: 'Success' }),
-	      React.createElement(VideoRow, { videos: this.props.videos, category: 'Comedy' })
+	      React.createElement(VideoRow, { videos: this.props.videos, category: 'Success' })
 	    );
 	  }
 	});
@@ -25991,41 +25986,45 @@
 	    var list = this.props.featured.map(function (video) {
 	
 	      var imageStyle = {
-	        'backgroundImage': 'url(https://img.youtube.com/vi/' + video.id + '/hqdefault.jpg)',
+	        'backgroundImage': 'url(https://img.youtube.com/vi/' + video.id + '/0.jpg)',
 	        'backgroundSize': 'cover'
 	      };
 	      return React.createElement(
 	        'div',
-	        { className: 'hero-row' },
+	        null,
 	        React.createElement(
 	          'div',
-	          { className: 'hero' },
-	          React.createElement('div', { className: 'hero-image', style: imageStyle }),
-	          React.createElement('div', { className: 'vignette' }),
+	          { className: 'hero-row' },
 	          React.createElement(
 	            'div',
-	            { className: 'hero-info' },
+	            { className: 'hero' },
+	            React.createElement('div', { className: 'hero-image', style: imageStyle }),
+	            React.createElement('div', { className: 'vignette' }),
 	            React.createElement(
 	              'div',
-	              { className: 'hero-details' },
-	              React.createElement(
-	                'h1',
-	                { className: 'hero-details__title' },
-	                video.title
-	              ),
-	              React.createElement(
-	                'p',
-	                { className: 'hero-details__description' },
-	                video.description
-	              ),
+	              { className: 'hero-info' },
 	              React.createElement(
 	                'div',
-	                null,
+	                { className: 'hero-details' },
 	                React.createElement(
-	                  Link,
-	                  { className: 'upload-video__button upload-video__button--primary',
-	                    to: "/playback/" + video.id },
-	                  '▶ Play'
+	                  'h1',
+	                  { className: 'hero-details__title' },
+	                  video.title
+	                ),
+	                React.createElement(
+	                  'p',
+	                  { className: 'hero-details__description' },
+	                  video.description
+	                ),
+	                React.createElement(
+	                  'div',
+	                  null,
+	                  React.createElement(
+	                    Link,
+	                    { className: 'upload-video__button upload-video__button--primary',
+	                      to: "/playback/" + video.id },
+	                    '▶ Play'
+	                  )
 	                )
 	              )
 	            )
@@ -28175,16 +28174,23 @@
 												moving case for creating an education system that \
 												nurtures (rather than undermines) creativity."
 		}, {
-			"id": "YTuElM6T50w",
-			"title": "Be The Hero of Your Own Movie",
-			"category": ["Success", "Motivation", "Philosophy"],
-			"description": "If your life was a movie and it started now, what would the hero of your \
-												life's movie do right now? Joe Rogan says do those things."
+			"id": "pfw2Qf1VfJo",
+			"title": "This is Water",
+			"category": ["success"],
+			"description": "This talk by the late David Foster Wallace might just \
+												change the way you see the tiny, sometimes annoying, \
+												details of life."
 		}, {
 			"id": "OX0OARBqBp0",
 			"title": "The Story of the Chinese Farmer",
 			"category": ["Spirituality"],
 			"description": "This story might change your perspective on how to judge events in life."
+		}, {
+			"id": "YTuElM6T50w",
+			"title": "Be The Hero of Your Own Movie",
+			"category": ["Success", "Motivation", "Philosophy"],
+			"description": "If your life was a movie and it started now, what would the hero of your \
+												life's movie do right now? Joe Rogan says do those things."
 		}],
 		"categories": ["Education", "Science", "Astronomy", "Drama", "Comedy"],
 		"videos": [{

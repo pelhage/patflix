@@ -13,7 +13,6 @@ module.exports = React.createClass({
         <VideoRow videos={this.props.videos} category="Comedy" />
         <VideoRow videos={this.props.videos} category="Spirituality" />
         <VideoRow videos={this.props.videos} category="Success" />
-        <VideoRow videos={this.props.videos} category="Comedy" />
       </div>
     );
   }
