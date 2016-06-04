@@ -25974,10 +25974,10 @@
 	      infinite: true,
 	      speed: 500,
 	      slidesToShow: 1,
-	      fade: true,
 	      draggable: false,
 	      slidesToScroll: 1,
-	      autoplay: true
+	      autoplay: true,
+	      autoplaySpeed: 6500
 	    };
 	
 	    var list = this.props.featured.map(function (video) {
@@ -26020,7 +26020,7 @@
 	                    Link,
 	                    { className: 'upload-video__button upload-video__button--primary',
 	                      to: "/playback/" + video.id },
-	                    '▶ Play'
+	                    '▶︎ Play'
 	                  )
 	                )
 	              )
@@ -26070,7 +26070,7 @@
 	
 	var _innerSlider = __webpack_require__(/*! ./inner-slider */ 227);
 	
-	var _objectAssign = __webpack_require__(/*! object-assign */ 231);
+	var _objectAssign = __webpack_require__(/*! object-assign */ 233);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -26183,7 +26183,7 @@
 	
 	var _mixinsEventHandlers2 = _interopRequireDefault(_mixinsEventHandlers);
 	
-	var _mixinsHelpers = __webpack_require__(/*! ./mixins/helpers */ 232);
+	var _mixinsHelpers = __webpack_require__(/*! ./mixins/helpers */ 231);
 	
 	var _mixinsHelpers2 = _interopRequireDefault(_mixinsHelpers);
 	
@@ -26371,11 +26371,11 @@
 	
 	var _trackHelper = __webpack_require__(/*! ./trackHelper */ 229);
 	
-	var _helpers = __webpack_require__(/*! ./helpers */ 232);
+	var _helpers = __webpack_require__(/*! ./helpers */ 231);
 	
 	var _helpers2 = _interopRequireDefault(_helpers);
 	
-	var _objectAssign = __webpack_require__(/*! object-assign */ 231);
+	var _objectAssign = __webpack_require__(/*! object-assign */ 233);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -26706,41 +26706,6 @@
 
 /***/ },
 /* 231 */
-/*!************************************************!*\
-  !*** ./~/react-slick/~/object-assign/index.js ***!
-  \************************************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	function ToObject(val) {
-		if (val == null) {
-			throw new TypeError('Object.assign cannot be called with null or undefined');
-		}
-	
-		return Object(val);
-	}
-	
-	module.exports = Object.assign || function (target, source) {
-		var from;
-		var keys;
-		var to = ToObject(target);
-	
-		for (var s = 1; s < arguments.length; s++) {
-			from = arguments[s];
-			keys = Object.keys(Object(from));
-	
-			for (var i = 0; i < keys.length; i++) {
-				to[keys[i]] = from[keys[i]];
-			}
-		}
-	
-		return to;
-	};
-
-
-/***/ },
-/* 232 */
 /*!*********************************************!*\
   !*** ./~/react-slick/lib/mixins/helpers.js ***!
   \*********************************************/
@@ -26762,13 +26727,13 @@
 	
 	var _ReactDOM2 = _interopRequireDefault(_ReactDOM);
 	
-	var _reactLibReactTransitionEvents = __webpack_require__(/*! react/lib/ReactTransitionEvents */ 233);
+	var _reactLibReactTransitionEvents = __webpack_require__(/*! react/lib/ReactTransitionEvents */ 232);
 	
 	var _reactLibReactTransitionEvents2 = _interopRequireDefault(_reactLibReactTransitionEvents);
 	
 	var _trackHelper = __webpack_require__(/*! ./trackHelper */ 229);
 	
-	var _objectAssign = __webpack_require__(/*! object-assign */ 231);
+	var _objectAssign = __webpack_require__(/*! object-assign */ 233);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -27044,7 +27009,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 233 */
+/* 232 */
 /*!**********************************************!*\
   !*** ./~/react/lib/ReactTransitionEvents.js ***!
   \**********************************************/
@@ -27159,6 +27124,41 @@
 	};
 	
 	module.exports = ReactTransitionEvents;
+
+/***/ },
+/* 233 */
+/*!************************************************!*\
+  !*** ./~/react-slick/~/object-assign/index.js ***!
+  \************************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	function ToObject(val) {
+		if (val == null) {
+			throw new TypeError('Object.assign cannot be called with null or undefined');
+		}
+	
+		return Object(val);
+	}
+	
+	module.exports = Object.assign || function (target, source) {
+		var from;
+		var keys;
+		var to = ToObject(target);
+	
+		for (var s = 1; s < arguments.length; s++) {
+			from = arguments[s];
+			keys = Object.keys(Object(from));
+	
+			for (var i = 0; i < keys.length; i++) {
+				to[keys[i]] = from[keys[i]];
+			}
+		}
+	
+		return to;
+	};
+
 
 /***/ },
 /* 234 */
@@ -27345,7 +27345,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _objectAssign = __webpack_require__(/*! object-assign */ 231);
+	var _objectAssign = __webpack_require__(/*! object-assign */ 233);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -28146,7 +28146,23 @@
 	      infinite: true,
 	      speed: 500,
 	      slidesToShow: 5,
-	      slidesToScroll: 5
+	      slidesToScroll: 5,
+	      responsive: [{
+	        breakpoint: 320,
+	        settings: {
+	          slidesToShow: 3
+	        }
+	      }, {
+	        breakpoint: 768,
+	        settings: {
+	          slidesToShow: 3
+	        }
+	      }, {
+	        breakpoint: 1000,
+	        settings: {
+	          slidesToShow: 4
+	        }
+	      }]
 	    };
 	    var list = this.findVideos().map(function (video) {
 	      return React.createElement(
@@ -28161,7 +28177,11 @@
 	            React.createElement(
 	              'div',
 	              { className: 'tile__media' },
-	              React.createElement('img', { className: 'tile__img', src: "http://img.youtube.com/vi/" + video.id + "/0.jpg" })
+	              React.createElement(
+	                'div',
+	                null,
+	                React.createElement('img', { className: 'tile__img', src: "http://img.youtube.com/vi/" + video.id + "/0.jpg" })
+	              )
 	            ),
 	            React.createElement(
 	              'div',
@@ -28182,7 +28202,7 @@
 	      { className: 'row' },
 	      React.createElement(
 	        'span',
-	        { className: 'h2' },
+	        { className: 'video-category' },
 	        this.props.category
 	      ),
 	      React.createElement(

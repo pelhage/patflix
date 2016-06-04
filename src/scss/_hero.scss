@@ -1,9 +1,10 @@
-
 @charset "UTF-8";
 
 
 .hero-wrapper {
-  
+  @include iPhone {
+    margin-top: 75px;
+  }
   .slick-prev, .slick-next {
     position: absolute;
     margin-top: 0;
@@ -36,9 +37,6 @@
 
   .slick-dots {
     bottom: 20px;
-    // li:first-child {
-    //   margin-left: 
-    // }
     li {
       margin: 0;
     }
@@ -63,7 +61,12 @@
 }
 .hero-row {
   position: relative;
-  padding-bottom: 50%;
+  padding-bottom: 40%;
+  // background: orange;
+  @include iPhone {
+    padding-bottom: 60%;
+    // background: orange;
+  }
   margin-bottom: 20px;
 }
 
@@ -105,20 +108,56 @@
         left: 4%;
         top: 26%;
         width: 35%;
-        z-index: 3;
+        @include iPhone {
+          width: 50%;
+        }
+        @include medium {
+          width: 45%;
+          // background: red;
+        }
+        z-index: 3;        
       }
         .hero-details__title {
-          font-size: 2.4rem;
+          
           font-weight: 300;
           line-height: 1.5;
           vertical-align: bottom;
           text-transform: uppercase;
+
+          @include small {
+            font-size: 1.3rem;
+          }
+          @include medium {
+            font-size: 1.6rem;
+            // background: orange;
+          }
+          @include large {
+            font-size: 2.4rem;
+          }
+          @include iPhone {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            border: 1px solid blue;
+          }
         }
         .hero-details__description {
-          font-size: 1.4rem;
+          font-size: 0.8rem;
           line-height: 1.5;
           font-weight: 300;
-          margin-bottom: 40px;
+          margin-bottom: 5px;
+          
+          @include iPhone {
+            display: none;  
+          }
+          @include medium {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+          }
+          @include large {
+            font-size: 1.4rem;
+            max-width: 500px;
+          }
         }
     .play-hero {
       position: absolute;
@@ -128,7 +167,7 @@
       width: 100px;
       height: 100px;
       z-index: 3;
-      background: orange;
+      // background: orange;
     }
       .play-button {
         display: block;

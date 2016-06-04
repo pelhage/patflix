@@ -8,6 +8,9 @@
 
   .slick-track, .slick-list {
     height: 170px;
+    // @include iPhone {
+    //   height: 470px;
+    // }
   }
   .slick-prev, .slick-next {
     position: absolute;
@@ -22,6 +25,11 @@
       background: #333;
       opacity: 0.5;
     }
+    @include iPhone {
+      display: none;
+      background: orange;
+      visibility: hidden;
+    }
   }
   .slick-prev {
     left: 0;
@@ -34,6 +42,14 @@
       opacity: 0.5;
     }
   }
+}
+
+.video-category {
+  font-size: 1.2rem;
+  font-weight: bold;
+  // @include iPhone {
+  //   font-size: 2rem;
+  // }
 }
 
 .tile {
@@ -52,6 +68,11 @@
   height: 170px;
   -o-object-fit: cover;
      object-fit: cover;
+  @include iPhone {
+    position: relative;
+    height: 220px;
+    bottom: 24px;
+  }
 }
 .tile__details {
   position: absolute;
@@ -90,7 +111,8 @@
   background: green;
 }
 .tile__details:before {
-  content: '▶';
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  content: '\0025B6\00FE0E';
   color: #e50914;
   left: 0;
   width: 100%;

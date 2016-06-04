@@ -13,10 +13,10 @@ module.exports = React.createClass({
       infinite: true,
       speed: 500,
       slidesToShow: 1,
-      fade: true,
       draggable: false,
       slidesToScroll: 1,
-      autoplay: true
+      autoplay: true,
+      autoplaySpeed: 6500
     };
 
     var list = this.props.featured.map(function(video) {
@@ -36,7 +36,7 @@ module.exports = React.createClass({
               <div>
                 <Link className="upload-video__button upload-video__button--primary"
                    to={"/playback/"+ video.id}>
-                   ▶ Play
+                   &#x25b6;&#xFE0E; Play
                 </Link>
               </div>
             </div>

@@ -1,3 +1,5 @@
+@import "mixins/_media-queries.scss";
+
 .contain {
   width: 100%;
 }
@@ -6,5 +8,5 @@
   margin: 0 auto;
 }
 .container--medium {
-	width: 450px;
+	max-width: 450px;
 }

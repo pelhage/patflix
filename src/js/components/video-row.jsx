@@ -21,13 +21,34 @@ module.exports = React.createClass({
       infinite: true,
       speed: 500,
       slidesToShow: 5,
-      slidesToScroll: 5
+      slidesToScroll: 5,
+      responsive: [
+      {
+        breakpoint: 320,
+        settings: {
+          slidesToShow: 3
+        }
+      },
+      { 
+        breakpoint: 768, 
+        settings: { 
+          slidesToShow: 3 
+        } 
+      }, 
+      { 
+        breakpoint: 1000, 
+        settings: { 
+          slidesToShow: 4
+        } 
+      }]
     };
     var list = this.findVideos().map(function(video) {
       return <div><Link to={"/playback/"+ video.id}>
         <div className="tile">
           <div className="tile__media">
-            <img className="tile__img" src={"http://img.youtube.com/vi/"+ video.id +"/0.jpg"}  />
+            <div>
+              <img className="tile__img" src={"http://img.youtube.com/vi/"+ video.id +"/0.jpg"}  />
+            </div>
           </div>
           <div className="tile__details">
             <div className="tile__title">
@@ -40,7 +61,7 @@ module.exports = React.createClass({
 
     return (
       <div className="row">
-        <span className="h2">{this.props.category}</span>
+        <span className="video-category">{this.props.category}</span>
         <Slider {...settings}>
           {list}
         </Slider>
