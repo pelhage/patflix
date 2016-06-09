@@ -1,19 +1,25 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+
 var mongodb = require('mongodb');
 var ObjectID = require('mongodb').ObjectID;
 var Hashids = require('hashids');
 
 var hashids = new Hashids("NaCl for patflix video player", 0);
 
-
+/** Passport & Session Management **/
+var passport = require('passport');
+var expressSession = require('express-session');
+app.use(expressSession({secret: 'mySecretKey'}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // for parsing application/json
 app.use(bodyParser.json());
 
 // Global database variables
-var MONGODB_URI = 'mongodb://localhost:27017/massdrop';
+var MONGODB_URI = 'mongodb://localhost:27017/patflix';
 var db;
 
 // Initialize connection
@@ -43,24 +49,6 @@ app.post('/l', function(req, res) {
   });
 });
 
-
-// Add featured
-// app.put('/l/:id/category', function(req, res) {
-//   // get library's collection
-//   // get 
-//   if (req.body.addCategory === true) {
-//     // Add a category
-//   } else {
-//     // Remove a category
-//   }
-// });
-
-// Remove featured
-
-// Add Categories
-// Remove Categories
-
-// 
 
 // Get a user library
 app.get('/l/:id', function(req, res) {
