@@ -1,56 +1,58 @@
-module.exports = function(app, passport) {
+var libraryController = require('./controllers/LibraryController');
+var userController = require('./controllers/UserController');
 
+var bodyParser = require('body-parser');
+
+module.exports = function(app, passport) {
+  app.use(bodyParser.json());
+  
   app.get('/', function(req, res) {
     res.render('index');
   });
+  
+  /**
+   * SIGNUP
+   */
+  // Show Signup Page
+  app.get('/signup', userController.showSignup);
+  // Signup User
+  app.post('/signup', userController.signup(passport));
 
-  app.get('/login', function(req, res) {
-    res.render('login', { message: req.flash('loginMessage') });
-  });
+  /**
+   * LOGIN
+   */
+  // Show Login Page
+  app.get('/login', userController.showLogin);
+  // Login User
+  app.post('/login', userController.login(passport));
 
-  app.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/profile',
-    failureRedirect: '/login',
-    failureFlash: true
-  }));
+  /**
+   * LOGOUT
+   */
+  // Logout User
+  app.get('/logout', userController.logout);
 
-  app.get('/signup', function(req, res) {
-    res.render('signup', { message: req.flash('signupMessage') });
-  });
-
-  app.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/profile',
-    failureRedirect: '/signup',
-    failureFlash: true
-  }));
+  /**
+   * LIBRARY
+   */
+  // Create + Save a New Library
+  app.post('/l', isLoggedIn, libraryController.create);
+  // Get a user library
+  app.get('/l/:id', libraryController.render);
+  // Get all libraries
+  app.get('/libraries', libraryController.showAll);  
 
   app.get('/upload', isLoggedIn, function(req, res) {
+    console.log(req.user);
     res.render('profile', {
       user: req.user,
     });
   });
 
-  app.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
+  app.get('/test', function(req, res) {
+    res.render('upload');
   });
 
-  // Save a New Library
-  app.post('/l', function(req, res) {
-    var lib = req.body.library;
-    var pwd = req.body.password;
-    libs.insert({library: lib}, function(err, result) {
-      res.send(hashids.encodeHex(result.ops[0]._id));
-    });
-  });
-  
-  // Get a user library
-  app.get('/l/:id', function(req, res) {
-    var libID = hashids.decodeHex(req.params.id);
-    libs.findOne({'_id': new ObjectID(libID)}, function(err, doc) {
-      res.send(doc);
-    });
-  });
 };
 
 function isLoggedIn(req, res, next) {

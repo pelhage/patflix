@@ -1,12 +1,14 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
 
-var userSchema = mongoose.Schema({
+var userSchema = Schema({
   local: {
     email: String,
     username: String,
     password: String
-  }
+  },
+  libraries: [{ type: Schema.Types.ObjectId, ref: 'Library' }]
 });
 
 // Generate Hash
