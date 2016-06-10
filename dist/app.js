@@ -20141,20 +20141,16 @@
 	
 	/* Component Declarations */
 	var Main = __webpack_require__(/*! ./components/main.jsx */ 221);
-	var Upload = __webpack_require__(/*! ./components/upload.jsx */ 249);
-	var Playback = __webpack_require__(/*! ./components/playback.jsx */ 247);
-	var About = __webpack_require__(/*! ./components/about.jsx */ 248);
+	var Upload = __webpack_require__(/*! ./components/upload.jsx */ 247);
+	var Playback = __webpack_require__(/*! ./components/playback.jsx */ 248);
+	var About = __webpack_require__(/*! ./components/about.jsx */ 249);
 	
 	module.exports = React.createElement(
 	  Router,
 	  { history: hashHistory },
-	  React.createElement(
-	    Route,
-	    { path: '/', component: Main },
-	    React.createElement(Route, { path: '/upload', component: Upload }),
-	    React.createElement(Route, { path: '/about', component: About })
-	  ),
-	  React.createElement(Route, { path: '/playback/:videoid', component: Playback })
+	  React.createElement(Route, { path: '/l/:libraryId', component: Main }),
+	  React.createElement(Route, { path: '/upload', component: Upload }),
+	  React.createElement(Route, { path: '/about', component: About })
 	);
 
 /***/ },
@@ -25864,16 +25860,36 @@
 	
 	var Header = __webpack_require__(/*! ./header.jsx */ 222);
 	var Library = __webpack_require__(/*! ./library.jsx */ 223);
-	var data = __webpack_require__(/*! ../library-data.js */ 246);
+	var localData = __webpack_require__(/*! ../library-data.js */ 246);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
 	
 	
+	  getInitialState: function getInitialState() {
+	    return {
+	      data: localData
+	    };
+	  },
+	
+	  componentDidMount: function componentDidMount() {
+	    var reqId = this.props.params.libraryId;
+	    var reqUrl = '/l/' + reqId;
+	
+	    this.serverRequest = fetch(reqUrl).then(function (res) {
+	      return res.json();
+	    }).then(function (text) {
+	      console.log('RESPONSE TEXT: ', text);
+	      this.setState({ data: text.data });
+	    }.bind(this));
+	  },
+	
 	  content: function content() {
 	    if (this.props.children) {
 	      return this.props.children;
 	    } else {
+	      var data = this.state.data;
+	      console.log(data);
 	      return React.createElement(Library, data);
 	    }
 	  },
@@ -25946,14 +25962,23 @@
 	
 	
 	  render: function render() {
+	    // Go through each category
+	    var allVideos = this.props.videos;
+	    var categories = this.props.categories;
+	    var VideoRows = categories.map(function (category) {
+	      // Grab videos that contain that category's tag
+	      var videos = allVideos.filter(function (video) {
+	        return video.categories.indexOf(category) > -1;
+	      });
+	      // Return a Video Row component for this specific category
+	      return React.createElement(VideoRow, { videos: videos, category: category });
+	    });
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'contain' },
 	      React.createElement(Hero, { featured: this.props.featured }),
-	      React.createElement(VideoRow, { videos: this.props.videos, category: 'Astronomy' }),
-	      React.createElement(VideoRow, { videos: this.props.videos, category: 'Comedy' }),
-	      React.createElement(VideoRow, { videos: this.props.videos, category: 'Spirituality' }),
-	      React.createElement(VideoRow, { videos: this.props.videos, category: 'Success' })
+	      VideoRows
 	    );
 	  }
 	});
@@ -28140,40 +28165,32 @@
 	  displayName: 'exports',
 	
 	
-	  findVideos: function findVideos() {
-	    var category = this.props.category;
-	
-	    return this.props.videos.filter(function (video) {
-	      return video.category.indexOf(category) > -1;
-	    });
+	  settings: {
+	    arrows: true,
+	    dots: false,
+	    infinite: true,
+	    speed: 500,
+	    slidesToShow: 5,
+	    slidesToScroll: 5,
+	    responsive: [{
+	      breakpoint: 320,
+	      settings: {
+	        slidesToShow: 3
+	      }
+	    }, {
+	      breakpoint: 768,
+	      settings: {
+	        slidesToShow: 3
+	      }
+	    }, {
+	      breakpoint: 1000,
+	      settings: {
+	        slidesToShow: 4
+	      }
+	    }]
 	  },
-	
 	  render: function render() {
-	    var settings = {
-	      arrows: true,
-	      dots: false,
-	      infinite: true,
-	      speed: 500,
-	      slidesToShow: 5,
-	      slidesToScroll: 5,
-	      responsive: [{
-	        breakpoint: 320,
-	        settings: {
-	          slidesToShow: 3
-	        }
-	      }, {
-	        breakpoint: 768,
-	        settings: {
-	          slidesToShow: 3
-	        }
-	      }, {
-	        breakpoint: 1000,
-	        settings: {
-	          slidesToShow: 4
-	        }
-	      }]
-	    };
-	    var list = this.findVideos().map(function (video) {
+	    var list = this.props.videos.map(function (video) {
 	      return React.createElement(
 	        'div',
 	        null,
@@ -28216,7 +28233,7 @@
 	      ),
 	      React.createElement(
 	        Slider,
-	        settings,
+	        this.settings,
 	        list
 	      )
 	    );
@@ -28237,26 +28254,26 @@
 		"featured": [{
 			"id": "iG9CE55wbtY",
 			"title": "Do Schools Kill Creativity?",
-			"category": [""],
+			"categories": [""],
 			"description": "Sir Ken Robinson makes an entertaining and profoundly \
 												moving case for creating an education system that \
 												nurtures (rather than undermines) creativity."
 		}, {
 			"id": "pfw2Qf1VfJo",
 			"title": "This is Water",
-			"category": ["Success", "Spirituality"],
+			"categories": ["Success", "Spirituality"],
 			"description": "This talk by the late David Foster Wallace might just \
 												change the way you see the tiny, sometimes annoying, \
 												details of life."
 		}, {
 			"id": "OX0OARBqBp0",
 			"title": "The Story of the Chinese Farmer",
-			"category": ["Spirituality"],
+			"categories": ["Spirituality"],
 			"description": "This story might change your perspective on how to judge events in life."
 		}, {
 			"id": "YTuElM6T50w",
 			"title": "Be The Hero of Your Own Movie",
-			"category": ["Success", "Motivation", "Philosophy"],
+			"categories": ["Success", "Motivation", "Philosophy"],
 			"description": "If your life was a movie and it started now, what would the hero of your \
 												life's movie do right now? Joe Rogan says do those things."
 		}],
@@ -28264,305 +28281,228 @@
 		"videos": [{
 			"id": "ejc5zic4q2A",
 			"title": "what. (Bo Burnham FULL SHOW)",
-			"category": ["Comedy"]
+			"categories": ["Comedy"],
+			"description": null
 		}, {
 			"id": "ofnSojq-vqI",
 			"title": "Killing Them Softly - Dave Chappelle",
-			"category": ["Comedy"]
+			"categories": ["Comedy"],
+			"description": null
 		}, {
 			"id": "LTWwY8Ok5I0",
 			"title": "Plato's Allegory of the Cave",
-			"category": ["Philosophy", "Spirituality"]
+			"categories": ["Philosophy", "Spirituality"],
+			"description": null
 		}, {
 			"id": "4PN5JJDh78I",
 			"title": "Carl Sagan - You Are Here (Pale Blue Dot)",
-			"category": ["Astronomy", "Science"]
+			"categories": ["Astronomy", "Science"],
+			"description": null
 		}, {
 			"id": "OKY6BGcx37k",
 			"title": "Talking Funny",
-			"category": ["Comedy"]
+			"categories": ["Comedy"],
+			"description": null
 		}, {
 			"id": "9D05ej8u-gU",
 			"title": "Neil deGrasse Tyson - The Most Astounding Fact",
-			"category": ["Astronomy", "Science"]
+			"categories": ["Astronomy", "Science"],
+			"description": null
 		}, {
 			"id": "KFwBH2fb2E0",
 			"title": "Louis CK - Of Course But Maybe",
-			"category": ["Comedy"]
+			"categories": ["Comedy"],
+			"description": null
 		}, {
 			"id": "pfw2Qf1VfJo",
 			"title": "This is Water",
-			"category": ["Success", "Spirituality"]
+			"categories": ["Success", "Spirituality"],
+			"description": null
 		}, {
 			"id": "yu7n0XzqtfA",
 			"title": "The Stoics",
-			"category": ["Philosophy", "Spirituality"]
+			"categories": ["Philosophy", "Spirituality"],
+			"description": null
 		}, {
 			"id": "vH0nP4NzS9M",
 			"title": "Arnold Schwarzenegger - Who do YOU want to be in life?",
-			"category": ["Success", "Inspirational", "Motivational"]
+			"categories": ["Success", "Inspirational", "Motivational"],
+			"description": null
 		}, {
 			"id": "45mMioJ5szc",
 			"title": "Michael Jordan - Failure",
-			"category": ["Success"]
+			"categories": ["Success"],
+			"description": null
 		}, {
 			"id": "Yh9IGY2U2dQ",
 			"title": "Michael Jordan - Become Legendary #1",
-			"category": ["Success", "Motivational", "Motivation", "Inspirational"]
+			"categories": ["Success", "Motivational", "Motivation", "Inspirational"],
+			"description": null
 		}, {
 			"id": "GTq5xSo_jP4",
 			"title": "Michael Jordan - Become Legendary #2",
-			"category": ["Success", "Motivational", "Motivation", "Inspirational"]
+			"categories": ["Success", "Motivational", "Motivation", "Inspirational"],
+			"description": null
 		}, {
 			"id": "9zSVu76AX3I",
 			"title": "Michael Jordan - Maybe It's My Fault",
-			"category": ["Success"]
+			"categories": ["Success"],
+			"description": null
 		}, {
 			"id": "oY59wZdCDo0",
 			"title": "Carl Sagan - The Frontier Is Everywhere",
-			"category": ["Astronomy", "Science"]
+			"categories": ["Astronomy", "Science"]
 		}, {
 			"id": "QAa2O_8wBUQ",
 			"title": "What is Dark Matter and Dark Energy?",
-			"category": ["Astronomy", "Science"]
+			"categories": ["Astronomy", "Science"]
 		}, {
 			"id": "emHAoQGoQic",
 			"title": "Alan Watts - The Mind",
-			"category": ["Spirituality"]
+			"categories": ["Spirituality"]
 		}, {
 			"id": "OX0OARBqBp0",
 			"title": "Alan Watts - The Story of the Chinese Farmer",
-			"category": ["Spirituality"]
+			"categories": ["Spirituality"]
 		}, {
 			"id": "gd2Ot6hLCtM",
 			"title": "Alan Watts - The Art of Meditation",
-			"category": ["Spirituality"]
+			"categories": ["Spirituality"]
 		}, {
 			"id": "YMDu3JdQ8Ow",
 			"title": "Alan Watts - What is Wrong With Our Culture",
-			"category": ["Spirituality", "Philosophy"]
+			"categories": ["Spirituality", "Philosophy"]
 		}, {
 			"id": "E1oZhEIrer4",
 			"title": "Nobody Tells This To Beginners - Ira Glass",
-			"category": ["Success", "Motivation"]
+			"categories": ["Success", "Motivation"]
 		}, {
 			"id": "RWsx1X8PV_A",
 			"title": "Milton Friedman - Greed",
-			"category": []
+			"categories": []
 		}, {
 			"id": "iG9CE55wbtY",
 			"title": "Sir Ken Robinson - Do Schools Kill Creativity?",
-			"category": ["Education"]
+			"categories": ["Education"]
 		}, {
 			"id": "7Pq-S557XQU",
 			"title": "Humans Need Not Apply - CGP Grey",
-			"category": ["Science"]
+			"categories": ["Science"]
 		}, {
 			"id": "YTuElM6T50w",
 			"title": "Joe Rogan: Be The Hero of Your Own Movie",
-			"category": ["Success", "Motivation", "Philosophy"]
+			"categories": ["Success", "Motivation", "Philosophy"]
 		}, {
 			"id": "UrOZllbNarw",
 			"title": "Why Shouldn't I Work for the NSA? (Good Will Hunting)",
-			"category": []
+			"categories": []
 		}, {
 			"id": "jNhtbmXzIaM",
 			"title": "Richard Dawkins Teaching Evolution to Religious Students",
-			"category": ["Science"]
+			"categories": ["Science"]
 		}, {
 			"id": "KaOC9danxNo",
 			"title": "Space Oddity - Chris Hadfield",
-			"category": ["Astronomy", "Music"]
+			"categories": ["Astronomy", "Music"]
 		}, {
 			"id": "Q4PE2hSqVnk",
 			"title": "ALEC BALDWIN GLENGARRY GLEN ROSS ALWAYS BE CLOSING FULL SPEECH",
-			"category": []
+			"categories": []
 		}, {
 			"id": "4u2ZsoYWwJA",
 			"title": "Why? - Louis C.K.",
-			"category": ["Comedy"]
+			"categories": ["Comedy"]
 		}, {
 			"id": "kYfNvmF0Bqw",
 			"title": "Steve Jobs - Interview",
-			"category": ["Success", "Inspirational", "Motivation", "Motivational"]
+			"categories": ["Success", "Inspirational", "Motivation", "Motivational"]
 		}, {
 			"id": "Kj_48pHuXWo",
 			"title": "Steve Jobs Rare Interview (1990)",
-			"category": ["Success"]
+			"categories": ["Success"]
 		}, {
 			"id": "aUaZS1pHNAA",
 			"title": "Dave Chappelle HBO Special",
-			"category": ["Comedy"]
+			"categories": ["Comedy"]
 		}, {
 			"id": "yzh7RtIJKZk",
 			"title": "Louis C.K. Monologue - SNL",
-			"category": ["Comedy"]
+			"categories": ["Comedy"]
 		}, {
 			"id": "xSSDeesUUsU",
 			"title": "Louis C.K. Hates Twitter - Conan on TBS",
-			"category": ["Comedy"]
+			"categories": ["Comedy"]
 		}, {
 			"id": "0JW1tJLRtsk",
 			"title": "LCK on Doing Your Job & the Current Crop of 20 year-Olds",
-			"category": ["Comedy"]
+			"categories": ["Comedy"]
 		}, {
 			"id": "u6xaj2fC1jI",
 			"title": "Mitch Hedberg - A Comic Genius",
-			"category": ["Comedy"]
+			"categories": ["Comedy"]
 		}, {
 			"id": "LCsvJe3dGVk",
 			"title": "This Is Water - David Foster Wallace",
-			"category": ["Life", "Philosophy"]
+			"categories": ["Life", "Philosophy"]
 		}, {
 			"id": "vBmavNoChZc",
 			"title": "Amazon founder and CEO Jeff Bezos delivers graduation speech at Princeton University",
-			"category": ["Success", "Advice"]
+			"categories": ["Success", "Advice"]
 		}, {
 			"id": "o0FiCxZKuv8",
 			"title": "Martin Luther King's Last Speech: \"I've Been To The Mountaintop\"",
-			"category": ["Inspirational", "History"]
+			"categories": ["Inspirational", "History"]
 		}, {
 			"id": "WINDtlPXmmE",
 			"title": "Network - Mad as Hell Scene",
-			"category": ["Social Critique"]
+			"categories": ["Social Critique"]
 		}, {
 			"id": "kFMZrEABdw4",
 			"title": "Bring on the Learning Revolution! - Ken Robinson",
-			"category": ["Education"]
+			"categories": ["Education"]
 		}, {
 			"id": "SXE4_DCMmYM",
 			"title": "Charlie Chaplin's Epic Speech in The Great Dictator",
-			"category": ["Inspirational", "Social Critique"]
+			"categories": ["Inspirational", "Social Critique"]
 		}, {
 			"id": "D1R-jKKp3NA",
 			"title": "Stay Hungry, Stay Foolish - Steve Jobs Stanford Commencement Speech",
-			"category": ["Inspirational", "Motivational", "Success"]
+			"categories": ["Inspirational", "Motivational", "Success"]
 		}, {
 			"id": "8Xtly-dpBeA",
 			"title": "Carl Sagan - The Gift of Apollo",
-			"category": ["Astronomy"]
+			"categories": ["Astronomy"]
 		}, {
 			"id": "7ImvlS8PLIo",
 			"title": "'A Universe From Nothing' by Lawrence Krauss",
-			"category": ["Astronomy"]
+			"categories": ["Astronomy"]
 		}
 	
 		// {
 		// 	"id": "",
 		// 	"title": "",
-		// 	"category": []
+		// 	"categories": []
 		// },
 		// {
 		// 	"id": "",
 		// 	"title": "",
-		// 	"category": []
+		// 	"categories": []
 		// },
 		// {
 		// 	"id": "",
 		// 	"title": "",
-		// 	"category": []
+		// 	"categories": []
 		// },
 		// {
 		// 	"id": "",
 		// 	"title": "",
-		// 	"category": []
+		// 	"categories": []
 		// }
 		]
 	};
 
 /***/ },
 /* 247 */
-/*!****************************************!*\
-  !*** ./src/js/components/playback.jsx ***!
-  \****************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(/*! react */ 1);
-	
-	module.exports = React.createClass({
-		displayName: 'exports',
-	
-	
-		validateID: function validateID() {
-			return true;
-		},
-	
-		getInitialState: function getInitialState() {
-			return { style: {
-					width: window.innerWidth + 'px',
-					height: window.innerHeight + 'px'
-				}
-			};
-		},
-	
-		componentDidMount: function componentDidMount() {
-			window.addEventListener('resize', this.handleResize);
-		},
-	
-		handleResize: function handleResize() {
-			this.setState({ style: {
-					width: window.innerWidth + 'px',
-					height: window.innerHeight + 'px'
-				}
-			});
-		},
-	
-		render: function render() {
-			return React.createElement('iframe', { style: this.state.style,
-				src: "http://www.youtube.com/embed/" + this.props.params.videoid + "?autoplay=1",
-				frameBorder: '0',
-				allowFullScreen: true });
-		}
-	});
-
-/***/ },
-/* 248 */
-/*!*************************************!*\
-  !*** ./src/js/components/about.jsx ***!
-  \*************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var React = __webpack_require__(/*! react */ 1);
-	
-	module.exports = React.createClass({
-	  displayName: "exports",
-	
-	
-	  render: function render() {
-	
-	    return React.createElement(
-	      "div",
-	      { className: "container container--medium" },
-	      React.createElement(
-	        "h1",
-	        null,
-	        "Upload Your Own Netflix-Like Video Library"
-	      ),
-	      React.createElement(
-	        "p",
-	        null,
-	        "I created Patflix as a way to share my selection of Youtube videos with the world."
-	      ),
-	      React.createElement(
-	        "p",
-	        null,
-	        "All content is pulled in dynamically by category and by youtube ID, and then presented in Netflix-like fashion."
-	      ),
-	      React.createElement(
-	        "p",
-	        null,
-	        "The next iteration of Patflix already in progress will have an interface allowing for other people to upload \\ Youtube links and then share their library via a URL."
-	      )
-	    );
-	  }
-	});
-
-/***/ },
-/* 249 */
 /*!**************************************!*\
   !*** ./src/js/components/upload.jsx ***!
   \**************************************/
@@ -28573,6 +28513,7 @@
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	var React = __webpack_require__(/*! react */ 1);
+	var VideoData = __webpack_require__(/*! ../library-data.js */ 246);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -28591,18 +28532,19 @@
 	  handleSubmit: function handleSubmit() {
 	    var library = this.state.videos;
 	    // Options for API Call
+	    console.log('VIDEO DATA FOR THIS API CALL', VideoData);
 	    var options = {
 	      method: 'post',
-	      headers: new Headers({ "Content-Type": "application/json" }),
-	      body: JSON.stringify({
-	        library: library,
-	        password: "Nerd"
-	      })
+	      headers: new Headers({
+	        "Content-Type": "application/json",
+	        "userId": window.App._id
+	      }),
+	      body: JSON.stringify(VideoData)
 	    };
 	    // Make API Call to Save Library
 	    fetch('/l', options).then(function (response) {
 	      response.text().then(function (text) {
-	        console.log(text);
+	        console.log('response text: ', text);
 	      });
 	    }).catch(function (err) {
 	      console.log(err);
@@ -28743,6 +28685,97 @@
 	            type: 'button',
 	            value: 'Save Library' })
 	        )
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 248 */
+/*!****************************************!*\
+  !*** ./src/js/components/playback.jsx ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(/*! react */ 1);
+	
+	module.exports = React.createClass({
+		displayName: 'exports',
+	
+	
+		validateID: function validateID() {
+			return true;
+		},
+	
+		getInitialState: function getInitialState() {
+			return { style: {
+					width: window.innerWidth + 'px',
+					height: window.innerHeight + 'px'
+				}
+			};
+		},
+	
+		componentDidMount: function componentDidMount() {
+			window.addEventListener('resize', this.handleResize);
+		},
+	
+		handleResize: function handleResize() {
+			this.setState({ style: {
+					width: window.innerWidth + 'px',
+					height: window.innerHeight + 'px'
+				}
+			});
+		},
+	
+		render: function render() {
+			return React.createElement('iframe', { style: this.state.style,
+				src: "http://www.youtube.com/embed/" + this.props.params.videoid + "?autoplay=1",
+				frameBorder: '0',
+				allowFullScreen: true });
+		}
+	});
+
+/***/ },
+/* 249 */
+/*!*************************************!*\
+  !*** ./src/js/components/about.jsx ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(/*! react */ 1);
+	
+	module.exports = React.createClass({
+	  displayName: "exports",
+	
+	
+	  render: function render() {
+	
+	    return React.createElement(
+	      "div",
+	      { className: "container container--medium" },
+	      React.createElement(
+	        "h1",
+	        null,
+	        "Upload Your Own Netflix-Like Video Library"
+	      ),
+	      React.createElement(
+	        "p",
+	        null,
+	        "I created Patflix as a way to share my selection of Youtube videos with the world."
+	      ),
+	      React.createElement(
+	        "p",
+	        null,
+	        "All content is pulled in dynamically by category and by youtube ID, and then presented in Netflix-like fashion."
+	      ),
+	      React.createElement(
+	        "p",
+	        null,
+	        "The next iteration of Patflix already in progress will have an interface allowing for other people to upload \\ Youtube links and then share their library via a URL."
 	      )
 	    );
 	  }

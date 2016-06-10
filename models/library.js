@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var Video = require('../models/video');
 
 var librarySchema = Schema({
   libraryId: String,

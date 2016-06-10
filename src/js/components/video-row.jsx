@@ -6,43 +6,35 @@ var Link = Router.Link;
 
 module.exports = React.createClass({
 
-  findVideos: function() {
-    var category = this.props.category;
-
-    return this.props.videos.filter(function(video) {
-      return video.category.indexOf(category) > -1
-    });
+  settings: {
+    arrows: true,
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    responsive: [
+    {
+      breakpoint: 320,
+      settings: {
+        slidesToShow: 3
+      }
+    },
+    { 
+      breakpoint: 768, 
+      settings: { 
+        slidesToShow: 3 
+      } 
+    }, 
+    { 
+      breakpoint: 1000, 
+      settings: { 
+        slidesToShow: 4
+      } 
+    }]
   },
-
   render: function() {
-    var settings = {
-      arrows: true,
-      dots: false,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 5,
-      slidesToScroll: 5,
-      responsive: [
-      {
-        breakpoint: 320,
-        settings: {
-          slidesToShow: 3
-        }
-      },
-      { 
-        breakpoint: 768, 
-        settings: { 
-          slidesToShow: 3 
-        } 
-      }, 
-      { 
-        breakpoint: 1000, 
-        settings: { 
-          slidesToShow: 4
-        } 
-      }]
-    };
-    var list = this.findVideos().map(function(video) {
+    var list = this.props.videos.map(function(video) {
       return <div><Link to={"/playback/"+ video.id}>
         <div className="tile">
           <div className="tile__media">
@@ -62,7 +54,7 @@ module.exports = React.createClass({
     return (
       <div className="row">
         <span className="video-category">{this.props.category}</span>
-        <Slider {...settings}>
+        <Slider {...this.settings}>
           {list}
         </Slider>
       </div>

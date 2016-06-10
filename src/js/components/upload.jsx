@@ -1,4 +1,5 @@
 var React = require('react');
+var VideoData = require('../library-data.js');
 
 module.exports = React.createClass({
 
@@ -15,18 +16,19 @@ module.exports = React.createClass({
   handleSubmit: function() {
     var library = this.state.videos;
     // Options for API Call
+    console.log('VIDEO DATA FOR THIS API CALL', VideoData);
     var options = {
       method: 'post',
-      headers: new Headers({"Content-Type": "application/json"}),
-      body: JSON.stringify({
-        library: library,
-        password: "Nerd"
-      })
+      headers: new Headers({
+        "Content-Type": "application/json",
+        "userId": window.App._id
+      }),
+      body: JSON.stringify(VideoData)
     };
     // Make API Call to Save Library
     fetch('/l', options).then(function(response) {
       response.text().then(function(text) {
-        console.log(text);
+        console.log('response text: ', text);
       });
     }).catch(function(err) {
       console.log(err);

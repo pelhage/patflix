@@ -6,9 +6,9 @@ var bodyParser = require('body-parser');
 module.exports = function(app, passport) {
   app.use(bodyParser.json());
   
-  app.get('/', function(req, res) {
-    res.render('index');
-  });
+  // app.get('/', function(req, res) {
+  //   res.render('index');
+  // });
   
   /**
    * SIGNUP
@@ -36,13 +36,13 @@ module.exports = function(app, passport) {
    * LIBRARY
    */
   // Create + Save a New Library
-  app.post('/l', isLoggedIn, libraryController.create);
+  app.post('/l', libraryController.create);
   // Get a user library
   app.get('/l/:id', libraryController.render);
   // Get all libraries
   app.get('/libraries', libraryController.showAll);  
 
-  app.get('/upload', isLoggedIn, function(req, res) {
+  app.get('/', isLoggedIn, function(req, res) {
     console.log(req.user);
     res.render('profile', {
       user: req.user,
@@ -58,6 +58,8 @@ module.exports = function(app, passport) {
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
+  } else {
+    res.redirect('/login');  
   }
-  res.redirect('/');
+  // console.log('is there a user?', req.user);
 }

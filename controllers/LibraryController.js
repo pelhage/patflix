@@ -2,20 +2,23 @@ var Library = require('../models/library');
 var User = require('../models/user');
 var Hashids = require('hashids');
 var hashids = new Hashids("NaCl for patflix video player", 0);
-
+var ObjectID = require('mongodb').ObjectID;
 module.exports = {
 
   // Save a New Library
   create: function(req, res) {
     var newLibrary = new Library();
+    console.log('Trying to create new library.. \n');
     newLibrary.libraryId = hashids.encodeHex(newLibrary._id);
-    newLibrary.featured = [req.body.featured];
+    newLibrary.featured = req.body.featured;
     newLibrary.categories = req.body.categories;
-    newLibrary.videos = [req.body.videos];
-    newLibrary.ownerId = req.user._id;
+    newLibrary.videos = req.body.videos;
+    newLibrary.ownerId = ObjectID(req.headers.userId);
+
     newLibrary.save(function(err) {
       if (err) { throw err; }
     });
+    console.log('SAVING NEW LIBRARY: ', newLibrary);
     res.send(newLibrary);
   },
 

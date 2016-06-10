@@ -8,12 +8,6 @@ var Hashids = require('hashids');
 
 var hashids = new Hashids("NaCl for patflix video player", 0);
 
-/** Passport & Session Management **/
-var passport = require('passport');
-var expressSession = require('express-session');
-app.use(expressSession({secret: 'mySecretKey'}));
-app.use(passport.initialize());
-app.use(passport.session());
 
 // for parsing application/json
 app.use(bodyParser.json());

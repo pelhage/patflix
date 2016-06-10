@@ -14,10 +14,8 @@ var About = require('./components/about.jsx');
 
 module.exports = (
   <Router history={hashHistory}>
-    <Route path="/" component={Main}>
-    	<Route path="/upload" component={Upload} />
-    	<Route path="/about" component={About} />
-    </Route>
-    <Route path="/playback/:videoid" component={Playback} />
+    <Route path="/l/:libraryId" component={Main} />
+    <Route path="/upload" component={Upload} />
+  	<Route path="/about" component={About} />
   </Router>
 );
