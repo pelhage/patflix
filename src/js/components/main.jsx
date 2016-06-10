@@ -4,43 +4,39 @@ var Header = require('./header.jsx');
 var Library = require('./library.jsx');
 var localData = require('../library-data.js');
 
-
 module.exports = React.createClass({
-  
-  getInitialState: function() {
+  getInitialState() {
     return {
-      data: localData
+      data: null
     };
   },
-
   componentDidMount: function() {
-    var reqId = this.props.params.libraryId;
-    var reqUrl = '/l/' + reqId;
+    var reqId = this.props.params.libraryId || 'jVEv5p5Drvf83N7KEVaY';
+    var reqUrl = 'http://localhost:8080/l/' + reqId;
     
-    this.serverRequest = fetch(reqUrl)
+    fetch(reqUrl)
       .then(function(res) {
         return res.json();
       }).then(function(text) {
-        console.log('RESPONSE TEXT: ', text);
-        this.setState({ data: text.data });
+        console.log('fetch response: ', text);
+        this.setState({ data: text });
       }.bind(this));
   },
 
   content: function() {
-    if (this.props.children) {
-      return this.props.children;
-    } else {
-      var data = this.state.data;
-      console.log(data);
-      return (<Library {...data} />);
-    }
+    var data = this.state.data;
+    console.log('CONTENT dATA LOADED: ', data);
+    return (<Library {...data} />);
   },
 
   render: function() {
+    if (this.state.data === null) {
+      return <Header />;
+    }
     return (
       <div className="contain" >
         <Header />
-        {this.content()}
+        <Library {...this.state.data} />
       </div>
     );
   }

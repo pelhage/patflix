@@ -30,7 +30,7 @@ module.exports = {
 											life's movie do right now? Joe Rogan says do those things."
 		},
 	],
-	"categories": ["Education", "Science", "Astronomy", "Drama", "Comedy"],
+	"categories": ["Astronomy", "Comedy", "Spirituality", "Success"],
 	"videos": [
 		{
 			"id": "ejc5zic4q2A",

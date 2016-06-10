@@ -20148,7 +20148,8 @@
 	module.exports = React.createElement(
 	  Router,
 	  { history: hashHistory },
-	  React.createElement(Route, { path: '/l/:libraryId', component: Main }),
+	  React.createElement(Route, { path: '/', component: Main }),
+	  React.createElement(Route, { path: '/l/:libraryId', component: Main, test: 'test' }),
 	  React.createElement(Route, { path: '/upload', component: Upload }),
 	  React.createElement(Route, { path: '/about', component: About })
 	);
@@ -25864,42 +25865,39 @@
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
-	
-	
 	  getInitialState: function getInitialState() {
 	    return {
-	      data: localData
+	      data: null
 	    };
 	  },
 	
 	  componentDidMount: function componentDidMount() {
-	    var reqId = this.props.params.libraryId;
-	    var reqUrl = '/l/' + reqId;
+	    var reqId = this.props.params.libraryId || 'jVEv5p5Drvf83N7KEVaY';
+	    var reqUrl = 'http://localhost:8080/l/' + reqId;
 	
-	    this.serverRequest = fetch(reqUrl).then(function (res) {
+	    fetch(reqUrl).then(function (res) {
 	      return res.json();
 	    }).then(function (text) {
-	      console.log('RESPONSE TEXT: ', text);
-	      this.setState({ data: text.data });
+	      console.log('fetch response: ', text);
+	      this.setState({ data: text });
 	    }.bind(this));
 	  },
 	
 	  content: function content() {
-	    if (this.props.children) {
-	      return this.props.children;
-	    } else {
-	      var data = this.state.data;
-	      console.log(data);
-	      return React.createElement(Library, data);
-	    }
+	    var data = this.state.data;
+	    console.log('CONTENT dATA LOADED: ', data);
+	    return React.createElement(Library, data);
 	  },
 	
 	  render: function render() {
+	    if (this.state.data === null) {
+	      return React.createElement(Header, null);
+	    }
 	    return React.createElement(
 	      'div',
 	      { className: 'contain' },
 	      React.createElement(Header, null),
-	      this.content()
+	      React.createElement(Library, this.state.data)
 	    );
 	  }
 	});
@@ -25952,6 +25950,8 @@
 
 	'use strict';
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
 	var React = __webpack_require__(/*! react */ 1);
 	
 	var Hero = __webpack_require__(/*! ./hero.jsx */ 224);
@@ -25964,7 +25964,10 @@
 	  render: function render() {
 	    // Go through each category
 	    var allVideos = this.props.videos;
+	    console.log('videos: ', allVideos);
 	    var categories = this.props.categories;
+	    console.log('categories: ', this.props.categories);
+	    console.log('typeof categories: ', _typeof(this.props.categories));
 	    var VideoRows = categories.map(function (category) {
 	      // Grab videos that contain that category's tag
 	      var videos = allVideos.filter(function (video) {
@@ -28277,7 +28280,7 @@
 			"description": "If your life was a movie and it started now, what would the hero of your \
 												life's movie do right now? Joe Rogan says do those things."
 		}],
-		"categories": ["Education", "Science", "Astronomy", "Drama", "Comedy"],
+		"categories": ["Astronomy", "Comedy", "Spirituality", "Success"],
 		"videos": [{
 			"id": "ejc5zic4q2A",
 			"title": "what. (Bo Burnham FULL SHOW)",

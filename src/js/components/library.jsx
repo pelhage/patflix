@@ -8,7 +8,10 @@ module.exports = React.createClass({
   render: function() {
     // Go through each category
     var allVideos = this.props.videos;
+    console.log('videos: ', allVideos);
     var categories = this.props.categories;
+    console.log('categories: ', this.props.categories);
+    console.log('typeof categories: ', typeof this.props.categories);
     var VideoRows = categories.map(function(category) {
       // Grab videos that contain that category's tag
       var videos = allVideos.filter(function(video) {

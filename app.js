@@ -22,6 +22,12 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser());
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 // Set Up View Engine + Static Directory
 app.set('view engine', 'pug');
 app.use('/dist', express.static('dist'));
