@@ -11,3 +11,5 @@ var librarySchema = Schema({
 });
 
 module.exports = mongoose.model('Library', librarySchema);
+
+// TODO: Use nested schemas ('Video')
