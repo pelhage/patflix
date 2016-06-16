@@ -5,12 +5,14 @@ module.exports = {
   // log in user
   login: function(passport) {
     return passport.authenticate('local-login', {
-      successRedirect: '/upload',
+      successRedirect: '/dashboard',
       failureRedirect: '/login',
       failureFlash: true
     });
   },
-
+  addLibrary: function(library) {
+    res.send(User)
+  },
   // render login page
   showLogin: function(req, res) {
     res.render('login', { message: req.flash('loginMessage') });
@@ -19,7 +21,7 @@ module.exports = {
   // sign up user
   signup: function(passport) {
     return passport.authenticate('local-signup', {
-      successRedirect: '/upload',
+      successRedirect: '/dashboard',
       failureRedirect: '/signup',
       failureFlash: true
     });

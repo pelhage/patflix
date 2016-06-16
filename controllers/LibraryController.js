@@ -3,6 +3,7 @@ var User = require('../models/user');
 var Hashids = require('hashids');
 var hashids = new Hashids("NaCl for patflix video player", 0);
 var ObjectID = require('mongodb').ObjectID;
+
 module.exports = {
 
   // Save a New Library
@@ -18,8 +19,16 @@ module.exports = {
     newLibrary.save(function(err) {
       if (err) { throw err; }
     });
-    console.log('SAVING NEW LIBRARY: ', newLibrary);
+
+    User.find({ 'local.email': req.user.email }, function(err, user) {
+      user.libraries.push(newLibrary);
+    });
+
     res.send(newLibrary);
+  },
+
+  test: function(req, res) {
+    console.log('Test Endpoint requesting user: ', req.user);
   },
 
   // Get a user library

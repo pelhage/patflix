@@ -5,10 +5,13 @@ var BUILD_DIR = path.resolve(__dirname, 'dist');
 var APP_DIR = path.resolve(__dirname, 'src');
 
 var config = {
-  entry: APP_DIR + '/js/app.jsx',
+  entry: {
+    app: APP_DIR + '/js/app.jsx',
+    dashboard: APP_DIR + '/js/dashboard.jsx'
+  },
   output: {
     path: BUILD_DIR,
-    filename: 'app.js'
+    filename: '[name].js'
   },
   module: {
     loaders: [

@@ -6,10 +6,6 @@ var bodyParser = require('body-parser');
 module.exports = function(app, passport) {
   app.use(bodyParser.json());
   
-  // app.get('/', function(req, res) {
-  //   res.render('index');
-  // });
-  
   /**
    * SIGNUP
    */
@@ -35,7 +31,8 @@ module.exports = function(app, passport) {
   /**
    * LIBRARY
    */
-  // Create + Save a New Library
+  app.post('/test', isLoggedIn, libraryController.test);
+  
   app.post('/l', libraryController.create);
   // Get a user library
   app.get('/l/:id', libraryController.render);
@@ -44,15 +41,28 @@ module.exports = function(app, passport) {
 
   app.get('/', isLoggedIn, function(req, res) {
     console.log(req.user);
-    res.render('profile', {
+    res.render('library', {
       user: req.user,
     });
   });
 
-  app.get('/test', function(req, res) {
-    res.render('upload');
+  app.post('/testAuth', function(req, res) {
+    console.log('TESTAUTH BODY: ', req.body);
+    console.log('TESTAUTH SESSION: ', req.session);
+    console.log('TESTAUTH USER', req.user);
   });
 
+  /**
+   * DASHBOARD AREA
+   * (where user uploads libraries)
+   */
+  // Create + Save a New Library
+  app.get('/dashboard', isLoggedIn, function(req, res) {
+    console.log('TEST DASHBOARD SESSION:', req.session);
+    res.render('dashboard', {
+      user: req.user
+    });
+  });
 };
 
 function isLoggedIn(req, res, next) {
