@@ -1,45 +1,33 @@
 var express = require('express');
-var app = express();
-var port = process.env.PORT || 8080;
-var mongoose = require('mongoose');
-var passport = require('passport');
-var flash = require('connect-flash');
-
-var morgan = require('morgan');
-var cookieParser = require('cookie-parser');
+var app = module.exports = express();
 var bodyParser = require('body-parser');
-var session = require('express-session');
+var morgan = require('morgan');
+var mongoose = require('mongoose');
 
-var configDB = require('./config/database.js');
+var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+var configJwt = require('./config/jwt');
+var configDB = require('./config/database');
 
-// Configuration
+// =======================
+// configuration =========
+// =======================
+var port = process.env.PORT || 8080;
 mongoose.connect(configDB.url); // connect to DB
+app.set('authSecret', configJwt.secret);
 
-require('./config/passport')(passport);
+// Use body parser to process POSTS and URL params
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-// Set up App
+// Use Morgan to log requests
 app.use(morgan('dev'));
-app.use(cookieParser());
-app.use(bodyParser());
-
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
 // Set Up View Engine + Static Directory
 app.set('view engine', 'pug');
 app.use('/dist', express.static('dist'));
 
-// Required for passport
-app.use(session({ secret: 'patrickisthebest'}));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
-
 // routes
-require('./routes.js')(app, passport);
+require('./routes.js')(app);
 
 // launch
 app.listen(port);

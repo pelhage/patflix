@@ -20,7 +20,7 @@ module.exports = {
       if (err) { throw err; }
     });
 
-    User.find({ 'local.email': req.user.email }, function(err, user) {
+    User.find({ 'auth.email': req.user.email }, function(err, user) {
       user.libraries.push(newLibrary);
     });
 

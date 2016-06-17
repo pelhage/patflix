@@ -2,25 +2,33 @@ var libraryController = require('./controllers/LibraryController');
 var userController = require('./controllers/UserController');
 
 var bodyParser = require('body-parser');
+var jwt = require('jsonwebtoken');
 
-module.exports = function(app, passport) {
-  app.use(bodyParser.json());
-  
+module.exports = function(app) {
+
+  app.get('/', function(req, res) {
+    res.json({ 'message': 'Hello, working now' });
+  });
+
   /**
    * SIGNUP
    */
   // Show Signup Page
   app.get('/signup', userController.showSignup);
   // Signup User
-  app.post('/signup', userController.signup(passport));
+  app.post('/signup', userController.signup);
 
+  app.get('/isauth', isAuthenticated, function(req, res) {
+    console.log('decoded req', req.decoded);
+    res.json({ 'message': 'You were able to authenticate!'});
+  });
   /**
    * LOGIN
    */
   // Show Login Page
-  app.get('/login', userController.showLogin);
+  // app.get('/login', userController.showLogin);
   // Login User
-  app.post('/login', userController.login(passport));
+  app.post('/login', userController.login);
 
   /**
    * LOGOUT
@@ -31,45 +39,52 @@ module.exports = function(app, passport) {
   /**
    * LIBRARY
    */
-  app.post('/test', isLoggedIn, libraryController.test);
-  
+  app.post('/test', libraryController.test);
+
   app.post('/l', libraryController.create);
   // Get a user library
   app.get('/l/:id', libraryController.render);
   // Get all libraries
-  app.get('/libraries', libraryController.showAll);  
-
-  app.get('/', isLoggedIn, function(req, res) {
-    console.log(req.user);
-    res.render('library', {
-      user: req.user,
-    });
-  });
-
-  app.post('/testAuth', function(req, res) {
-    console.log('TESTAUTH BODY: ', req.body);
-    console.log('TESTAUTH SESSION: ', req.session);
-    console.log('TESTAUTH USER', req.user);
-  });
+  app.get('/libraries', libraryController.showAll);
 
   /**
    * DASHBOARD AREA
    * (where user uploads libraries)
    */
   // Create + Save a New Library
-  app.get('/dashboard', isLoggedIn, function(req, res) {
-    console.log('TEST DASHBOARD SESSION:', req.session);
+  app.get('/dashboard', isAuthenticated, function(req, res) {
     res.render('dashboard', {
-      user: req.user
+      user: {
+        accessToken: req.
+        userId: req.decoded._doc._id,
+        libraries: req.decoded._doc.libraries
+      }
     });
   });
-};
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  } else {
-    res.redirect('/login');  
+  function isAuthenticated(req, res, next) {
+    // check header or url parameters or post parameters for token
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    // decode token
+    if (token) {
+      console.log('Found a token');
+      // verifies secret and checks exp
+      jwt.verify(token, app.get('authSecret'), function(err, decoded) {
+        if (err) {
+          return res.json({ success: false, message: 'Failed to authenticate token.' });
+        } else {
+          // if everything is good, save to request for use in other routes
+          req.decoded = decoded;
+          next();
+        }
+      });
+    } else {
+      // if there is no token
+      // return an error
+      return res.status(403).send({
+          success: false,
+          message: 'No token provided.'
+      });
+    }
   }
-  // console.log('is there a user?', req.user);
-}
+
+};
