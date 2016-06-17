@@ -8,7 +8,7 @@ var hashHistory = ReactRouter.hashHistory;
 
 /* Component Declarations */
 var Main = require('./components/main.jsx');
-var Upload = require('./components/upload.jsx'); 
+var Upload = require('./components/upload'); 
 var Playback = require('./components/playback.jsx');
 var About = require('./components/about.jsx');
 

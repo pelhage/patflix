@@ -19,4 +19,9 @@ app.use(express.static('dist'));
 app.get('/', function(req, res) {
   res.render('library');
 });
+
+app.get('/dashboard', function(req, res) {
+  res.render('dashboard');
+});
+
 app.listen(3000);
