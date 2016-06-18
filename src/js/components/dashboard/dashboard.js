@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-// import { connect } from 'react-redux';
 
 import DashboardHeader from './dashboard-header';
 

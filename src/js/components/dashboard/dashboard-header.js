@@ -23,6 +23,9 @@ class DashboardHeader extends Component {
             <Link to="/dashboard/upload">Upload</Link>
           </li>
           <li className="nav-item">
+            <Link to="/dashboard/users">Users</Link>
+          </li>
+          <li className="nav-item">
             { this.authButton() }
           </li>
         </ul>

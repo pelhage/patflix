@@ -6,6 +6,13 @@ var jwt = require('jsonwebtoken');
 
 module.exports = function(app) {
 
+  app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+    next();
+  });
+
   app.get('/', function(req, res) {
     res.json({ 'message': 'Hello, working now' });
   });
@@ -30,6 +37,13 @@ module.exports = function(app) {
   // Login User
   app.post('/login', userController.login);
 
+  app.get('/dummyData', function(req, res) {
+    res.json({
+      'data': 'isDummy',
+      'hello': 'world',
+      'testing': 'this route'
+    });
+  })
   /**
    * LOGOUT
    */
@@ -55,7 +69,6 @@ module.exports = function(app) {
   app.get('/dashboard', isAuthenticated, function(req, res) {
     res.render('dashboard', {
       user: {
-        accessToken: req.
         userId: req.decoded._doc._id,
         libraries: req.decoded._doc.libraries
       }

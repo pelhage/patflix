@@ -75,13 +75,21 @@
 	
 	var _upload2 = _interopRequireDefault(_upload);
 	
+	var _userList = __webpack_require__(/*! ./components/user-list */ 284);
+	
+	var _userList2 = _interopRequireDefault(_userList);
+	
 	var _reducers = __webpack_require__(/*! ./reducers */ 282);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
+	var _async = __webpack_require__(/*! ./middlewares/async */ 286);
+	
+	var _async2 = _interopRequireDefault(_async);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var createStoreWithMiddleware = (0, _redux.applyMiddleware)()(_redux.createStore);
+	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_async2.default)(_redux.createStore);
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
@@ -92,7 +100,8 @@
 	    _react2.default.createElement(
 	      _reactRouter.Route,
 	      { path: '/dashboard', component: _dashboard2.default },
-	      _react2.default.createElement(_reactRouter.Route, { path: 'upload', component: (0, _require_auth2.default)(_upload2.default) })
+	      _react2.default.createElement(_reactRouter.Route, { path: 'upload', component: (0, _require_auth2.default)(_upload2.default) }),
+	      _react2.default.createElement(_reactRouter.Route, { path: 'users', component: _userList2.default })
 	    )
 	  )
 	), document.querySelector('.container'));
@@ -28036,7 +28045,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	// import { connect } from 'react-redux';
 	
 	var Dashboard = function (_Component) {
 	  _inherits(Dashboard, _Component);
@@ -28162,6 +28170,15 @@
 	          _react2.default.createElement(
 	            'li',
 	            { className: 'nav-item' },
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/dashboard/users' },
+	              'Users'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'nav-item' },
 	            this.authButton()
 	          )
 	        )
@@ -28191,6 +28208,7 @@
 	  value: true
 	});
 	exports.authenticate = authenticate;
+	exports.fetchUsers = fetchUsers;
 	
 	var _types = __webpack_require__(/*! ./types */ 279);
 	
@@ -28198,6 +28216,16 @@
 	  return {
 	    type: _types.CHANGE_AUTH,
 	    payload: isLoggedIn
+	  };
+	}
+	
+	function fetchUsers() {
+	  // fetch data here:
+	  var data = fetch('http://localhost:8080/dummyData');
+	
+	  return {
+	    type: _types.FETCH_USERS,
+	    payload: data
 	  };
 	}
 
@@ -28214,6 +28242,7 @@
 	  value: true
 	});
 	var CHANGE_AUTH = exports.CHANGE_AUTH = 'change_auth';
+	var FETCH_USERS = exports.FETCH_USERS = 'fetch_users';
 
 /***/ },
 /* 280 */
@@ -28535,10 +28564,15 @@
 	
 	var _authentication2 = _interopRequireDefault(_authentication);
 	
+	var _users = __webpack_require__(/*! ./users */ 285);
+	
+	var _users2 = _interopRequireDefault(_users);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var rootReducer = (0, _redux.combineReducers)({
-	  authenticated: _authentication2.default
+	  authenticated: _authentication2.default,
+	  users: _users2.default
 	});
 	
 	exports.default = rootReducer;
@@ -28569,6 +28603,175 @@
 	};
 	
 	var _types = __webpack_require__(/*! ../actions/types */ 279);
+
+/***/ },
+/* 284 */
+/*!****************************************!*\
+  !*** ./src/js/components/user-list.js ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 249);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 278);
+	
+	var actions = _interopRequireWildcard(_actions);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var UserList = function (_Component) {
+	  _inherits(UserList, _Component);
+	
+	  function UserList() {
+	    _classCallCheck(this, UserList);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(UserList).apply(this, arguments));
+	  }
+	
+	  _createClass(UserList, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.props.fetchUsers();
+	    }
+	  }, {
+	    key: 'renderUser',
+	    value: function renderUser(user) {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'card card-block' },
+	        _react2.default.createElement(
+	          'h4',
+	          { className: 'card-title' },
+	          user.name
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          { className: 'card-text' },
+	          'Description'
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      console.log('this.props.users', this.props);
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.props.users.map(this.renderUser)
+	      );
+	    }
+	  }]);
+	
+	  return UserList;
+	}(_react.Component);
+	
+	function mapStateToProps(state) {
+	  return { users: state.users };
+	}
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(UserList);
+
+/***/ },
+/* 285 */
+/*!**********************************!*\
+  !*** ./src/js/reducers/users.js ***!
+  \**********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	exports.default = function () {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case _types.FETCH_USERS:
+	      return [].concat(_toConsumableArray(state), _toConsumableArray(action.payload));
+	    default:
+	      return state;
+	  }
+	};
+	
+	var _types = __webpack_require__(/*! ../actions/types */ 279);
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+/***/ },
+/* 286 */
+/*!*************************************!*\
+  !*** ./src/js/middlewares/async.js ***!
+  \*************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	
+	/*
+	return function(next) {
+	  return function(action) {
+	    console.log(action);
+	
+	    next(action);
+	  }
+	}
+	*/
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	exports.default = function (_ref) {
+	  var dispatch = _ref.dispatch;
+	
+	  return function (next) {
+	    return function (action) {
+	      // If action does not have payload or does
+	      // not have a .then property, send it on
+	      if (!action.payload || !action.payload.then) {
+	        return next(action);
+	      }
+	
+	      // Make sure action promise resolves
+	      console.log('We have a promis: ', action);
+	      action.payload.then(function (response) {
+	        return response.json();
+	      }).then(function (data) {
+	        // Create new action with the old type,
+	        // but replace the promise with response data
+	        var newAction = _extends({}, action, { payload: data });
+	        console.log('New action to be passed: ', newAction);
+	        dispatch(newAction);
+	      });
+	    };
+	  };
+	};
 
 /***/ }
 /******/ ]);
