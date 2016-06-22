@@ -6,20 +6,22 @@ module.exports = {
 
   // log in user
   login: function(req, res) {
+    const email = req.body.email;
+    const password = req.body.password;
 
-    User.findOne({ 
-      'auth.email': req.body.email 
+    User.findOne({
+      'auth.email': email
     }, function(err, user) {
       if (err) throw err;
-      
+
       if (!user) {
         res.json({ success: false, message: 'Authentication failed. User not found' });
-      
+
       } else if (user) {
-        
-        if (!user.validPassword(req.body.password)) {
+
+        if (!user.validPassword(password)) {
           res.json({ success: false, message: 'Authentication failed. Wrong password'});
-        
+
         } else {
           var token = jwt.sign(user, app.get('authSecret'), {
             expiresIn: 60
@@ -38,20 +40,26 @@ module.exports = {
 
   // sign up user
   signup: function(req, res) {
-    
+    const email = req.body.email;
+    const password = req.body.password;
+
+    if (!email || !password) {
+      return res.status(422).send({ error: 'You must provide email and password' });
+    }
+
     User.findOne({
-      'auth.email': req.body.email
+      'auth.email': email
     }, function(err, user) {
       if (err) throw err;
 
       if (user) {
-        res.json({ success: false, message: 'Signup failed. User already exists' });
-      
+        res.status(422).send({ success: false, message: 'Signup failed. User already exists' });
+
       } else {
-      
+
         var newUser = new User();
-        newUser.auth.email = req.body.email;
-        newUser.auth.password = newUser.generateHash(req.body.password);
+        newUser.auth.email = email;
+        newUser.auth.password = newUser.generateHash(password);
 
         newUser.save(function(err) {
           if (err) throw err;
@@ -81,7 +89,7 @@ module.exports = {
       users.forEach(function(user) {
         userMap[user._id] = user;
       });
-      res.send(userMap);  
+      res.send(userMap);
     });
   }
 

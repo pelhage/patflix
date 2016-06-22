@@ -28736,6 +28736,8 @@
 	
 	
 	/*
+	Alternate ES5 syntax for middleware
+	
 	return function(next) {
 	  return function(action) {
 	    console.log(action);
@@ -28759,7 +28761,6 @@
 	      }
 	
 	      // Make sure action promise resolves
-	      console.log('We have a promis: ', action);
 	      action.payload.then(function (response) {
 	        return response.json();
 	      }).then(function (data) {

@@ -4,7 +4,7 @@ var bcrypt = require('bcrypt-nodejs');
 
 var userSchema = Schema({
   auth: {
-    email: String,
+    email: { type: String, unique: true, lowercase: true },
     password: String
   },
   libraries: [{ type: Schema.Types.ObjectId, ref: 'Library' }]

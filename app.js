@@ -1,17 +1,17 @@
-var express = require('express');
-var app = module.exports = express();
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
-var mongoose = require('mongoose');
+const express = require('express');
+const app = module.exports = express();
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const mongoose = require('mongoose');
 
-var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-var configJwt = require('./config/jwt');
-var configDB = require('./config/database');
+const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+const configJwt = require('./config/jwt');
+const configDB = require('./config/database');
 
 // =======================
 // configuration =========
 // =======================
-var port = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 mongoose.connect(configDB.url); // connect to DB
 app.set('authSecret', configJwt.secret);
 
