@@ -1,9 +1,8 @@
-var React = require('react');
+import React, { Component } from 'react';
 
-module.exports = React.createClass({
+export default class About extends Component {
 
-  render: function() {
-
+  render() {
     return (<div className="container container--medium">
       <h1>Upload Your Own Netflix-Like Video Library</h1>
       <p>I created Patflix as a way to share my selection of Youtube videos with the world.</p>
@@ -12,5 +11,4 @@ module.exports = React.createClass({
       Youtube links and then share their library via a URL.</p>
     </div>);
   }
-});
-
+}

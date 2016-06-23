@@ -29,7 +29,7 @@ module.exports = React.createClass({
 	render: function() {
 		return (<iframe style={this.state.style}
 			src={"http://www.youtube.com/embed/"+ this.props.params.videoid + "?autoplay=1"}
-			frameBorder="0" 
+			frameBorder="0"
 			allowFullScreen></iframe>);
 	}
 });

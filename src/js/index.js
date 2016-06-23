@@ -5,10 +5,12 @@ import { createStore, applyMiddleware } from 'redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import requireAuth from './components/require_auth';
-import Dashboard from './components/dashboard/dashboard';
-// import App from './components/app';
-import Upload from './components/upload';
+import App from './components/app';
+
+import Library from './components/library';
+import Dashboard from './components/dashboard';
 import UserList from './components/user-list';
+import About from './components/about';
 
 import reducers from './reducers';
 import Async from './middlewares/async';
@@ -18,10 +20,12 @@ const createStoreWithMiddleware = applyMiddleware(Async)(createStore);
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <Router history={browserHistory}>
-      <Route path="/dashboard" component={Dashboard}>
-        <Route path="upload" component={requireAuth(Upload)}></Route>
+      <Route path="/" component={App}>
+        <Route path="dashboard" component={requireAuth(Dashboard)}></Route>
+        <Route path="about" component={About}></Route>
         <Route path="users" component={UserList}></Route>
       </Route>
+
     </Router>
   </Provider>
   , document.querySelector('.container')
