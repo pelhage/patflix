@@ -38,7 +38,7 @@ module.exports = React.createClass({
   },
 
   handleIdChange: function(e) {
-    this.setState({ 
+    this.setState({
       enteredUrl: e.target.value,
       isValidId: this.validateYoutubeId(e.target.value)
     });
@@ -73,7 +73,7 @@ module.exports = React.createClass({
         enteredUrl: '',
         description: '',
         isFeatured: false
-      });      
+      });
     }
   },
 
@@ -107,64 +107,64 @@ module.exports = React.createClass({
       );
     });
     return (<div>
-      <div className="upload-container">
+      <div className="form-container">
       <h2>Add Videos to Your Library</h2>
-      <form className="upload-video">
-        <div className="upload-video__input-container">
-          <label className="upload-video__label" htmlFor="ytURL">YouTube URL
+      <form className="form">
+        <div className="form__input-container">
+          <label className="form__label" htmlFor="ytURL">YouTube URL
             {isValid}
           </label>
-          <input 
+          <input
             id="ytURL"
-            className="upload-video__input"
-            type="text" 
+            className="form__input"
+            type="text"
             value={this.state.enteredUrl}
             onChange={this.handleIdChange} />
         </div>
 
-        <div className="upload-video__input-container">
-          <input 
-            className="upload-video__checkbox" 
-            id="isFeatured" 
-            type="checkbox" 
+        <div className="form__input-container">
+          <input
+            className="form__checkbox"
+            id="isFeatured"
+            type="checkbox"
             value={this.state.isFeatured}
             onChange={this.handleFeatureChange}
             />
           <label htmlFor="isFeatured">Feature this video in your library</label>
         </div>
 
-        <div className="upload-video__input-container">
-          <label className="upload-video__label" htmlFor="description">Description</label>
+        <div className="form__input-container">
+          <label className="form__label" htmlFor="description">Description</label>
           <p>Write a short summary of what this video is about.</p>
-          <textarea 
-            className="upload-video_textarea"
+          <textarea
+            className="form_textarea"
             id="description"
             value={this.state.description}
             onChange={this.handleDescriptionChange}>
           </textarea>
         </div>
 
-        <div className="upload-video__input-container">
-          <label className="upload-video__label" htmlFor="categories">Categories</label>
-          <textarea 
-            className="upload-video_textarea"
+        <div className="form__input-container">
+          <label className="form__label" htmlFor="categories">Categories</label>
+          <textarea
+            className="form_textarea"
             id="categories"
             value={this.state.categories}
             onChange={this.handleCategoriesChange}
-            className="upload-video__input">
+            className="form__input">
           </textarea>
         </div>
 
-        <div className="upload-video__input-container">
+        <div className="form__input-container">
           <input
-            className="upload-video__button margin-right" 
-            type="button" 
-            onClick={this.addVideoToLib} 
+            className="form__button margin-right"
+            type="button"
+            onClick={this.addVideoToLib}
             value="Add to Library" />
           <input
-            className="upload-video__button upload-video__button--primary"
-            onClick={this.handleSubmit} 
-            type="button" 
+            className="form__button form__button--primary"
+            onClick={this.handleSubmit}
+            type="button"
             value="Save Library" />
         </div>
       </form>

@@ -1,8 +1,8 @@
 /* Video Uploading Component */
-.upload-container {
+.form-container {
   padding: 10px;
   width: 450px;
-  
+
   h2 {
     font-weight: 400;
     color: #fff;
@@ -20,20 +20,20 @@
   margin-left: 10px;
   color: #E50914;
 }
-.upload-video__input-container {
+.form__input-container {
   margin-bottom: 20px;
 }
-  .upload-video__label {
+  .form__label {
     display: block;
     margin-bottom: 5px;
     font-size: 1.2rem;
     font-weight: 300;
     color: #fff;
   }
-.upload-video__checkbox {
+.form__checkbox {
   margin-right: 15px;
 }
-.upload-video__input, .upload-video_textarea {
+.form__input, .form_textarea {
   display: block;
   border: none;
   border-radius: 4px;
@@ -44,12 +44,12 @@
   color: #ddddd1;
 }
 
-.upload-video__button {
+.form__button {
   @extend .btn;
   margin-right: 15px;
 }
 
-.upload-video__button--primary {
+.form__button--primary {
   @extend .btn-primary;
 }
 
