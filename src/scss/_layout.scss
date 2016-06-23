@@ -8,9 +8,16 @@
   margin: 0 auto;
 }
 .container--medium {
-	max-width: 450px;
+  padding: 10px;
+	width: 450px;
+}
+.container--small {
+  width: 300px
 }
 
-.container--small {
-  max-width: 300px
+.flex-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

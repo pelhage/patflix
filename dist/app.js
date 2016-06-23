@@ -27857,7 +27857,7 @@
 	      if (this.props.authenticated) {
 	        return _react2.default.createElement(
 	          'button',
-	          { onClick: function onClick() {
+	          { className: 'btn btn-lg', onClick: function onClick() {
 	              return _this2.props.authenticate(false);
 	            } },
 	          'Sign Out'
@@ -27865,7 +27865,7 @@
 	      }
 	      return _react2.default.createElement(
 	        'button',
-	        { onClick: function onClick() {
+	        { className: 'btn btn-lg btn-primary', onClick: function onClick() {
 	            return _this2.props.authenticate(true);
 	          } },
 	        'Sign In'
@@ -34075,40 +34075,54 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'form-container' },
+	        { className: 'flex-center' },
 	        _react2.default.createElement(
-	          'form',
-	          { className: 'form', onSubmit: handleSubmit(this.handleFormSubmit.bind(this)) },
+	          'h1',
+	          null,
+	          'Log In to Upload Your Own Shareable Library'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'container--small form-container bg--med' },
 	          _react2.default.createElement(
-	            'div',
-	            { className: 'form__input-container' },
-	            _react2.default.createElement(
-	              'label',
-	              { className: 'form__label', htmlFor: 'email' },
-	              'Email'
-	            ),
-	            _react2.default.createElement('input', _extends({}, email, { id: 'email',
-	              className: 'form__input',
-	              type: 'email' }))
+	            'h2',
+	            null,
+	            'Sign Into Patflix'
 	          ),
 	          _react2.default.createElement(
-	            'div',
-	            { className: 'form__input-container' },
+	            'form',
+	            { className: 'form', onSubmit: handleSubmit(this.handleFormSubmit.bind(this)) },
 	            _react2.default.createElement(
-	              'label',
-	              { htmlFor: 'password' },
-	              'Password'
+	              'div',
+	              { className: 'form__input-container' },
+	              _react2.default.createElement(
+	                'label',
+	                { className: 'form__label', htmlFor: 'email' },
+	                'Email'
+	              ),
+	              _react2.default.createElement('input', _extends({}, email, { id: 'email',
+	                className: 'form__input',
+	                type: 'email' }))
 	            ),
-	            _react2.default.createElement('input', {
-	              className: 'form__input',
-	              id: 'password',
-	              type: 'password'
-	            })
-	          ),
-	          _react2.default.createElement(
-	            'button',
-	            { action: 'submit', className: 'btn btn-primary' },
-	            'Sign In'
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'form__input-container' },
+	              _react2.default.createElement(
+	                'label',
+	                { className: 'form__label', htmlFor: 'password' },
+	                'Password'
+	              ),
+	              _react2.default.createElement('input', {
+	                className: 'form__input',
+	                id: 'password',
+	                type: 'password'
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { action: 'submit', className: 'btn btn-primary' },
+	              'Sign In'
+	            )
 	          )
 	        )
 	      );

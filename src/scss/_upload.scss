@@ -1,9 +1,12 @@
 /* Video Uploading Component */
+.bg--med {
+  background: #191919;
+}
 .form-container {
-  padding: 10px;
-  width: 450px;
+  padding: 20px 15px;
 
   h2 {
+    margin-top: 0;
     font-weight: 400;
     color: #fff;
   }

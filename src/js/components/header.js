@@ -6,10 +6,10 @@ import * as actions from '../actions';
 class Header extends Component {
   authButton() {
     if (this.props.authenticated) {
-      return <button onClick={() => this.props.authenticate(false)}>Sign Out</button>
+      return <button className="btn btn-lg" onClick={() => this.props.authenticate(false)}>Sign Out</button>
     }
     return (
-      <button onClick={() => this.props.authenticate(true)}>Sign In</button>
+      <button className="btn btn-lg btn-primary" onClick={() => this.props.authenticate(true)}>Sign In</button>
     );
   }
   render() {
