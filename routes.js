@@ -5,6 +5,12 @@ const authController = require('./controllers/AuthenticationController');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 
+const passportService = require('./services/passport');
+const passport = require('passport');
+
+const requireAuth = passport.authenticate('jwt', { session: false });
+const requireLogin = passport.authenticate('local', { session: false });
+
 module.exports = function(app) {
   // Allow cross origin requests
   app.use(function (req, res, next) {
@@ -14,19 +20,16 @@ module.exports = function(app) {
     next();
   });
 
-  app.get('/', function(req, res) {
+  app.get('/', requireAuth, function(req, res) {
     res.json({ 'message': 'Hello, working now' });
   });
-
   /**
    * LOGIN & SIGNUP
    */
-  // Show Signup Page
-  app.get('/signup', userController.showSignup);
   // Signup User
   app.post('/signup', userController.signup);
   // Login User
-  app.post('/login', userController.login);
+  app.post('/login', requireLogin, userController.login);
   // Logout User
   app.get('/logout', userController.logout);
   // Check to see if user is auth'd
@@ -60,6 +63,7 @@ module.exports = function(app) {
       }
     });
   });
+
   /**
    * DUMMY ROUTES FOR TESTING
    */

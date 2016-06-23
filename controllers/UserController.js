@@ -1,96 +1,63 @@
 var User = require('../models/user');
-var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+const jwt = require('jwt-simple'); // used to create, sign, and verify tokens
+const config = require('../config');
 var app = require('../app');
 
-module.exports = {
+// Takes User model
+function tokenForUser(user) {
+  const timestamp = new Date().getTime();
+  return jwt.encode({ sub: user._id, iat: timestamp }, config.secret);
+}
 
-  // log in user
-  login: function(req, res) {
-    const email = req.body.email;
-    const password = req.body.password;
+exports.login = function(req, res, next) {
+  console.log('No good');
+  res.send({ token: tokenForUser(req.user) })
+};
 
-    User.findOne({
-      'auth.email': email
-    }, function(err, user) {
-      if (err) throw err;
+// sign up user
+exports.signup = function(req, res, next) {
+  const email = req.body.email;
+  const password = req.body.password;
 
-      if (!user) {
-        res.json({ success: false, message: 'Authentication failed. User not found' });
-
-      } else if (user) {
-
-        if (!user.validPassword(password)) {
-          res.json({ success: false, message: 'Authentication failed. Wrong password'});
-
-        } else {
-          var token = jwt.sign(user, app.get('authSecret'), {
-            expiresIn: 60
-          });
-
-          res.json({
-            success: true,
-            message: 'Authentication successful',
-            token: token
-          });
-        }
-      }
-    });
-
-  },
-
-  // sign up user
-  signup: function(req, res) {
-    const email = req.body.email;
-    const password = req.body.password;
-
-    if (!email || !password) {
-      return res.status(422).send({ error: 'You must provide email and password' });
-    }
-
-    User.findOne({
-      'auth.email': email
-    }, function(err, user) {
-      if (err) throw err;
-
-      if (user) {
-        res.status(422).send({ success: false, message: 'Signup failed. User already exists' });
-
-      } else {
-
-        var newUser = new User();
-        newUser.auth.email = email;
-        newUser.auth.password = newUser.generateHash(password);
-
-        newUser.save(function(err) {
-          if (err) throw err;
-          console.log('User saved successfully');
-          res.json({ success: true });
-        });
-      }
-    });
-
-  },
-
-  // render signup page
-  showSignup: function(req, res) {
-    res.render('signup');
-  },
-
-  // log out user
-  logout: function(req, res) {
-    req.logout();
-    res.redirect('/');
-  },
-
-  showAll: function(req, res) {
-    User.find({}, function(err, users) {
-      var userMap = {};
-
-      users.forEach(function(user) {
-        userMap[user._id] = user;
-      });
-      res.send(userMap);
-    });
+  if (!email || !password) {
+    return res.status(422).send({ error: 'You must provide email and password' });
   }
 
+  User.findOne({
+    'auth.email': email
+  }, function(err, existingUser) {
+    if (err) { return next(err); }
+
+    if (existingUser) {
+      return res.status(422).send({ error: 'Email is in use' });
+    }
+    // All is good, create new user
+    var newUser = new User();
+    newUser.auth.email = email;
+    newUser.auth.password = password;
+
+    newUser.save(function(err) {
+      if (err) { return next(err); }
+      console.log('User saved successfully');
+      res.json({ token: tokenForUser(newUser) });
+    });
+  });
+
+};
+
+// log out user
+exports.logout = function(req, res) {
+  req.logout();
+  res.redirect('/');
+};
+
+exports.showAll = function(req, res) {
+  User.find({}, function(err, users) {
+    var userMap = {};
+
+    users.forEach(function(user) {
+      userMap[user._id] = user;
+    });
+    res.send(userMap);
+  });
 };
