@@ -57,29 +57,29 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _reactRedux = __webpack_require__(/*! react-redux */ 249);
+	var _reactRedux = __webpack_require__(/*! react-redux */ 251);
 	
-	var _redux = __webpack_require__(/*! redux */ 256);
+	var _redux = __webpack_require__(/*! redux */ 258);
 	
 	var _reactRouter = __webpack_require__(/*! react-router */ 160);
 	
-	var _require_auth = __webpack_require__(/*! ./components/require_auth */ 275);
+	var _require_auth = __webpack_require__(/*! ./components/require_auth */ 277);
 	
 	var _require_auth2 = _interopRequireDefault(_require_auth);
 	
-	var _dashboard = __webpack_require__(/*! ./components/dashboard/dashboard */ 276);
+	var _dashboard = __webpack_require__(/*! ./components/dashboard/dashboard */ 278);
 	
 	var _dashboard2 = _interopRequireDefault(_dashboard);
 	
-	var _upload = __webpack_require__(/*! ./components/upload */ 280);
+	var _upload = __webpack_require__(/*! ./components/upload */ 247);
 	
 	var _upload2 = _interopRequireDefault(_upload);
 	
-	var _userList = __webpack_require__(/*! ./components/user-list */ 284);
+	var _userList = __webpack_require__(/*! ./components/user-list */ 282);
 	
 	var _userList2 = _interopRequireDefault(_userList);
 	
-	var _reducers = __webpack_require__(/*! ./reducers */ 282);
+	var _reducers = __webpack_require__(/*! ./reducers */ 283);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
@@ -88,6 +88,9 @@
 	var _async2 = _interopRequireDefault(_async);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// import App from './components/app';
+	
 	
 	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_async2.default)(_redux.createStore);
 	
@@ -26153,9 +26156,310 @@
 	};
 
 /***/ },
-/* 247 */,
-/* 248 */,
-/* 249 */
+/* 247 */
+/*!*************************************!*\
+  !*** ./src/js/components/upload.js ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _libraryData = __webpack_require__(/*! ../library-data.js */ 246);
+	
+	var _libraryData2 = _interopRequireDefault(_libraryData);
+	
+	var _api = __webpack_require__(/*! ../utils/api.jsx */ 248);
+	
+	var _api2 = _interopRequireDefault(_api);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	module.exports = _react2.default.createClass({
+	  displayName: 'exports',
+	
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      id: '',
+	      enteredUrl: '',
+	      description: '',
+	      videos: [],
+	      isValidId: false,
+	      isFeatured: false
+	    };
+	  },
+	
+	  testAuth: function testAuth() {
+	    var options = {
+	      method: 'post',
+	      headers: new Headers({
+	        "Content-Type": "application/json"
+	      }),
+	      body: JSON.stringify({ 'testBody': 'hello' })
+	    };
+	    // Make API Call to Save Library
+	    fetch('/testAuth', options).then(function (response) {
+	      response.text().then(function (text) {
+	        console.log('response text: ', text);
+	      });
+	    }).catch(function (err) {
+	      console.log(err);
+	    });
+	  },
+	
+	  handleSubmit: function handleSubmit() {
+	    _api2.default.createLibrary(this.state.videos);
+	  },
+	
+	  handleIdChange: function handleIdChange(e) {
+	    this.setState({
+	      enteredUrl: e.target.value,
+	      isValidId: this.validateYoutubeId(e.target.value)
+	    });
+	  },
+	
+	  handleDescriptionChange: function handleDescriptionChange(e) {
+	    this.setState({ description: e.target.value });
+	  },
+	
+	  handleCategoriesChange: function handleCategoriesChange(e) {
+	    this.setState({ categories: e.target.value });
+	  },
+	
+	  handleFeatureChange: function handleFeatureChange(e) {
+	    console.log('is Featured: ', e.target.checked);
+	    this.setState({ featured: e.target.checked });
+	  },
+	
+	  addVideoToLib: function addVideoToLib() {
+	    if (this.state.isValidId) {
+	      console.log('Adding Video To Library');
+	      // Copy state & push to library's array
+	      var videosArr = this.state.videos.slice();
+	      videosArr.push({
+	        id: this.state.id,
+	        description: this.state.description
+	      });
+	      // Update state with new library, & reset forms
+	      this.setState({
+	        videos: videosArr,
+	        id: '',
+	        enteredUrl: '',
+	        description: '',
+	        isFeatured: false
+	      });
+	    }
+	  },
+	
+	  validateYoutubeId: function validateYoutubeId(url) {
+	    console.log('validating: ', url);
+	    var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+	    var match = url.match(regExp);
+	    if (match && match[2].length == 11) {
+	      this.setState({ id: match[2] });
+	      return match[2];
+	    } else {
+	      return false;
+	    }
+	  },
+	
+	  render: function render() {
+	    var isValid;
+	    if (this.state.isValidId) {
+	      isValid = _react2.default.createElement(
+	        'span',
+	        { className: 'video-is-valid' },
+	        '✔'
+	      );
+	    } else if (this.state.id.length < 1) {
+	      isValid = '';
+	    } else {
+	      isValid = _react2.default.createElement(
+	        'span',
+	        { className: 'video-is-not-valid' },
+	        '✘'
+	      );
+	    }
+	    var currentLib = this.state.videos.map(function (video) {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          video.title
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement('img', { src: "http://img.youtube.com/vi/" + video.id + "/0.jpg" })
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          video.description
+	        )
+	      );
+	    });
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'upload-container' },
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Add Videos to Your Library'
+	        ),
+	        _react2.default.createElement(
+	          'form',
+	          { className: 'upload-video' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'upload-video__input-container' },
+	            _react2.default.createElement(
+	              'label',
+	              { className: 'upload-video__label', htmlFor: 'ytURL' },
+	              'YouTube URL',
+	              isValid
+	            ),
+	            _react2.default.createElement('input', {
+	              id: 'ytURL',
+	              className: 'upload-video__input',
+	              type: 'text',
+	              value: this.state.enteredUrl,
+	              onChange: this.handleIdChange })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'upload-video__input-container' },
+	            _react2.default.createElement('input', {
+	              className: 'upload-video__checkbox',
+	              id: 'isFeatured',
+	              type: 'checkbox',
+	              value: this.state.isFeatured,
+	              onChange: this.handleFeatureChange
+	            }),
+	            _react2.default.createElement(
+	              'label',
+	              { htmlFor: 'isFeatured' },
+	              'Feature this video in your library'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'upload-video__input-container' },
+	            _react2.default.createElement(
+	              'label',
+	              { className: 'upload-video__label', htmlFor: 'description' },
+	              'Description'
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              'Write a short summary of what this video is about.'
+	            ),
+	            _react2.default.createElement('textarea', {
+	              className: 'upload-video_textarea',
+	              id: 'description',
+	              value: this.state.description,
+	              onChange: this.handleDescriptionChange })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'upload-video__input-container' },
+	            _react2.default.createElement(
+	              'label',
+	              { className: 'upload-video__label', htmlFor: 'categories' },
+	              'Categories'
+	            ),
+	            _react2.default.createElement('textarea', _defineProperty({
+	              className: 'upload-video_textarea',
+	              id: 'categories',
+	              value: this.state.categories,
+	              onChange: this.handleCategoriesChange
+	            }, 'className', 'upload-video__input'))
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'upload-video__input-container' },
+	            _react2.default.createElement('input', {
+	              className: 'upload-video__button margin-right',
+	              type: 'button',
+	              onClick: this.addVideoToLib,
+	              value: 'Add to Library' }),
+	            _react2.default.createElement('input', {
+	              className: 'upload-video__button upload-video__button--primary',
+	              onClick: this.handleSubmit,
+	              type: 'button',
+	              value: 'Save Library' })
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'upload-container' },
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          currentLib
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'form',
+	        { action: '/test', method: 'post' },
+	        _react2.default.createElement(
+	          'button',
+	          { type: 'submit' },
+	          'Submit TEST'
+	        )
+	      ),
+	      _react2.default.createElement('input', { type: 'button', onClick: this.testAuth, value: 'Test Auth MiddleWare' })
+	    );
+	  }
+	});
+
+/***/ },
+/* 248 */
+/*!******************************!*\
+  !*** ./src/js/utils/api.jsx ***!
+  \******************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports.createLibrary = function (videoLibrary) {
+	  var library = videoLibrary;
+	  // Options for API Call
+	  var options = {
+	    method: 'post',
+	    headers: new Headers({
+	      "Content-Type": "application/json",
+	      "userId": window.App._id
+	    }),
+	    body: JSON.stringify(library)
+	  };
+	  // Make API Call to Save Library
+	  fetch('/l', options).then(function (response) {
+	    response.text().then(function (text) {
+	      console.log('response text: ', text);
+	    });
+	  }).catch(function (err) {
+	    console.log(err);
+	  });
+	};
+
+/***/ },
+/* 249 */,
+/* 250 */,
+/* 251 */
 /*!************************************!*\
   !*** ./~/react-redux/lib/index.js ***!
   \************************************/
@@ -26166,11 +26470,11 @@
 	exports.__esModule = true;
 	exports.connect = exports.Provider = undefined;
 	
-	var _Provider = __webpack_require__(/*! ./components/Provider */ 250);
+	var _Provider = __webpack_require__(/*! ./components/Provider */ 252);
 	
 	var _Provider2 = _interopRequireDefault(_Provider);
 	
-	var _connect = __webpack_require__(/*! ./components/connect */ 253);
+	var _connect = __webpack_require__(/*! ./components/connect */ 255);
 	
 	var _connect2 = _interopRequireDefault(_connect);
 	
@@ -26180,7 +26484,7 @@
 	exports.connect = _connect2["default"];
 
 /***/ },
-/* 250 */
+/* 252 */
 /*!**************************************************!*\
   !*** ./~/react-redux/lib/components/Provider.js ***!
   \**************************************************/
@@ -26193,11 +26497,11 @@
 	
 	var _react = __webpack_require__(/*! react */ 1);
 	
-	var _storeShape = __webpack_require__(/*! ../utils/storeShape */ 251);
+	var _storeShape = __webpack_require__(/*! ../utils/storeShape */ 253);
 	
 	var _storeShape2 = _interopRequireDefault(_storeShape);
 	
-	var _warning = __webpack_require__(/*! ../utils/warning */ 252);
+	var _warning = __webpack_require__(/*! ../utils/warning */ 254);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -26267,7 +26571,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 4)))
 
 /***/ },
-/* 251 */
+/* 253 */
 /*!***********************************************!*\
   !*** ./~/react-redux/lib/utils/storeShape.js ***!
   \***********************************************/
@@ -26286,7 +26590,7 @@
 	});
 
 /***/ },
-/* 252 */
+/* 254 */
 /*!********************************************!*\
   !*** ./~/react-redux/lib/utils/warning.js ***!
   \********************************************/
@@ -26318,7 +26622,7 @@
 	}
 
 /***/ },
-/* 253 */
+/* 255 */
 /*!*************************************************!*\
   !*** ./~/react-redux/lib/components/connect.js ***!
   \*************************************************/
@@ -26333,31 +26637,31 @@
 	
 	var _react = __webpack_require__(/*! react */ 1);
 	
-	var _storeShape = __webpack_require__(/*! ../utils/storeShape */ 251);
+	var _storeShape = __webpack_require__(/*! ../utils/storeShape */ 253);
 	
 	var _storeShape2 = _interopRequireDefault(_storeShape);
 	
-	var _shallowEqual = __webpack_require__(/*! ../utils/shallowEqual */ 254);
+	var _shallowEqual = __webpack_require__(/*! ../utils/shallowEqual */ 256);
 	
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 	
-	var _wrapActionCreators = __webpack_require__(/*! ../utils/wrapActionCreators */ 255);
+	var _wrapActionCreators = __webpack_require__(/*! ../utils/wrapActionCreators */ 257);
 	
 	var _wrapActionCreators2 = _interopRequireDefault(_wrapActionCreators);
 	
-	var _warning = __webpack_require__(/*! ../utils/warning */ 252);
+	var _warning = __webpack_require__(/*! ../utils/warning */ 254);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
-	var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 269);
+	var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 271);
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _hoistNonReactStatics = __webpack_require__(/*! hoist-non-react-statics */ 273);
+	var _hoistNonReactStatics = __webpack_require__(/*! hoist-non-react-statics */ 275);
 	
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 	
-	var _invariant = __webpack_require__(/*! invariant */ 274);
+	var _invariant = __webpack_require__(/*! invariant */ 276);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
@@ -26720,7 +27024,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 4)))
 
 /***/ },
-/* 254 */
+/* 256 */
 /*!*************************************************!*\
   !*** ./~/react-redux/lib/utils/shallowEqual.js ***!
   \*************************************************/
@@ -26754,7 +27058,7 @@
 	}
 
 /***/ },
-/* 255 */
+/* 257 */
 /*!*******************************************************!*\
   !*** ./~/react-redux/lib/utils/wrapActionCreators.js ***!
   \*******************************************************/
@@ -26765,7 +27069,7 @@
 	exports.__esModule = true;
 	exports["default"] = wrapActionCreators;
 	
-	var _redux = __webpack_require__(/*! redux */ 256);
+	var _redux = __webpack_require__(/*! redux */ 258);
 	
 	function wrapActionCreators(actionCreators) {
 	  return function (dispatch) {
@@ -26774,7 +27078,7 @@
 	}
 
 /***/ },
-/* 256 */
+/* 258 */
 /*!******************************!*\
   !*** ./~/redux/lib/index.js ***!
   \******************************/
@@ -26785,27 +27089,27 @@
 	exports.__esModule = true;
 	exports.compose = exports.applyMiddleware = exports.bindActionCreators = exports.combineReducers = exports.createStore = undefined;
 	
-	var _createStore = __webpack_require__(/*! ./createStore */ 257);
+	var _createStore = __webpack_require__(/*! ./createStore */ 259);
 	
 	var _createStore2 = _interopRequireDefault(_createStore);
 	
-	var _combineReducers = __webpack_require__(/*! ./combineReducers */ 264);
+	var _combineReducers = __webpack_require__(/*! ./combineReducers */ 266);
 	
 	var _combineReducers2 = _interopRequireDefault(_combineReducers);
 	
-	var _bindActionCreators = __webpack_require__(/*! ./bindActionCreators */ 266);
+	var _bindActionCreators = __webpack_require__(/*! ./bindActionCreators */ 268);
 	
 	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
 	
-	var _applyMiddleware = __webpack_require__(/*! ./applyMiddleware */ 267);
+	var _applyMiddleware = __webpack_require__(/*! ./applyMiddleware */ 269);
 	
 	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
 	
-	var _compose = __webpack_require__(/*! ./compose */ 268);
+	var _compose = __webpack_require__(/*! ./compose */ 270);
 	
 	var _compose2 = _interopRequireDefault(_compose);
 	
-	var _warning = __webpack_require__(/*! ./utils/warning */ 265);
+	var _warning = __webpack_require__(/*! ./utils/warning */ 267);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -26829,7 +27133,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 4)))
 
 /***/ },
-/* 257 */
+/* 259 */
 /*!************************************!*\
   !*** ./~/redux/lib/createStore.js ***!
   \************************************/
@@ -26841,11 +27145,11 @@
 	exports.ActionTypes = undefined;
 	exports["default"] = createStore;
 	
-	var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 258);
+	var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 260);
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _symbolObservable = __webpack_require__(/*! symbol-observable */ 262);
+	var _symbolObservable = __webpack_require__(/*! symbol-observable */ 264);
 	
 	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 	
@@ -27099,15 +27403,15 @@
 	}
 
 /***/ },
-/* 258 */
+/* 260 */
 /*!*******************************************!*\
   !*** ./~/redux/~/lodash/isPlainObject.js ***!
   \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var getPrototype = __webpack_require__(/*! ./_getPrototype */ 259),
-	    isHostObject = __webpack_require__(/*! ./_isHostObject */ 260),
-	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 261);
+	var getPrototype = __webpack_require__(/*! ./_getPrototype */ 261),
+	    isHostObject = __webpack_require__(/*! ./_isHostObject */ 262),
+	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 263);
 	
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -27178,7 +27482,7 @@
 
 
 /***/ },
-/* 259 */
+/* 261 */
 /*!*******************************************!*\
   !*** ./~/redux/~/lodash/_getPrototype.js ***!
   \*******************************************/
@@ -27202,7 +27506,7 @@
 
 
 /***/ },
-/* 260 */
+/* 262 */
 /*!*******************************************!*\
   !*** ./~/redux/~/lodash/_isHostObject.js ***!
   \*******************************************/
@@ -27231,7 +27535,7 @@
 
 
 /***/ },
-/* 261 */
+/* 263 */
 /*!******************************************!*\
   !*** ./~/redux/~/lodash/isObjectLike.js ***!
   \******************************************/
@@ -27269,7 +27573,7 @@
 
 
 /***/ },
-/* 262 */
+/* 264 */
 /*!**********************************************!*\
   !*** ./~/redux/~/symbol-observable/index.js ***!
   \**********************************************/
@@ -27278,12 +27582,12 @@
 	/* WEBPACK VAR INJECTION */(function(global) {/* global window */
 	'use strict';
 	
-	module.exports = __webpack_require__(/*! ./ponyfill */ 263)(global || window || this);
+	module.exports = __webpack_require__(/*! ./ponyfill */ 265)(global || window || this);
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 263 */
+/* 265 */
 /*!*************************************************!*\
   !*** ./~/redux/~/symbol-observable/ponyfill.js ***!
   \*************************************************/
@@ -27311,7 +27615,7 @@
 
 
 /***/ },
-/* 264 */
+/* 266 */
 /*!****************************************!*\
   !*** ./~/redux/lib/combineReducers.js ***!
   \****************************************/
@@ -27322,13 +27626,13 @@
 	exports.__esModule = true;
 	exports["default"] = combineReducers;
 	
-	var _createStore = __webpack_require__(/*! ./createStore */ 257);
+	var _createStore = __webpack_require__(/*! ./createStore */ 259);
 	
-	var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 258);
+	var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 260);
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _warning = __webpack_require__(/*! ./utils/warning */ 265);
+	var _warning = __webpack_require__(/*! ./utils/warning */ 267);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -27447,7 +27751,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 4)))
 
 /***/ },
-/* 265 */
+/* 267 */
 /*!**************************************!*\
   !*** ./~/redux/lib/utils/warning.js ***!
   \**************************************/
@@ -27480,7 +27784,7 @@
 	}
 
 /***/ },
-/* 266 */
+/* 268 */
 /*!*******************************************!*\
   !*** ./~/redux/lib/bindActionCreators.js ***!
   \*******************************************/
@@ -27539,7 +27843,7 @@
 	}
 
 /***/ },
-/* 267 */
+/* 269 */
 /*!****************************************!*\
   !*** ./~/redux/lib/applyMiddleware.js ***!
   \****************************************/
@@ -27553,7 +27857,7 @@
 	
 	exports["default"] = applyMiddleware;
 	
-	var _compose = __webpack_require__(/*! ./compose */ 268);
+	var _compose = __webpack_require__(/*! ./compose */ 270);
 	
 	var _compose2 = _interopRequireDefault(_compose);
 	
@@ -27605,7 +27909,7 @@
 	}
 
 /***/ },
-/* 268 */
+/* 270 */
 /*!********************************!*\
   !*** ./~/redux/lib/compose.js ***!
   \********************************/
@@ -27653,15 +27957,15 @@
 	}
 
 /***/ },
-/* 269 */
+/* 271 */
 /*!*************************************************!*\
   !*** ./~/react-redux/~/lodash/isPlainObject.js ***!
   \*************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var getPrototype = __webpack_require__(/*! ./_getPrototype */ 270),
-	    isHostObject = __webpack_require__(/*! ./_isHostObject */ 271),
-	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 272);
+	var getPrototype = __webpack_require__(/*! ./_getPrototype */ 272),
+	    isHostObject = __webpack_require__(/*! ./_isHostObject */ 273),
+	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 274);
 	
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -27732,7 +28036,7 @@
 
 
 /***/ },
-/* 270 */
+/* 272 */
 /*!*************************************************!*\
   !*** ./~/react-redux/~/lodash/_getPrototype.js ***!
   \*************************************************/
@@ -27756,7 +28060,7 @@
 
 
 /***/ },
-/* 271 */
+/* 273 */
 /*!*************************************************!*\
   !*** ./~/react-redux/~/lodash/_isHostObject.js ***!
   \*************************************************/
@@ -27785,7 +28089,7 @@
 
 
 /***/ },
-/* 272 */
+/* 274 */
 /*!************************************************!*\
   !*** ./~/react-redux/~/lodash/isObjectLike.js ***!
   \************************************************/
@@ -27823,7 +28127,7 @@
 
 
 /***/ },
-/* 273 */
+/* 275 */
 /*!**********************************************************!*\
   !*** ./~/react-redux/~/hoist-non-react-statics/index.js ***!
   \**********************************************************/
@@ -27874,7 +28178,7 @@
 
 
 /***/ },
-/* 274 */
+/* 276 */
 /*!**********************************************!*\
   !*** ./~/react-redux/~/invariant/browser.js ***!
   \**********************************************/
@@ -27935,7 +28239,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 4)))
 
 /***/ },
-/* 275 */
+/* 277 */
 /*!*******************************************!*\
   !*** ./src/js/components/require_auth.js ***!
   \*******************************************/
@@ -28001,7 +28305,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRedux = __webpack_require__(/*! react-redux */ 249);
+	var _reactRedux = __webpack_require__(/*! react-redux */ 251);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28012,7 +28316,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /***/ },
-/* 276 */
+/* 278 */
 /*!**************************************************!*\
   !*** ./src/js/components/dashboard/dashboard.js ***!
   \**************************************************/
@@ -28034,7 +28338,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _dashboardHeader = __webpack_require__(/*! ./dashboard-header */ 277);
+	var _dashboardHeader = __webpack_require__(/*! ./dashboard-header */ 279);
 	
 	var _dashboardHeader2 = _interopRequireDefault(_dashboardHeader);
 	
@@ -28073,7 +28377,7 @@
 	exports.default = Dashboard;
 
 /***/ },
-/* 277 */
+/* 279 */
 /*!*********************************************************!*\
   !*** ./src/js/components/dashboard/dashboard-header.js ***!
   \*********************************************************/
@@ -28093,9 +28397,9 @@
 	
 	var _reactRouter = __webpack_require__(/*! react-router */ 160);
 	
-	var _reactRedux = __webpack_require__(/*! react-redux */ 249);
+	var _reactRedux = __webpack_require__(/*! react-redux */ 251);
 	
-	var _actions = __webpack_require__(/*! ../../actions */ 278);
+	var _actions = __webpack_require__(/*! ../../actions */ 280);
 	
 	var actions = _interopRequireWildcard(_actions);
 	
@@ -28196,7 +28500,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(DashboardHeader);
 
 /***/ },
-/* 278 */
+/* 280 */
 /*!*********************************!*\
   !*** ./src/js/actions/index.js ***!
   \*********************************/
@@ -28210,7 +28514,7 @@
 	exports.authenticate = authenticate;
 	exports.fetchUsers = fetchUsers;
 	
-	var _types = __webpack_require__(/*! ./types */ 279);
+	var _types = __webpack_require__(/*! ./types */ 281);
 	
 	function authenticate(isLoggedIn) {
 	  return {
@@ -28230,7 +28534,7 @@
 	}
 
 /***/ },
-/* 279 */
+/* 281 */
 /*!*********************************!*\
   !*** ./src/js/actions/types.js ***!
   \*********************************/
@@ -28245,367 +28549,7 @@
 	var FETCH_USERS = exports.FETCH_USERS = 'fetch_users';
 
 /***/ },
-/* 280 */
-/*!*************************************!*\
-  !*** ./src/js/components/upload.js ***!
-  \*************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _libraryData = __webpack_require__(/*! ../library-data.js */ 246);
-	
-	var _libraryData2 = _interopRequireDefault(_libraryData);
-	
-	var _api = __webpack_require__(/*! ../utils/api.jsx */ 281);
-	
-	var _api2 = _interopRequireDefault(_api);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	module.exports = _react2.default.createClass({
-	  displayName: 'exports',
-	
-	
-	  getInitialState: function getInitialState() {
-	    return {
-	      id: '',
-	      enteredUrl: '',
-	      description: '',
-	      videos: [],
-	      isValidId: false,
-	      isFeatured: false
-	    };
-	  },
-	
-	  testAuth: function testAuth() {
-	    var options = {
-	      method: 'post',
-	      headers: new Headers({
-	        "Content-Type": "application/json"
-	      }),
-	      body: JSON.stringify({ 'testBody': 'hello' })
-	    };
-	    // Make API Call to Save Library
-	    fetch('/testAuth', options).then(function (response) {
-	      response.text().then(function (text) {
-	        console.log('response text: ', text);
-	      });
-	    }).catch(function (err) {
-	      console.log(err);
-	    });
-	  },
-	
-	  handleSubmit: function handleSubmit() {
-	    _api2.default.createLibrary(this.state.videos);
-	  },
-	
-	  handleIdChange: function handleIdChange(e) {
-	    this.setState({
-	      enteredUrl: e.target.value,
-	      isValidId: this.validateYoutubeId(e.target.value)
-	    });
-	  },
-	
-	  handleDescriptionChange: function handleDescriptionChange(e) {
-	    this.setState({ description: e.target.value });
-	  },
-	
-	  handleCategoriesChange: function handleCategoriesChange(e) {
-	    this.setState({ categories: e.target.value });
-	  },
-	
-	  handleFeatureChange: function handleFeatureChange(e) {
-	    console.log('is Featured: ', e.target.checked);
-	    this.setState({ featured: e.target.checked });
-	  },
-	
-	  addVideoToLib: function addVideoToLib() {
-	    if (this.state.isValidId) {
-	      console.log('Adding Video To Library');
-	      // Copy state & push to library's array
-	      var videosArr = this.state.videos.slice();
-	      videosArr.push({
-	        id: this.state.id,
-	        description: this.state.description
-	      });
-	      // Update state with new library, & reset forms
-	      this.setState({
-	        videos: videosArr,
-	        id: '',
-	        enteredUrl: '',
-	        description: '',
-	        isFeatured: false
-	      });
-	    }
-	  },
-	
-	  validateYoutubeId: function validateYoutubeId(url) {
-	    console.log('validating: ', url);
-	    var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-	    var match = url.match(regExp);
-	    if (match && match[2].length == 11) {
-	      this.setState({ id: match[2] });
-	      return match[2];
-	    } else {
-	      return false;
-	    }
-	  },
-	
-	  render: function render() {
-	    var isValid;
-	    if (this.state.isValidId) {
-	      isValid = _react2.default.createElement(
-	        'span',
-	        { className: 'video-is-valid' },
-	        '✔'
-	      );
-	    } else if (this.state.id.length < 1) {
-	      isValid = '';
-	    } else {
-	      isValid = _react2.default.createElement(
-	        'span',
-	        { className: 'video-is-not-valid' },
-	        '✘'
-	      );
-	    }
-	    var currentLib = this.state.videos.map(function (video) {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'h2',
-	          null,
-	          video.title
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement('img', { src: "http://img.youtube.com/vi/" + video.id + "/0.jpg" })
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          video.description
-	        )
-	      );
-	    });
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'upload-container' },
-	        _react2.default.createElement(
-	          'h2',
-	          null,
-	          'Add Videos to Your Library'
-	        ),
-	        _react2.default.createElement(
-	          'form',
-	          { className: 'upload-video' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'upload-video__input-container' },
-	            _react2.default.createElement(
-	              'label',
-	              { className: 'upload-video__label', htmlFor: 'ytURL' },
-	              'YouTube URL',
-	              isValid
-	            ),
-	            _react2.default.createElement('input', {
-	              id: 'ytURL',
-	              className: 'upload-video__input',
-	              type: 'text',
-	              value: this.state.enteredUrl,
-	              onChange: this.handleIdChange })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'upload-video__input-container' },
-	            _react2.default.createElement('input', {
-	              className: 'upload-video__checkbox',
-	              id: 'isFeatured',
-	              type: 'checkbox',
-	              value: this.state.isFeatured,
-	              onChange: this.handleFeatureChange
-	            }),
-	            _react2.default.createElement(
-	              'label',
-	              { htmlFor: 'isFeatured' },
-	              'Feature this video in your library'
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'upload-video__input-container' },
-	            _react2.default.createElement(
-	              'label',
-	              { className: 'upload-video__label', htmlFor: 'description' },
-	              'Description'
-	            ),
-	            _react2.default.createElement(
-	              'p',
-	              null,
-	              'Write a short summary of what this video is about.'
-	            ),
-	            _react2.default.createElement('textarea', {
-	              className: 'upload-video_textarea',
-	              id: 'description',
-	              value: this.state.description,
-	              onChange: this.handleDescriptionChange })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'upload-video__input-container' },
-	            _react2.default.createElement(
-	              'label',
-	              { className: 'upload-video__label', htmlFor: 'categories' },
-	              'Categories'
-	            ),
-	            _react2.default.createElement('textarea', _defineProperty({
-	              className: 'upload-video_textarea',
-	              id: 'categories',
-	              value: this.state.categories,
-	              onChange: this.handleCategoriesChange
-	            }, 'className', 'upload-video__input'))
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'upload-video__input-container' },
-	            _react2.default.createElement('input', {
-	              className: 'upload-video__button margin-right',
-	              type: 'button',
-	              onClick: this.addVideoToLib,
-	              value: 'Add to Library' }),
-	            _react2.default.createElement('input', {
-	              className: 'upload-video__button upload-video__button--primary',
-	              onClick: this.handleSubmit,
-	              type: 'button',
-	              value: 'Save Library' })
-	          )
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'upload-container' },
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          currentLib
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'form',
-	        { action: '/test', method: 'post' },
-	        _react2.default.createElement(
-	          'button',
-	          { type: 'submit' },
-	          'Submit TEST'
-	        )
-	      ),
-	      _react2.default.createElement('input', { type: 'button', onClick: this.testAuth, value: 'Test Auth MiddleWare' })
-	    );
-	  }
-	});
-
-/***/ },
-/* 281 */
-/*!******************************!*\
-  !*** ./src/js/utils/api.jsx ***!
-  \******************************/
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	module.exports.createLibrary = function (videoLibrary) {
-	  var library = videoLibrary;
-	  // Options for API Call
-	  var options = {
-	    method: 'post',
-	    headers: new Headers({
-	      "Content-Type": "application/json",
-	      "userId": window.App._id
-	    }),
-	    body: JSON.stringify(library)
-	  };
-	  // Make API Call to Save Library
-	  fetch('/l', options).then(function (response) {
-	    response.text().then(function (text) {
-	      console.log('response text: ', text);
-	    });
-	  }).catch(function (err) {
-	    console.log(err);
-	  });
-	};
-
-/***/ },
 /* 282 */
-/*!**********************************!*\
-  !*** ./src/js/reducers/index.js ***!
-  \**********************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _redux = __webpack_require__(/*! redux */ 256);
-	
-	var _authentication = __webpack_require__(/*! ./authentication */ 283);
-	
-	var _authentication2 = _interopRequireDefault(_authentication);
-	
-	var _users = __webpack_require__(/*! ./users */ 285);
-	
-	var _users2 = _interopRequireDefault(_users);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var rootReducer = (0, _redux.combineReducers)({
-	  authenticated: _authentication2.default,
-	  users: _users2.default
-	});
-	
-	exports.default = rootReducer;
-
-/***/ },
-/* 283 */
-/*!*******************************************!*\
-  !*** ./src/js/reducers/authentication.js ***!
-  \*******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	exports.default = function () {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
-	  var action = arguments[1];
-	
-	  switch (action.type) {
-	    case _types.CHANGE_AUTH:
-	      return action.payload;
-	  }
-	
-	  return state;
-	};
-	
-	var _types = __webpack_require__(/*! ../actions/types */ 279);
-
-/***/ },
-/* 284 */
 /*!****************************************!*\
   !*** ./src/js/components/user-list.js ***!
   \****************************************/
@@ -28623,9 +28567,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRedux = __webpack_require__(/*! react-redux */ 249);
+	var _reactRedux = __webpack_require__(/*! react-redux */ 251);
 	
-	var _actions = __webpack_require__(/*! ../actions */ 278);
+	var _actions = __webpack_require__(/*! ../actions */ 280);
 	
 	var actions = _interopRequireWildcard(_actions);
 	
@@ -28693,6 +28637,65 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(UserList);
 
 /***/ },
+/* 283 */
+/*!**********************************!*\
+  !*** ./src/js/reducers/index.js ***!
+  \**********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _redux = __webpack_require__(/*! redux */ 258);
+	
+	var _authentication = __webpack_require__(/*! ./authentication */ 284);
+	
+	var _authentication2 = _interopRequireDefault(_authentication);
+	
+	var _users = __webpack_require__(/*! ./users */ 285);
+	
+	var _users2 = _interopRequireDefault(_users);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var rootReducer = (0, _redux.combineReducers)({
+	  authenticated: _authentication2.default,
+	  users: _users2.default
+	});
+	
+	exports.default = rootReducer;
+
+/***/ },
+/* 284 */
+/*!*******************************************!*\
+  !*** ./src/js/reducers/authentication.js ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	exports.default = function () {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case _types.CHANGE_AUTH:
+	      return action.payload;
+	  }
+	
+	  return state;
+	};
+	
+	var _types = __webpack_require__(/*! ../actions/types */ 281);
+
+/***/ },
 /* 285 */
 /*!**********************************!*\
   !*** ./src/js/reducers/users.js ***!
@@ -28717,7 +28720,7 @@
 	  }
 	};
 	
-	var _types = __webpack_require__(/*! ../actions/types */ 279);
+	var _types = __webpack_require__(/*! ../actions/types */ 281);
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 

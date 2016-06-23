@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import requireAuth from './components/require_auth';
 import Dashboard from './components/dashboard/dashboard';
+// import App from './components/app';
 import Upload from './components/upload';
 import UserList from './components/user-list';
 

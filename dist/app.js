@@ -20141,9 +20141,9 @@
 	
 	/* Component Declarations */
 	var Main = __webpack_require__(/*! ./components/main.jsx */ 221);
-	var Upload = __webpack_require__(/*! ./components/upload */ 280);
-	var Playback = __webpack_require__(/*! ./components/playback.jsx */ 247);
-	var About = __webpack_require__(/*! ./components/about.jsx */ 248);
+	var Upload = __webpack_require__(/*! ./components/upload */ 247);
+	var Playback = __webpack_require__(/*! ./components/playback.jsx */ 249);
+	var About = __webpack_require__(/*! ./components/about.jsx */ 250);
 	
 	module.exports = React.createElement(
 	  Router,
@@ -28506,128 +28506,6 @@
 
 /***/ },
 /* 247 */
-/*!****************************************!*\
-  !*** ./src/js/components/playback.jsx ***!
-  \****************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(/*! react */ 1);
-	
-	module.exports = React.createClass({
-		displayName: 'exports',
-	
-	
-		validateID: function validateID() {
-			return true;
-		},
-	
-		getInitialState: function getInitialState() {
-			return { style: {
-					width: window.innerWidth + 'px',
-					height: window.innerHeight + 'px'
-				}
-			};
-		},
-	
-		componentDidMount: function componentDidMount() {
-			window.addEventListener('resize', this.handleResize);
-		},
-	
-		handleResize: function handleResize() {
-			this.setState({ style: {
-					width: window.innerWidth + 'px',
-					height: window.innerHeight + 'px'
-				}
-			});
-		},
-	
-		render: function render() {
-			return React.createElement('iframe', { style: this.state.style,
-				src: "http://www.youtube.com/embed/" + this.props.params.videoid + "?autoplay=1",
-				frameBorder: '0',
-				allowFullScreen: true });
-		}
-	});
-
-/***/ },
-/* 248 */
-/*!*************************************!*\
-  !*** ./src/js/components/about.jsx ***!
-  \*************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var React = __webpack_require__(/*! react */ 1);
-	
-	module.exports = React.createClass({
-	  displayName: "exports",
-	
-	
-	  render: function render() {
-	
-	    return React.createElement(
-	      "div",
-	      { className: "container container--medium" },
-	      React.createElement(
-	        "h1",
-	        null,
-	        "Upload Your Own Netflix-Like Video Library"
-	      ),
-	      React.createElement(
-	        "p",
-	        null,
-	        "I created Patflix as a way to share my selection of Youtube videos with the world."
-	      ),
-	      React.createElement(
-	        "p",
-	        null,
-	        "All content is pulled in dynamically by category and by youtube ID, and then presented in Netflix-like fashion."
-	      ),
-	      React.createElement(
-	        "p",
-	        null,
-	        "The next iteration of Patflix already in progress will have an interface allowing for other people to upload \\ Youtube links and then share their library via a URL."
-	      )
-	    );
-	  }
-	});
-
-/***/ },
-/* 249 */,
-/* 250 */,
-/* 251 */,
-/* 252 */,
-/* 253 */,
-/* 254 */,
-/* 255 */,
-/* 256 */,
-/* 257 */,
-/* 258 */,
-/* 259 */,
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */,
-/* 266 */,
-/* 267 */,
-/* 268 */,
-/* 269 */,
-/* 270 */,
-/* 271 */,
-/* 272 */,
-/* 273 */,
-/* 274 */,
-/* 275 */,
-/* 276 */,
-/* 277 */,
-/* 278 */,
-/* 279 */,
-/* 280 */
 /*!*************************************!*\
   !*** ./src/js/components/upload.js ***!
   \*************************************/
@@ -28643,7 +28521,7 @@
 	
 	var _libraryData2 = _interopRequireDefault(_libraryData);
 	
-	var _api = __webpack_require__(/*! ../utils/api.jsx */ 281);
+	var _api = __webpack_require__(/*! ../utils/api.jsx */ 248);
 	
 	var _api2 = _interopRequireDefault(_api);
 	
@@ -28898,7 +28776,7 @@
 	});
 
 /***/ },
-/* 281 */
+/* 248 */
 /*!******************************!*\
   !*** ./src/js/utils/api.jsx ***!
   \******************************/
@@ -28926,6 +28804,97 @@
 	    console.log(err);
 	  });
 	};
+
+/***/ },
+/* 249 */
+/*!****************************************!*\
+  !*** ./src/js/components/playback.jsx ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(/*! react */ 1);
+	
+	module.exports = React.createClass({
+		displayName: 'exports',
+	
+	
+		validateID: function validateID() {
+			return true;
+		},
+	
+		getInitialState: function getInitialState() {
+			return { style: {
+					width: window.innerWidth + 'px',
+					height: window.innerHeight + 'px'
+				}
+			};
+		},
+	
+		componentDidMount: function componentDidMount() {
+			window.addEventListener('resize', this.handleResize);
+		},
+	
+		handleResize: function handleResize() {
+			this.setState({ style: {
+					width: window.innerWidth + 'px',
+					height: window.innerHeight + 'px'
+				}
+			});
+		},
+	
+		render: function render() {
+			return React.createElement('iframe', { style: this.state.style,
+				src: "http://www.youtube.com/embed/" + this.props.params.videoid + "?autoplay=1",
+				frameBorder: '0',
+				allowFullScreen: true });
+		}
+	});
+
+/***/ },
+/* 250 */
+/*!*************************************!*\
+  !*** ./src/js/components/about.jsx ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(/*! react */ 1);
+	
+	module.exports = React.createClass({
+	  displayName: "exports",
+	
+	
+	  render: function render() {
+	
+	    return React.createElement(
+	      "div",
+	      { className: "container container--medium" },
+	      React.createElement(
+	        "h1",
+	        null,
+	        "Upload Your Own Netflix-Like Video Library"
+	      ),
+	      React.createElement(
+	        "p",
+	        null,
+	        "I created Patflix as a way to share my selection of Youtube videos with the world."
+	      ),
+	      React.createElement(
+	        "p",
+	        null,
+	        "All content is pulled in dynamically by category and by youtube ID, and then presented in Netflix-like fashion."
+	      ),
+	      React.createElement(
+	        "p",
+	        null,
+	        "The next iteration of Patflix already in progress will have an interface allowing for other people to upload \\ Youtube links and then share their library via a URL."
+	      )
+	    );
+	  }
+	});
 
 /***/ }
 /******/ ]);
