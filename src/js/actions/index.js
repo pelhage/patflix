@@ -16,3 +16,18 @@ export function fetchUsers() {
     payload: data
   }
 }
+
+export function signinUser( {email, password}) {
+  return function(dispatch) {
+    // Submit email/password to server
+    // If request is good
+    // - update state to indicate user is auth'd
+    // - save the jwt token
+    // - redirect route to '/feature'
+
+    // If request is bad
+    // - Show an error to the user
+    // dispatch({ })
+  }
+
+}

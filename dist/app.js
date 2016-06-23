@@ -91,6 +91,10 @@
 	
 	var _signin2 = _interopRequireDefault(_signin);
 	
+	var _upload = __webpack_require__(/*! ./components/upload */ 330);
+	
+	var _upload2 = _interopRequireDefault(_upload);
+	
 	var _reducers = __webpack_require__(/*! ./reducers */ 276);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
@@ -99,9 +103,13 @@
 	
 	var _async2 = _interopRequireDefault(_async);
 	
+	var _reduxThunk = __webpack_require__(/*! redux-thunk */ 333);
+	
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_async2.default)(_redux.createStore);
+	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
@@ -115,7 +123,8 @@
 	      _react2.default.createElement(_reactRouter.Route, { path: 'dashboard', component: (0, _require_auth2.default)(_dashboard2.default) }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'about', component: _about2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'users', component: _userList2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: 'signin', component: _signin2.default })
+	      _react2.default.createElement(_reactRouter.Route, { path: 'signin', component: _signin2.default }),
+	      _react2.default.createElement(_reactRouter.Route, { path: 'upload', component: _upload2.default })
 	    )
 	  )
 	), document.querySelector('.container'));
@@ -27891,6 +27900,11 @@
 	            _reactRouter.Link,
 	            { className: 'nav__item', to: '/signin' },
 	            'Signin'
+	          ),
+	          _react2.default.createElement(
+	            _reactRouter.Link,
+	            { className: 'nav__item', to: '/upload' },
+	            'Upload'
 	          )
 	        )
 	      );
@@ -27920,6 +27934,7 @@
 	});
 	exports.authenticate = authenticate;
 	exports.fetchUsers = fetchUsers;
+	exports.signinUser = signinUser;
 	
 	var _types = __webpack_require__(/*! ./types */ 250);
 	
@@ -27937,6 +27952,23 @@
 	  return {
 	    type: _types.FETCH_USERS,
 	    payload: data
+	  };
+	}
+	
+	function signinUser(_ref) {
+	  var email = _ref.email;
+	  var password = _ref.password;
+	
+	  return function (dispatch) {
+	    // Submit email/password to server
+	    // If request is good
+	    // - update state to indicate user is auth'd
+	    // - save the jwt token
+	    // - redirect route to '/feature'
+	
+	    // If request is bad
+	    // - Show an error to the user
+	    // dispatch({ })
 	  };
 	}
 
@@ -34090,6 +34122,591 @@
 	  form: 'signin',
 	  fields: ['email', 'password']
 	})(Signin);
+
+/***/ },
+/* 330 */
+/*!*************************************!*\
+  !*** ./src/js/components/upload.js ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _libraryData = __webpack_require__(/*! ../library-data.js */ 331);
+	
+	var _libraryData2 = _interopRequireDefault(_libraryData);
+	
+	var _api = __webpack_require__(/*! ../utils/api.jsx */ 332);
+	
+	var _api2 = _interopRequireDefault(_api);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	module.exports = _react2.default.createClass({
+	  displayName: 'exports',
+	
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      id: '',
+	      enteredUrl: '',
+	      description: '',
+	      videos: [],
+	      isValidId: false,
+	      isFeatured: false
+	    };
+	  },
+	
+	  testAuth: function testAuth() {
+	    // Make API Call to Save Library
+	    fetch('http://localhost:8080/dummyData').then(function (response) {
+	      response.text().then(function (text) {
+	        console.log('response text: ', text);
+	      });
+	    }).catch(function (err) {
+	      console.log(err);
+	    });
+	  },
+	
+	  handleSubmit: function handleSubmit() {
+	    _api2.default.createLibrary(this.state.videos);
+	  },
+	
+	  handleIdChange: function handleIdChange(e) {
+	    this.setState({
+	      enteredUrl: e.target.value,
+	      isValidId: this.validateYoutubeId(e.target.value)
+	    });
+	  },
+	
+	  handleDescriptionChange: function handleDescriptionChange(e) {
+	    this.setState({ description: e.target.value });
+	  },
+	
+	  handleCategoriesChange: function handleCategoriesChange(e) {
+	    this.setState({ categories: e.target.value });
+	  },
+	
+	  handleFeatureChange: function handleFeatureChange(e) {
+	    console.log('is Featured: ', e.target.checked);
+	    this.setState({ featured: e.target.checked });
+	  },
+	
+	  addVideoToLib: function addVideoToLib() {
+	    if (this.state.isValidId) {
+	      console.log('Adding Video To Library');
+	      // Copy state & push to library's array
+	      var videosArr = this.state.videos.slice();
+	      videosArr.push({
+	        id: this.state.id,
+	        description: this.state.description
+	      });
+	      // Update state with new library, & reset forms
+	      this.setState({
+	        videos: videosArr,
+	        id: '',
+	        enteredUrl: '',
+	        description: '',
+	        isFeatured: false
+	      });
+	    }
+	  },
+	
+	  validateYoutubeId: function validateYoutubeId(url) {
+	    console.log('validating: ', url);
+	    var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+	    var match = url.match(regExp);
+	    if (match && match[2].length == 11) {
+	      this.setState({ id: match[2] });
+	      return match[2];
+	    } else {
+	      return false;
+	    }
+	  },
+	
+	  render: function render() {
+	    var isValid;
+	    if (this.state.isValidId) {
+	      isValid = _react2.default.createElement(
+	        'span',
+	        { className: 'video-is-valid' },
+	        '✔'
+	      );
+	    } else if (this.state.id.length < 1) {
+	      isValid = '';
+	    } else {
+	      isValid = _react2.default.createElement(
+	        'span',
+	        { className: 'video-is-not-valid' },
+	        '✘'
+	      );
+	    }
+	    var currentLib = this.state.videos.map(function (video) {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          video.title
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement('img', { src: "http://img.youtube.com/vi/" + video.id + "/0.jpg" })
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          video.description
+	        )
+	      );
+	    });
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'form-container' },
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Add Videos to Your Library'
+	        ),
+	        _react2.default.createElement(
+	          'form',
+	          { className: 'form' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'form__input-container' },
+	            _react2.default.createElement(
+	              'label',
+	              { className: 'form__label', htmlFor: 'ytURL' },
+	              'YouTube URL',
+	              isValid
+	            ),
+	            _react2.default.createElement('input', {
+	              id: 'ytURL',
+	              className: 'form__input',
+	              type: 'text',
+	              value: this.state.enteredUrl,
+	              onChange: this.handleIdChange })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'form__input-container' },
+	            _react2.default.createElement('input', {
+	              className: 'form__checkbox',
+	              id: 'isFeatured',
+	              type: 'checkbox',
+	              value: this.state.isFeatured,
+	              onChange: this.handleFeatureChange
+	            }),
+	            _react2.default.createElement(
+	              'label',
+	              { htmlFor: 'isFeatured' },
+	              'Feature this video in your library'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'form__input-container' },
+	            _react2.default.createElement(
+	              'label',
+	              { className: 'form__label', htmlFor: 'description' },
+	              'Description'
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              'Write a short summary of what this video is about.'
+	            ),
+	            _react2.default.createElement('textarea', {
+	              className: 'form_textarea',
+	              id: 'description',
+	              value: this.state.description,
+	              onChange: this.handleDescriptionChange })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'form__input-container' },
+	            _react2.default.createElement(
+	              'label',
+	              { className: 'form__label', htmlFor: 'categories' },
+	              'Categories'
+	            ),
+	            _react2.default.createElement('textarea', _defineProperty({
+	              className: 'form_textarea',
+	              id: 'categories',
+	              value: this.state.categories,
+	              onChange: this.handleCategoriesChange
+	            }, 'className', 'form__input'))
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'form__input-container' },
+	            _react2.default.createElement('input', {
+	              className: 'form__button margin-right',
+	              type: 'button',
+	              onClick: this.addVideoToLib,
+	              value: 'Add to Library' }),
+	            _react2.default.createElement('input', {
+	              className: 'form__button form__button--primary',
+	              onClick: this.handleSubmit,
+	              type: 'button',
+	              value: 'Save Library' })
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'upload-container' },
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          currentLib
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'form',
+	        { action: '/test', method: 'post' },
+	        _react2.default.createElement(
+	          'button',
+	          { type: 'submit' },
+	          'Submit TEST'
+	        )
+	      ),
+	      _react2.default.createElement('input', { type: 'button', onClick: this.testAuth, value: 'Test Auth MiddleWare' })
+	    );
+	  }
+	});
+
+/***/ },
+/* 331 */
+/*!********************************!*\
+  !*** ./src/js/library-data.js ***!
+  \********************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+		"featured": [{
+			"id": "iG9CE55wbtY",
+			"title": "Do Schools Kill Creativity?",
+			"categories": [""],
+			"description": "Sir Ken Robinson makes an entertaining and profoundly \
+												moving case for creating an education system that \
+												nurtures (rather than undermines) creativity."
+		}, {
+			"id": "pfw2Qf1VfJo",
+			"title": "This is Water",
+			"categories": ["Success", "Spirituality"],
+			"description": "This talk by the late David Foster Wallace might just \
+												change the way you see the tiny, sometimes annoying, \
+												details of life."
+		}, {
+			"id": "OX0OARBqBp0",
+			"title": "The Story of the Chinese Farmer",
+			"categories": ["Spirituality"],
+			"description": "This story might change your perspective on how to judge events in life."
+		}, {
+			"id": "YTuElM6T50w",
+			"title": "Be The Hero of Your Own Movie",
+			"categories": ["Success", "Motivation", "Philosophy"],
+			"description": "If your life was a movie and it started now, what would the hero of your \
+												life's movie do right now? Joe Rogan says do those things."
+		}],
+		"categories": ["Astronomy", "Comedy", "Spirituality", "Success"],
+		"videos": [{
+			"id": "ejc5zic4q2A",
+			"title": "what. (Bo Burnham FULL SHOW)",
+			"categories": ["Comedy"],
+			"description": null
+		}, {
+			"id": "ofnSojq-vqI",
+			"title": "Killing Them Softly - Dave Chappelle",
+			"categories": ["Comedy"],
+			"description": null
+		}, {
+			"id": "LTWwY8Ok5I0",
+			"title": "Plato's Allegory of the Cave",
+			"categories": ["Philosophy", "Spirituality"],
+			"description": null
+		}, {
+			"id": "4PN5JJDh78I",
+			"title": "Carl Sagan - You Are Here (Pale Blue Dot)",
+			"categories": ["Astronomy", "Science"],
+			"description": null
+		}, {
+			"id": "OKY6BGcx37k",
+			"title": "Talking Funny",
+			"categories": ["Comedy"],
+			"description": null
+		}, {
+			"id": "9D05ej8u-gU",
+			"title": "Neil deGrasse Tyson - The Most Astounding Fact",
+			"categories": ["Astronomy", "Science"],
+			"description": null
+		}, {
+			"id": "KFwBH2fb2E0",
+			"title": "Louis CK - Of Course But Maybe",
+			"categories": ["Comedy"],
+			"description": null
+		}, {
+			"id": "pfw2Qf1VfJo",
+			"title": "This is Water",
+			"categories": ["Success", "Spirituality"],
+			"description": null
+		}, {
+			"id": "yu7n0XzqtfA",
+			"title": "The Stoics",
+			"categories": ["Philosophy", "Spirituality"],
+			"description": null
+		}, {
+			"id": "vH0nP4NzS9M",
+			"title": "Arnold Schwarzenegger - Who do YOU want to be in life?",
+			"categories": ["Success", "Inspirational", "Motivational"],
+			"description": null
+		}, {
+			"id": "45mMioJ5szc",
+			"title": "Michael Jordan - Failure",
+			"categories": ["Success"],
+			"description": null
+		}, {
+			"id": "Yh9IGY2U2dQ",
+			"title": "Michael Jordan - Become Legendary #1",
+			"categories": ["Success", "Motivational", "Motivation", "Inspirational"],
+			"description": null
+		}, {
+			"id": "GTq5xSo_jP4",
+			"title": "Michael Jordan - Become Legendary #2",
+			"categories": ["Success", "Motivational", "Motivation", "Inspirational"],
+			"description": null
+		}, {
+			"id": "9zSVu76AX3I",
+			"title": "Michael Jordan - Maybe It's My Fault",
+			"categories": ["Success"],
+			"description": null
+		}, {
+			"id": "oY59wZdCDo0",
+			"title": "Carl Sagan - The Frontier Is Everywhere",
+			"categories": ["Astronomy", "Science"]
+		}, {
+			"id": "QAa2O_8wBUQ",
+			"title": "What is Dark Matter and Dark Energy?",
+			"categories": ["Astronomy", "Science"]
+		}, {
+			"id": "emHAoQGoQic",
+			"title": "Alan Watts - The Mind",
+			"categories": ["Spirituality"]
+		}, {
+			"id": "OX0OARBqBp0",
+			"title": "Alan Watts - The Story of the Chinese Farmer",
+			"categories": ["Spirituality"]
+		}, {
+			"id": "gd2Ot6hLCtM",
+			"title": "Alan Watts - The Art of Meditation",
+			"categories": ["Spirituality"]
+		}, {
+			"id": "YMDu3JdQ8Ow",
+			"title": "Alan Watts - What is Wrong With Our Culture",
+			"categories": ["Spirituality", "Philosophy"]
+		}, {
+			"id": "E1oZhEIrer4",
+			"title": "Nobody Tells This To Beginners - Ira Glass",
+			"categories": ["Success", "Motivation"]
+		}, {
+			"id": "RWsx1X8PV_A",
+			"title": "Milton Friedman - Greed",
+			"categories": []
+		}, {
+			"id": "iG9CE55wbtY",
+			"title": "Sir Ken Robinson - Do Schools Kill Creativity?",
+			"categories": ["Education"]
+		}, {
+			"id": "7Pq-S557XQU",
+			"title": "Humans Need Not Apply - CGP Grey",
+			"categories": ["Science"]
+		}, {
+			"id": "YTuElM6T50w",
+			"title": "Joe Rogan: Be The Hero of Your Own Movie",
+			"categories": ["Success", "Motivation", "Philosophy"]
+		}, {
+			"id": "UrOZllbNarw",
+			"title": "Why Shouldn't I Work for the NSA? (Good Will Hunting)",
+			"categories": []
+		}, {
+			"id": "jNhtbmXzIaM",
+			"title": "Richard Dawkins Teaching Evolution to Religious Students",
+			"categories": ["Science"]
+		}, {
+			"id": "KaOC9danxNo",
+			"title": "Space Oddity - Chris Hadfield",
+			"categories": ["Astronomy", "Music"]
+		}, {
+			"id": "Q4PE2hSqVnk",
+			"title": "ALEC BALDWIN GLENGARRY GLEN ROSS ALWAYS BE CLOSING FULL SPEECH",
+			"categories": []
+		}, {
+			"id": "4u2ZsoYWwJA",
+			"title": "Why? - Louis C.K.",
+			"categories": ["Comedy"]
+		}, {
+			"id": "kYfNvmF0Bqw",
+			"title": "Steve Jobs - Interview",
+			"categories": ["Success", "Inspirational", "Motivation", "Motivational"]
+		}, {
+			"id": "Kj_48pHuXWo",
+			"title": "Steve Jobs Rare Interview (1990)",
+			"categories": ["Success"]
+		}, {
+			"id": "aUaZS1pHNAA",
+			"title": "Dave Chappelle HBO Special",
+			"categories": ["Comedy"]
+		}, {
+			"id": "yzh7RtIJKZk",
+			"title": "Louis C.K. Monologue - SNL",
+			"categories": ["Comedy"]
+		}, {
+			"id": "xSSDeesUUsU",
+			"title": "Louis C.K. Hates Twitter - Conan on TBS",
+			"categories": ["Comedy"]
+		}, {
+			"id": "0JW1tJLRtsk",
+			"title": "LCK on Doing Your Job & the Current Crop of 20 year-Olds",
+			"categories": ["Comedy"]
+		}, {
+			"id": "u6xaj2fC1jI",
+			"title": "Mitch Hedberg - A Comic Genius",
+			"categories": ["Comedy"]
+		}, {
+			"id": "LCsvJe3dGVk",
+			"title": "This Is Water - David Foster Wallace",
+			"categories": ["Life", "Philosophy"]
+		}, {
+			"id": "vBmavNoChZc",
+			"title": "Amazon founder and CEO Jeff Bezos delivers graduation speech at Princeton University",
+			"categories": ["Success", "Advice"]
+		}, {
+			"id": "o0FiCxZKuv8",
+			"title": "Martin Luther King's Last Speech: \"I've Been To The Mountaintop\"",
+			"categories": ["Inspirational", "History"]
+		}, {
+			"id": "WINDtlPXmmE",
+			"title": "Network - Mad as Hell Scene",
+			"categories": ["Social Critique"]
+		}, {
+			"id": "kFMZrEABdw4",
+			"title": "Bring on the Learning Revolution! - Ken Robinson",
+			"categories": ["Education"]
+		}, {
+			"id": "SXE4_DCMmYM",
+			"title": "Charlie Chaplin's Epic Speech in The Great Dictator",
+			"categories": ["Inspirational", "Social Critique"]
+		}, {
+			"id": "D1R-jKKp3NA",
+			"title": "Stay Hungry, Stay Foolish - Steve Jobs Stanford Commencement Speech",
+			"categories": ["Inspirational", "Motivational", "Success"]
+		}, {
+			"id": "8Xtly-dpBeA",
+			"title": "Carl Sagan - The Gift of Apollo",
+			"categories": ["Astronomy"]
+		}, {
+			"id": "7ImvlS8PLIo",
+			"title": "'A Universe From Nothing' by Lawrence Krauss",
+			"categories": ["Astronomy"]
+		}
+	
+		// {
+		// 	"id": "",
+		// 	"title": "",
+		// 	"categories": []
+		// },
+		// {
+		// 	"id": "",
+		// 	"title": "",
+		// 	"categories": []
+		// },
+		// {
+		// 	"id": "",
+		// 	"title": "",
+		// 	"categories": []
+		// },
+		// {
+		// 	"id": "",
+		// 	"title": "",
+		// 	"categories": []
+		// }
+		]
+	};
+
+/***/ },
+/* 332 */
+/*!******************************!*\
+  !*** ./src/js/utils/api.jsx ***!
+  \******************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports.createLibrary = function (videoLibrary) {
+	  var library = videoLibrary;
+	  // Options for API Call
+	  var options = {
+	    method: 'post',
+	    headers: new Headers({
+	      "Content-Type": "application/json",
+	      "userId": window.App._id
+	    }),
+	    body: JSON.stringify(library)
+	  };
+	  // Make API Call to Save Library
+	  fetch('/l', options).then(function (response) {
+	    response.text().then(function (text) {
+	      console.log('response text: ', text);
+	    });
+	  }).catch(function (err) {
+	    console.log(err);
+	  });
+	};
+
+/***/ },
+/* 333 */
+/*!************************************!*\
+  !*** ./~/redux-thunk/lib/index.js ***!
+  \************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	function createThunkMiddleware(extraArgument) {
+	  return function (_ref) {
+	    var dispatch = _ref.dispatch;
+	    var getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        if (typeof action === 'function') {
+	          return action(dispatch, getState, extraArgument);
+	        }
+	
+	        return next(action);
+	      };
+	    };
+	  };
+	}
+	
+	var thunk = createThunkMiddleware();
+	thunk.withExtraArgument = createThunkMiddleware;
+	
+	exports['default'] = thunk;
 
 /***/ }
 /******/ ]);

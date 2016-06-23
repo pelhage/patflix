@@ -16,15 +16,8 @@ module.exports = React.createClass({
   },
 
   testAuth: function() {
-    var options = {
-      method: 'post',
-      headers: new Headers({
-        "Content-Type": "application/json"
-      }),
-      body: JSON.stringify({'testBody': 'hello'})
-    };
     // Make API Call to Save Library
-    fetch('/testAuth', options).then(function(response) {
+    fetch('http://localhost:8080/dummyData').then(function(response) {
       response.text().then(function(text) {
         console.log('response text: ', text);
       });

@@ -21,6 +21,7 @@ class Header extends Component {
           <Link className="nav__item" to="/about">About Patflix</Link>
           { this.authButton() }
           <Link className="nav__item" to="/signin">Signin</Link>
+          <Link className="nav__item" to="/upload">Upload</Link>
         </span>
       </nav>
     );

@@ -12,11 +12,13 @@ import Dashboard from './components/dashboard';
 import UserList from './components/user-list';
 import About from './components/about';
 import Signin from './components/auth/signin';
+import Upload from './components/upload';
 
 import reducers from './reducers';
 import Async from './middlewares/async';
+import reduxThunk from 'redux-thunk';
 
-const createStoreWithMiddleware = applyMiddleware(Async)(createStore);
+const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
@@ -26,6 +28,7 @@ ReactDOM.render(
         <Route path="about" component={About}></Route>
         <Route path="users" component={UserList}></Route>
         <Route path="signin" component={Signin}></Route>
+        <Route path="upload" component={Upload}></Route>
       </Route>
 
     </Router>
