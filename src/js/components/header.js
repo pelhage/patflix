@@ -6,22 +6,22 @@ import * as actions from '../actions';
 class Header extends Component {
   authButton() {
     if (this.props.authenticated) {
-      return <button className="btn btn-lg" onClick={() => this.props.authenticate(false)}>Sign Out</button>
+      return <Link to="/signout" className="nav__item">Sign Out</Link>
     }
-    return (
-      <button className="btn btn-lg btn-primary" onClick={() => this.props.authenticate(true)}>Sign In</button>
-    );
+    return [
+      <Link to="/signin" className="nav__item">Sign In</Link>,
+      <Link to="/signup" className="nav__item">Sign Up</Link>
+    ];
   }
   render() {
     return (
       <nav className="nav">
-        <Link className="nav__item nav__item--brand" to="/">PATFLIX</Link>
+        <Link to="/" className="nav__item nav__item--brand">PATFLIX</Link>
         <span className="nav__item--pull-right">
-          <Link className="nav__item" to="/dashboard">Create Library</Link>
-          <Link className="nav__item" to="/about">About Patflix</Link>
+          <Link to="/dashboard" className="nav__item">Create Library</Link>
+          <Link to="/about" className="nav__item">About Patflix</Link>
           { this.authButton() }
-          <Link className="nav__item" to="/signin">Signin</Link>
-          <Link className="nav__item" to="/upload">Upload</Link>
+          <Link to="/upload" className="nav__item">Upload</Link>
         </span>
       </nav>
     );
@@ -29,7 +29,7 @@ class Header extends Component {
 }
 
 function mapStateToProps(state) {
-  return { authenticated: state.authenticated }
+  return { authenticated: state.auth.authenticated }
 }
 
 export default connect(mapStateToProps, actions)(Header);

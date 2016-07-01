@@ -10,13 +10,13 @@ export default function(ComposedComponent) {
 
     componentWillMount() {
       if (!this.props.authenticated) {
-        this.context.router.push('/')
+        this.context.router.push('/signin')
       }
     }
 
     componentWillUpdate(nextProps) {
       if (!this.props.authenticated) {
-        this.context.router.push('/')
+        this.context.router.push('/signin')
       }
     }
 
@@ -26,7 +26,7 @@ export default function(ComposedComponent) {
   }
 
   function mapStateToProps(state) {
-    return { authenticated: state.authenticated }
+    return { authenticated: state.auth.authenticated }
   }
 
   return connect(mapStateToProps)(Authentication);

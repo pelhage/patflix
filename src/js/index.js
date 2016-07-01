@@ -9,10 +9,11 @@ import App from './components/app';
 
 import Library from './components/library';
 import Dashboard from './components/dashboard';
-import UserList from './components/user-list';
 import About from './components/about';
 import Signin from './components/auth/signin';
 import Upload from './components/upload';
+import SignUp from './components/auth/signup';
+import SignOut from './components/auth/signout';
 
 import reducers from './reducers';
 import Async from './middlewares/async';
@@ -26,8 +27,9 @@ ReactDOM.render(
       <Route path="/" component={App}>
         <Route path="dashboard" component={requireAuth(Dashboard)}></Route>
         <Route path="about" component={About}></Route>
-        <Route path="users" component={UserList}></Route>
         <Route path="signin" component={Signin}></Route>
+        <Route path="signup" component={SignUp}></Route>
+        <Route path="signout" component={SignOut}></Route>
         <Route path="upload" component={Upload}></Route>
       </Route>
 
