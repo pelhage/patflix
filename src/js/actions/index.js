@@ -61,6 +61,22 @@ export function authError(error) {
   }
 }
 
+export function fetchLibraries() {
+  return function(dispatch) {
+    axios.get(`${API_URL}/`, {
+      headers: { authorization: localStorage.getItem('token') }
+    })
+    .then(response => {
+      console.log(response)
+    })
+    .catch(function(err) {
+      // If request is bad
+      // Show an error to the user
+      console.log('fetchLibraries err: ', err)
+    });
+  }
+}
+
 export function signoutUser() {
   localStorage.removeItem('token');
 

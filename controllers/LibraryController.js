@@ -27,10 +27,6 @@ module.exports = {
     res.send(newLibrary);
   },
 
-  test: function(req, res) {
-    console.log('Test Endpoint requesting user: ', req.user);
-  },
-
   // Get a user library
   render: function(req, res) {
     var libID = hashids.decodeHex(req.params.id);

@@ -27947,6 +27947,7 @@
 	exports.signinUser = signinUser;
 	exports.signUpUser = signUpUser;
 	exports.authError = authError;
+	exports.fetchLibraries = fetchLibraries;
 	exports.signoutUser = signoutUser;
 	
 	var _types = __webpack_require__(/*! ./types */ 250);
@@ -28010,6 +28011,20 @@
 	  return {
 	    type: _types.AUTH_ERROR,
 	    payload: error
+	  };
+	}
+	
+	function fetchLibraries() {
+	  return function (dispatch) {
+	    _axios2.default.get(API_URL + '/', {
+	      headers: { authorization: localStorage.getItem('token') }
+	    }).then(function (response) {
+	      console.log(response);
+	    }).catch(function (err) {
+	      // If request is bad
+	      // Show an error to the user
+	      console.log('fetchLibraries err: ', err);
+	    });
 	  };
 	}
 	
@@ -31609,7 +31624,7 @@
   \****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -31620,6 +31635,18 @@
 	var _react = __webpack_require__(/*! react */ 1);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 159);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 249);
+	
+	var actions = _interopRequireWildcard(_actions);
+	
+	var _upload = __webpack_require__(/*! ./upload */ 344);
+	
+	var _upload2 = _interopRequireDefault(_upload);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -31639,16 +31666,26 @@
 	  }
 	
 	  _createClass(Dashboard, [{
-	    key: "render",
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.props.fetchLibraries();
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
 	      // Go through each category
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "contain" },
+	        'div',
+	        { className: 'contain' },
 	        _react2.default.createElement(
-	          "h1",
+	          'h1',
 	          null,
-	          "Hello, this is the dashboard"
+	          'Hello, this is the dashboard'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(_upload2.default, null)
 	        )
 	      );
 	    }
@@ -31657,7 +31694,7 @@
 	  return Dashboard;
 	}(_react.Component);
 	
-	exports.default = Dashboard;
+	exports.default = (0, _reactRedux.connect)(null, actions)(Dashboard);
 
 /***/ },
 /* 294 */
