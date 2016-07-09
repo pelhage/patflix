@@ -97,10 +97,6 @@
 	
 	var _signin2 = _interopRequireDefault(_signin);
 	
-	var _upload = __webpack_require__(/*! ./components/upload */ 344);
-	
-	var _upload2 = _interopRequireDefault(_upload);
-	
 	var _signup = __webpack_require__(/*! ./components/auth/signup */ 347);
 	
 	var _signup2 = _interopRequireDefault(_signup);
@@ -109,12 +105,18 @@
 	
 	var _signout2 = _interopRequireDefault(_signout);
 	
+	var _DeepForm = __webpack_require__(/*! ./components/upload/DeepForm */ 354);
+	
+	var _DeepForm2 = _interopRequireDefault(_DeepForm);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// All Components for Patflix
 	
 	
 	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
+	// import Upload from './components/upload';
+	
 	// HOC for authentication
 	
 	// Actions + Reducers
@@ -143,7 +145,7 @@
 	      _react2.default.createElement(_reactRouter.Route, { path: 'signin', component: _signin2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _signup2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'signout', component: _signout2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: 'upload', component: _upload2.default })
+	      _react2.default.createElement(_reactRouter.Route, { path: 'form', component: _DeepForm2.default })
 	    )
 	  )
 	), document.querySelector('.container'));
@@ -27880,6 +27882,10 @@
 	      }
 	      return [_react2.default.createElement(
 	        _reactRouter.Link,
+	        { to: '/about', className: 'nav__item' },
+	        'About Patflix'
+	      ), _react2.default.createElement(
+	        _reactRouter.Link,
 	        { to: '/signin', className: 'nav__item' },
 	        'Sign In'
 	      ), _react2.default.createElement(
@@ -27907,17 +27913,7 @@
 	            { to: '/dashboard', className: 'nav__item' },
 	            'Create Library'
 	          ),
-	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/about', className: 'nav__item' },
-	            'About Patflix'
-	          ),
-	          this.authButton(),
-	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/upload', className: 'nav__item' },
-	            'Upload'
-	          )
+	          this.authButton()
 	        )
 	      );
 	    }
@@ -27946,6 +27942,8 @@
 	});
 	exports.signinUser = signinUser;
 	exports.signUpUser = signUpUser;
+	exports.createLibrary = createLibrary;
+	exports.updateCurrentLib = updateCurrentLib;
 	exports.authError = authError;
 	exports.fetchLibraries = fetchLibraries;
 	exports.signoutUser = signoutUser;
@@ -28007,6 +28005,39 @@
 	  };
 	}
 	
+	function createLibrary(library) {
+	  return function (dispatch) {
+	    _axios2.default.post(API_URL + '/library', library, {
+	      headers: { authorization: localStorage.getItem('token') }
+	    }).then(function (response) {
+	      console.log(response.data);
+	      dispatch({
+	        type: _types.ADD_LIB,
+	        payload: response.data
+	      });
+	    });
+	  };
+	}
+	
+	function updateCurrentLib(library) {
+	  // Update Category Tags... NOT EFFICIENT...
+	  library['allCategories'] = library.videos.reduce(function (allCategories, currentVideo) {
+	    if (currentVideo.categories && allCategories.indexOf(currentVideo.categories) === -1) {
+	      var arrOfCats = currentVideo.categories.split(",").map(function (item) {
+	        return item.trim();
+	      });
+	      return allCategories.concat(arrOfCats);
+	    }
+	    console.log('updateCurrentLib allCategories: ', allCategories);
+	    return allCategories;
+	  }, []);
+	
+	  return {
+	    type: _types.ADD_LIB,
+	    payload: library
+	  };
+	}
+	
 	function authError(error) {
 	  return {
 	    type: _types.AUTH_ERROR,
@@ -28016,13 +28047,17 @@
 	
 	function fetchLibraries() {
 	  return function (dispatch) {
-	    _axios2.default.get(API_URL + '/', {
+	    _axios2.default.get(API_URL + '/libraries', {
 	      headers: { authorization: localStorage.getItem('token') }
 	    }).then(function (response) {
-	      console.log(response);
+	      console.log('fetchlibraries: ', response);
+	      console.log('fetchlibraries dispatching: ', response.data.message);
+	      dispatch({
+	        type: _types.FETCH_LIBS,
+	        payload: response.data
+	      });
 	    }).catch(function (err) {
-	      // If request is bad
-	      // Show an error to the user
+	      // If bad request show error
 	      console.log('fetchLibraries err: ', err);
 	    });
 	  };
@@ -28049,6 +28084,9 @@
 	var AUTH_USER = exports.AUTH_USER = 'auth_user';
 	var DEAUTH_USER = exports.DEAUTH_USER = 'deauth_user';
 	var AUTH_ERROR = exports.AUTH_ERROR = 'auth_error';
+	var FETCH_LIBS = exports.FETCH_LIBS = 'fetch_libs';
+	var ADD_LIB = exports.ADD_LIB = 'add_lib';
+	var UPDATE_CATS = exports.UPDATE_CATS = 'update_cats';
 
 /***/ },
 /* 251 */
@@ -29328,131 +29366,74 @@
 
 	'use strict';
 	
-	var React = __webpack_require__(/*! react */ 1);
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	var Hero = __webpack_require__(/*! ./hero.jsx */ 271);
-	var VideoRow = __webpack_require__(/*! ./video-row.jsx */ 292);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	module.exports = React.createClass({
-	  displayName: 'exports',
+	var _react = __webpack_require__(/*! react */ 1);
 	
+	var _react2 = _interopRequireDefault(_react);
 	
-	  render: function render() {
-	    // Go through each category
-	    var allVideos = this.props.videos;
-	    var categories = this.props.categories;
-	    var VideoRows = categories.map(function (category) {
-	      // Grab videos that contain that category's tag
-	      var videos = allVideos.filter(function (video) {
-	        return video.categories.indexOf(category) > -1;
+	var _videoRow = __webpack_require__(/*! ./video-row.jsx */ 292);
+	
+	var _videoRow2 = _interopRequireDefault(_videoRow);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Library = function (_Component) {
+	  _inherits(Library, _Component);
+	
+	  function Library() {
+	    _classCallCheck(this, Library);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Library).apply(this, arguments));
+	  }
+	
+	  _createClass(Library, [{
+	    key: 'render',
+	    value: function render() {
+	      console.log('LIBRARY props: ', this.props);
+	      var _props = this.props;
+	      var videos = _props.videos;
+	      var categories = _props.categories;
+	
+	      console.log('LIBRARY CATEGORIES: ', categories);
+	      // Go through each category
+	      var VideoRows = categories.map(function (category, index) {
+	        // Grab videos that contain that category's tag
+	        var categorizedVideos = videos.filter(function (video) {
+	          return video.categories.split(",").map(function (item) {
+	            return item.trim();
+	          }).indexOf(category) > -1;
+	        });
+	        console.log('LIBRARY: categorizedVideos', categorizedVideos);
+	        console.log('LIBRARY category', category);
+	        return _react2.default.createElement(_videoRow2.default, { videos: categorizedVideos, category: category });
 	      });
-	      // Return a Video Row component for this specific category
-	      return React.createElement(VideoRow, { videos: videos, category: category });
-	    });
 	
-	    return React.createElement(
-	      'div',
-	      { className: 'contain' },
-	      React.createElement(Hero, { featured: this.props.featured }),
-	      VideoRows
-	    );
-	  }
-	});
-
-/***/ },
-/* 271 */
-/*!************************************!*\
-  !*** ./src/js/components/hero.jsx ***!
-  \************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(/*! react */ 1);
-	var Slider = __webpack_require__(/*! react-slick */ 272);
-	
-	var Router = __webpack_require__(/*! react-router */ 185);
-	var Link = Router.Link;
-	
-	module.exports = React.createClass({
-	  displayName: 'exports',
-	
-	
-	  render: function render() {
-	    var settings = {
-	      dots: true,
-	      infinite: true,
-	      speed: 500,
-	      slidesToShow: 1,
-	      draggable: false,
-	      slidesToScroll: 1,
-	      autoplay: true,
-	      autoplaySpeed: 6500
-	    };
-	
-	    var list = this.props.featured.map(function (video) {
-	
-	      var imageStyle = {
-	        'backgroundImage': 'url(https://img.youtube.com/vi/' + video.id + '/sddefault.jpg)',
-	        'backgroundSize': 'cover'
-	      };
-	      return React.createElement(
+	      return _react2.default.createElement(
 	        'div',
-	        null,
-	        React.createElement(
-	          'div',
-	          { className: 'hero-row' },
-	          React.createElement(
-	            'div',
-	            { className: 'hero' },
-	            React.createElement('div', { className: 'hero-image', style: imageStyle }),
-	            React.createElement('div', { className: 'vignette' }),
-	            React.createElement(
-	              'div',
-	              { className: 'hero-info' },
-	              React.createElement(
-	                'div',
-	                { className: 'hero-details' },
-	                React.createElement(
-	                  'h1',
-	                  { className: 'hero-details__title' },
-	                  video.title
-	                ),
-	                React.createElement(
-	                  'p',
-	                  { className: 'hero-details__description' },
-	                  video.description
-	                ),
-	                React.createElement(
-	                  'div',
-	                  null,
-	                  React.createElement(
-	                    Link,
-	                    { className: 'upload-video__button upload-video__button--primary',
-	                      to: "/playback/" + video.id },
-	                    '▶︎ Play'
-	                  )
-	                )
-	              )
-	            )
-	          )
-	        )
+	        { className: 'contain' },
+	        VideoRows
 	      );
-	    });
+	    }
+	  }]);
 	
-	    return React.createElement(
-	      'div',
-	      { className: 'hero-wrapper' },
-	      React.createElement(
-	        Slider,
-	        settings,
-	        list
-	      )
-	    );
-	  }
-	});
+	  return Library;
+	}(_react.Component);
+	
+	exports.default = Library;
 
 /***/ },
+/* 271 */,
 /* 272 */
 /*!************************************!*\
   !*** ./~/react-slick/lib/index.js ***!
@@ -31531,91 +31512,124 @@
 
 	'use strict';
 	
-	var React = __webpack_require__(/*! react */ 1);
-	var Slider = __webpack_require__(/*! react-slick */ 272);
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	var Router = __webpack_require__(/*! react-router */ 185);
-	var Link = Router.Link;
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	module.exports = React.createClass({
-	  displayName: 'exports',
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactSlick = __webpack_require__(/*! react-slick */ 272);
+	
+	var _reactSlick2 = _interopRequireDefault(_reactSlick);
+	
+	var _Thumbnail = __webpack_require__(/*! ./upload/Thumbnail */ 359);
+	
+	var _Thumbnail2 = _interopRequireDefault(_Thumbnail);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var VideoRow = function (_Component) {
+	  _inherits(VideoRow, _Component);
+	
+	  function VideoRow() {
+	    _classCallCheck(this, VideoRow);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VideoRow).apply(this, arguments));
+	  }
+	
+	  _createClass(VideoRow, [{
+	    key: 'render',
+	    value: function render() {
+	      var settings = {
+	        arrows: true,
+	        dots: false,
+	        infinite: true,
+	        speed: 500,
+	        slidesToShow: 5,
+	        slidesToScroll: 5,
+	        responsive: [{
+	          breakpoint: 320,
+	          settings: {
+	            slidesToShow: 3
+	          }
+	        }, {
+	          breakpoint: 768,
+	          settings: {
+	            slidesToShow: 3
+	          }
+	        }, {
+	          breakpoint: 1000,
+	          settings: {
+	            slidesToShow: 4
+	          }
+	        }]
+	      };
+	
+	      var _props = this.props;
+	      var videos = _props.videos;
+	      var category = _props.category;
 	
 	
-	  settings: {
-	    arrows: true,
-	    dots: false,
-	    infinite: true,
-	    speed: 500,
-	    slidesToShow: 5,
-	    slidesToScroll: 5,
-	    responsive: [{
-	      breakpoint: 320,
-	      settings: {
-	        slidesToShow: 3
-	      }
-	    }, {
-	      breakpoint: 768,
-	      settings: {
-	        slidesToShow: 3
-	      }
-	    }, {
-	      breakpoint: 1000,
-	      settings: {
-	        slidesToShow: 4
-	      }
-	    }]
-	  },
-	  render: function render() {
-	    var list = this.props.videos.map(function (video) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(
-	          Link,
-	          { to: "/playback/" + video.id },
-	          React.createElement(
+	      var list = videos.map(function (video, index) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
 	            'div',
 	            { className: 'tile' },
-	            React.createElement(
+	            _react2.default.createElement(
 	              'div',
 	              { className: 'tile__media' },
-	              React.createElement(
+	              _react2.default.createElement(
 	                'div',
 	                null,
-	                React.createElement('img', { className: 'tile__img', src: "http://img.youtube.com/vi/" + video.id + "/0.jpg" })
+	                _react2.default.createElement(_Thumbnail2.default, { className: 'tile__img', url: video.url })
 	              )
 	            ),
-	            React.createElement(
+	            _react2.default.createElement(
 	              'div',
 	              { className: 'tile__details' },
-	              React.createElement(
+	              _react2.default.createElement(
 	                'div',
 	                { className: 'tile__title' },
-	                video.title
+	                video.description
 	              )
 	            )
 	          )
+	        );
+	      });
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'video-category' },
+	          category
+	        ),
+	        _react2.default.createElement(
+	          _reactSlick2.default,
+	          settings,
+	          list
 	        )
 	      );
-	    });
+	    }
+	  }]);
 	
-	    return React.createElement(
-	      'div',
-	      { className: 'row' },
-	      React.createElement(
-	        'span',
-	        { className: 'video-category' },
-	        this.props.category
-	      ),
-	      React.createElement(
-	        Slider,
-	        this.settings,
-	        list
-	      )
-	    );
-	  }
+	  return VideoRow;
+	}(_react.Component);
 	
-	});
+	exports.default = VideoRow;
 
 /***/ },
 /* 293 */
@@ -31641,6 +31655,14 @@
 	var _actions = __webpack_require__(/*! ../actions */ 249);
 	
 	var actions = _interopRequireWildcard(_actions);
+	
+	var _Preview = __webpack_require__(/*! ./upload/Preview */ 361);
+	
+	var _Preview2 = _interopRequireDefault(_Preview);
+	
+	var _DeepForm = __webpack_require__(/*! ./upload/DeepForm */ 354);
+	
+	var _DeepForm2 = _interopRequireDefault(_DeepForm);
 	
 	var _upload = __webpack_require__(/*! ./upload */ 344);
 	
@@ -31668,24 +31690,32 @@
 	  _createClass(Dashboard, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      this.props.fetchLibraries();
+	      // this.props.fetchLibraries()
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      // Go through each category
+	      console.log(this.props);
+	      var currentLib = this.props.currentLib;
+	
+	      console.log('dashboard, currentLib = ', currentLib);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'contain' },
 	        _react2.default.createElement(
-	          'h1',
-	          null,
-	          'Hello, this is the dashboard'
+	          'div',
+	          { className: 'container--medium' },
+	          _react2.default.createElement(_DeepForm2.default, null)
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          null,
-	          _react2.default.createElement(_upload2.default, null)
+	          { className: 'contain' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(_Preview2.default, null)
+	          )
 	        )
 	      );
 	    }
@@ -31694,7 +31724,13 @@
 	  return Dashboard;
 	}(_react.Component);
 	
-	exports.default = (0, _reactRedux.connect)(null, actions)(Dashboard);
+	function mapStateToProps(state) {
+	  return {
+	    library: state.libraries.all,
+	    currentLib: state.libraries.currentLib
+	  };
+	}
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(Dashboard);
 
 /***/ },
 /* 294 */
@@ -35301,10 +35337,6 @@
 	
 	var _libraryData2 = _interopRequireDefault(_libraryData);
 	
-	var _api = __webpack_require__(/*! ../utils/api.jsx */ 346);
-	
-	var _api2 = _interopRequireDefault(_api);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -35324,19 +35356,8 @@
 	    };
 	  },
 	
-	  testAuth: function testAuth() {
-	    // Make API Call to Save Library
-	    fetch('http://localhost:8080/dummyData').then(function (response) {
-	      response.text().then(function (text) {
-	        console.log('response text: ', text);
-	      });
-	    }).catch(function (err) {
-	      console.log(err);
-	    });
-	  },
-	
 	  handleSubmit: function handleSubmit() {
-	    _api2.default.createLibrary(this.state.videos);
+	    Requests.createLibrary(this.state.videos);
 	  },
 	
 	  handleIdChange: function handleIdChange(e) {
@@ -35533,17 +35554,7 @@
 	          null,
 	          currentLib
 	        )
-	      ),
-	      _react2.default.createElement(
-	        'form',
-	        { action: '/test', method: 'post' },
-	        _react2.default.createElement(
-	          'button',
-	          { type: 'submit' },
-	          'Submit TEST'
-	        )
-	      ),
-	      _react2.default.createElement('input', { type: 'button', onClick: this.testAuth, value: 'Test Auth MiddleWare' })
+	      )
 	    );
 	  }
 	});
@@ -35809,36 +35820,7 @@
 	};
 
 /***/ },
-/* 346 */
-/*!******************************!*\
-  !*** ./src/js/utils/api.jsx ***!
-  \******************************/
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	module.exports.createLibrary = function (videoLibrary) {
-	  var library = videoLibrary;
-	  // Options for API Call
-	  var options = {
-	    method: 'post',
-	    headers: new Headers({
-	      "Content-Type": "application/json",
-	      "userId": window.App._id
-	    }),
-	    body: JSON.stringify(library)
-	  };
-	  // Make API Call to Save Library
-	  fetch('/l', options).then(function (response) {
-	    response.text().then(function (text) {
-	      console.log('response text: ', text);
-	    });
-	  }).catch(function (err) {
-	    console.log(err);
-	  });
-	};
-
-/***/ },
+/* 346 */,
 /* 347 */
 /*!******************************************!*\
   !*** ./src/js/components/auth/signup.js ***!
@@ -36115,11 +36097,16 @@
 	
 	var _auth_reducer2 = _interopRequireDefault(_auth_reducer);
 	
+	var _library = __webpack_require__(/*! ./library */ 353);
+	
+	var _library2 = _interopRequireDefault(_library);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var rootReducer = (0, _redux.combineReducers)({
 	  form: _reduxForm.reducer,
-	  auth: _auth_reducer2.default
+	  auth: _auth_reducer2.default,
+	  libraries: _library2.default
 	});
 	
 	exports.default = rootReducer;
@@ -36188,6 +36175,719 @@
 	thunk.withExtraArgument = createThunkMiddleware;
 	
 	exports['default'] = thunk;
+
+/***/ },
+/* 353 */
+/*!************************************!*\
+  !*** ./src/js/reducers/library.js ***!
+  \************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	exports.default = function () {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case _types.FETCH_LIBS:
+	      return _extends({}, state, { all: action.payload });
+	    case _types.ADD_LIB:
+	      return _extends({}, state, { currentLib: action.payload });
+	  }
+	
+	  return state;
+	};
+	
+	var _types = __webpack_require__(/*! ../actions/types */ 250);
+
+/***/ },
+/* 354 */
+/*!**********************************************!*\
+  !*** ./src/js/components/upload/DeepForm.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.fields = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reduxForm = __webpack_require__(/*! redux-form */ 296);
+	
+	var _Video = __webpack_require__(/*! ./Video */ 358);
+	
+	var _Video2 = _interopRequireDefault(_Video);
+	
+	var _PureInput = __webpack_require__(/*! ./PureInput */ 357);
+	
+	var _PureInput2 = _interopRequireDefault(_PureInput);
+	
+	var _validateDeepForm = __webpack_require__(/*! ./validateDeepForm */ 356);
+	
+	var _validateDeepForm2 = _interopRequireDefault(_validateDeepForm);
+	
+	var _actions = __webpack_require__(/*! ../../actions */ 249);
+	
+	var actions = _interopRequireWildcard(_actions);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var fields = exports.fields = ['name', 'videos[].url', 'videos[].description', 'videos[].title', 'videos[].categories', 'videos[].isFeatured'];
+	
+	var DeepForm = function (_Component) {
+	  _inherits(DeepForm, _Component);
+	
+	  function DeepForm(props) {
+	    _classCallCheck(this, DeepForm);
+	
+	    // Bind member functions
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DeepForm).call(this, props));
+	
+	    _this.updateCurrentLib = _this.updateCurrentLib.bind(_this);
+	    _this.handleFormSubmit = _this.handleFormSubmit.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(DeepForm, [{
+	    key: 'handleFormSubmit',
+	    value: function handleFormSubmit(formProps) {
+	      console.log(formProps);
+	      this.props.createLibrary(formProps);
+	    }
+	  }, {
+	    key: 'updateCurrentLib',
+	    value: function updateCurrentLib(formProps) {
+	      console.log('update State, currentLib: ', formProps);
+	      this.props.updateCurrentLib(formProps);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      var _props = this.props;
+	      var _props$fields = _props.fields;
+	      var name = _props$fields.name;
+	      var featuredCategories = _props$fields.featuredCategories;
+	      var allCategories = _props$fields.allCategories;
+	      var videos = _props$fields.videos;
+	      var handleSubmit = _props.handleSubmit;
+	      var resetForm = _props.resetForm;
+	      var invalid = _props.invalid;
+	      var submitting = _props.submitting;
+	      var currentLib = _props.currentLib;
+	
+	
+	      var formData = this.props.values;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'form-container container--medium' },
+	        _react2.default.createElement(
+	          'form',
+	          { className: 'form', onSubmit: handleSubmit(this.handleFormSubmit) },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'form__input-container' },
+	            _react2.default.createElement(
+	              'label',
+	              { className: 'form__label' },
+	              'Library Name'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(_PureInput2.default, { type: 'text', placeholder: 'Name', field: name, title: name.error })
+	            )
+	          ),
+	          !videos.length && _react2.default.createElement(
+	            'div',
+	            null,
+	            'Your Library is Empty.'
+	          ),
+	          videos.map(function (video, index) {
+	            return _react2.default.createElement(
+	              'div',
+	              { className: 'form-container bg--med', key: index },
+	              _react2.default.createElement(_Video2.default, video),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'form__input-container' },
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'form__button', type: 'button', onClick: function onClick() {
+	                      videos.removeField(index);
+	                      _this2.updateCurrentLib(formData);
+	                    } },
+	                  _react2.default.createElement('i', null),
+	                  ' Remove Video'
+	                )
+	              )
+	            );
+	          }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'form__input-container' },
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'form__button', type: 'button', onClick: function onClick() {
+	                  _this2.updateCurrentLib(formData);
+	                  videos.addField(); // pushes empty child field onto the end of the array
+	                } },
+	              _react2.default.createElement('i', null),
+	              ' Add a Video'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'form__input-container' },
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'form__button', type: 'submit', disabled: submitting || invalid },
+	              submitting ? _react2.default.createElement('i', null) : _react2.default.createElement('i', null),
+	              ' Submit'
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return DeepForm;
+	}(_react.Component);
+	
+	DeepForm.propTypes = {
+	  fields: _react.PropTypes.object.isRequired,
+	  handleSubmit: _react.PropTypes.func.isRequired,
+	  resetForm: _react.PropTypes.func.isRequired,
+	  invalid: _react.PropTypes.bool.isRequired,
+	  submitting: _react.PropTypes.bool.isRequired
+	};
+	
+	function mapStateToProps(state) {
+	  return { currentLib: state.libraries.currentLib };
+	}
+	
+	exports.default = (0, _reduxForm.reduxForm)({
+	  form: 'deep',
+	  fields: fields,
+	  validate: _validateDeepForm2.default
+	}, mapStateToProps, actions)(DeepForm);
+
+/***/ },
+/* 355 */,
+/* 356 */
+/*!******************************************************!*\
+  !*** ./src/js/components/upload/validateDeepForm.js ***!
+  \******************************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var requireFields = function requireFields() {
+	  for (var _len = arguments.length, names = Array(_len), _key = 0; _key < _len; _key++) {
+	    names[_key] = arguments[_key];
+	  }
+	
+	  return function (data) {
+	    return names.reduce(function (errors, name) {
+	      if (!data[name]) {
+	        errors[name] = 'Required';
+	      }
+	      // Validate URL
+	      if (data['url']) {
+	        var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+	        var match = data['url'].match(regExp);
+	        if (!(match && match[2].length == 11)) {
+	          errors['url'] = 'Invalid Youtube URL or ID';
+	        }
+	      }
+	      return errors;
+	    }, {});
+	  };
+	};
+	
+	var validateVideo = requireFields('url', 'categories');
+	
+	var validateDeepForm = function validateDeepForm(data) {
+	  var errors = {};
+	  if (!data.name) {
+	    errors.name = 'Required';
+	  }
+	  errors.videos = data.videos.map(validateVideo);
+	  return errors;
+	};
+	
+	exports.default = validateDeepForm;
+
+/***/ },
+/* 357 */
+/*!***********************************************!*\
+  !*** ./src/js/components/upload/PureInput.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PureInput = function (_Component) {
+	  _inherits(PureInput, _Component);
+	
+	  function PureInput() {
+	    _classCallCheck(this, PureInput);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PureInput).apply(this, arguments));
+	  }
+	
+	  _createClass(PureInput, [{
+	    key: "shouldComponentUpdate",
+	    value: function shouldComponentUpdate(nextProps) {
+	      return this.props.field !== nextProps.field;
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _props = this.props;
+	      var field = _props.field;
+	
+	      var rest = _objectWithoutProperties(_props, ["field"]);
+	
+	      return _react2.default.createElement("input", _extends({ className: "form__input" }, field, rest));
+	    }
+	  }]);
+	
+	  return PureInput;
+	}(_react.Component);
+	
+	PureInput.propTypes = {
+	  field: _react.PropTypes.object.isRequired
+	};
+	
+	exports.default = PureInput;
+
+/***/ },
+/* 358 */
+/*!*******************************************!*\
+  !*** ./src/js/components/upload/Video.js ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _PureInput = __webpack_require__(/*! ./PureInput */ 357);
+	
+	var _PureInput2 = _interopRequireDefault(_PureInput);
+	
+	var _PureTextArea = __webpack_require__(/*! ./PureTextArea */ 360);
+	
+	var _PureTextArea2 = _interopRequireDefault(_PureTextArea);
+	
+	var _Thumbnail = __webpack_require__(/*! ./Thumbnail */ 359);
+	
+	var _Thumbnail2 = _interopRequireDefault(_Thumbnail);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Video = function (_Component) {
+	  _inherits(Video, _Component);
+	
+	  function Video() {
+	    _classCallCheck(this, Video);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Video).apply(this, arguments));
+	  }
+	
+	  _createClass(Video, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps) {
+	      return this.props.url !== nextProps.url || this.props.description !== nextProps.description || this.props.categories !== nextProps.categories || this.props.isFeatured !== nextProps.isFeatured;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      console.log('Video Component Props: ', this.props);
+	      var _props = this.props;
+	      var url = _props.url;
+	      var description = _props.description;
+	      var categories = _props.categories;
+	      var isFeatured = _props.isFeatured;
+	
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form__input-container' },
+	          _react2.default.createElement(
+	            'label',
+	            { className: 'form__label' },
+	            'YouTube URL'
+	          ),
+	          _react2.default.createElement(_PureInput2.default, { type: 'text',
+	            placeholder: 'Video URL',
+	            field: url,
+	            title: url.error
+	          }),
+	          url.touched && url.error && _react2.default.createElement(
+	            'div',
+	            null,
+	            url.error
+	          ),
+	          url.touched && !url.error && _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(_Thumbnail2.default, { url: url.value })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form__input-container' },
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            'Feature this video in your library'
+	          ),
+	          _react2.default.createElement(_PureInput2.default, { type: 'checkbox',
+	            className: 'form__checkbox',
+	            field: isFeatured
+	          })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form__input-container' },
+	          _react2.default.createElement(
+	            'label',
+	            { className: 'form__label' },
+	            'Description'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Write a short summary of what this video is about.'
+	          ),
+	          _react2.default.createElement(_PureTextArea2.default, { placeholder: 'Video Description',
+	            field: description,
+	            title: description.error })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form__input-container' },
+	          _react2.default.createElement(
+	            'label',
+	            { className: 'form__label' },
+	            'Categories'
+	          ),
+	          _react2.default.createElement(_PureInput2.default, { type: 'text',
+	            placeholder: 'Categories',
+	            field: categories,
+	            title: categories.error
+	          })
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Video;
+	}(_react.Component);
+	
+	// Video.propTypes = {
+	//   url: PropTypes.object.isRequired,
+	//   description: PropTypes.object.isRequired,
+	//   categories: PropTypes.object.isRequired,
+	//   isFeatured: PropTypes.object.isRequired
+	// }
+	
+	exports.default = Video;
+
+/***/ },
+/* 359 */
+/*!***********************************************!*\
+  !*** ./src/js/components/upload/Thumbnail.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Thumbnail = function (_Component) {
+	  _inherits(Thumbnail, _Component);
+	
+	  function Thumbnail() {
+	    _classCallCheck(this, Thumbnail);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Thumbnail).apply(this, arguments));
+	  }
+	
+	  _createClass(Thumbnail, [{
+	    key: 'validateYoutubeId',
+	    value: function validateYoutubeId(url) {
+	      console.log('validating: ', url);
+	      var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+	      var match = url.match(regExp);
+	
+	      if (match && match[2].length == 11) {
+	        return match[2];
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var url = this.props.url;
+	
+	      console.log('URL', url);
+	      return _react2.default.createElement('img', { className: 'tile__img', src: "http://img.youtube.com/vi/" + this.validateYoutubeId(url) + "/0.jpg" });
+	    }
+	  }]);
+	
+	  return Thumbnail;
+	}(_react.Component);
+	
+	exports.default = Thumbnail;
+	
+	
+	Thumbnail.propTypes = {
+	  url: _react.PropTypes.string.isRequired
+	};
+
+/***/ },
+/* 360 */
+/*!**************************************************!*\
+  !*** ./src/js/components/upload/PureTextArea.js ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PureTextArea = function (_Component) {
+	  _inherits(PureTextArea, _Component);
+	
+	  function PureTextArea() {
+	    _classCallCheck(this, PureTextArea);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PureTextArea).apply(this, arguments));
+	  }
+	
+	  _createClass(PureTextArea, [{
+	    key: "shouldComponentUpdate",
+	    value: function shouldComponentUpdate(nextProps) {
+	      return this.props.field !== nextProps.field;
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _props = this.props;
+	      var field = _props.field;
+	
+	      var rest = _objectWithoutProperties(_props, ["field"]);
+	
+	      return _react2.default.createElement("textarea", _extends({ className: "form_textarea" }, field, rest));
+	    }
+	  }]);
+	
+	  return PureTextArea;
+	}(_react.Component);
+	
+	PureTextArea.propTypes = {
+	  field: _react.PropTypes.object.isRequired
+	};
+	
+	exports.default = PureTextArea;
+
+/***/ },
+/* 361 */
+/*!*********************************************!*\
+  !*** ./src/js/components/upload/Preview.js ***!
+  \*********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(/*! react-router */ 185);
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 159);
+	
+	var _actions = __webpack_require__(/*! ../../actions */ 249);
+	
+	var actions = _interopRequireWildcard(_actions);
+	
+	var _library = __webpack_require__(/*! ../library */ 270);
+	
+	var _library2 = _interopRequireDefault(_library);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Preview = function (_Component) {
+	  _inherits(Preview, _Component);
+	
+	  function Preview() {
+	    _classCallCheck(this, Preview);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Preview).apply(this, arguments));
+	  }
+	
+	  _createClass(Preview, [{
+	    key: 'render',
+	    value: function render() {
+	      if (!this.props.currentLib) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          'Preview of Your Library!'
+	        );
+	      }
+	      var _props$currentLib = this.props.currentLib;
+	      var name = _props$currentLib.name;
+	      var videos = _props$currentLib.videos;
+	      var allCategories = _props$currentLib.allCategories;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          name
+	        ),
+	        _react2.default.createElement('div', null),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(_library2.default, { videos: videos, categories: allCategories })
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Preview;
+	}(_react.Component);
+	
+	function mapStateToProps(state) {
+	  return { currentLib: state.libraries.currentLib };
+	}
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(Preview);
 
 /***/ }
 /******/ ]);

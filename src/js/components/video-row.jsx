@@ -1,64 +1,67 @@
-var React = require('react');
-var Slider = require('react-slick');
+import React, { Component } from 'react'
+import Slider from 'react-slick';
 
-var Router = require('react-router');
-var Link = Router.Link;
+import Thumbnail from './upload/Thumbnail';
 
-module.exports = React.createClass({
+class VideoRow extends Component {
 
-  settings: {
-    arrows: true,
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 5,
-    responsive: [
-    {
-      breakpoint: 320,
-      settings: {
-        slidesToShow: 3
-      }
-    },
-    { 
-      breakpoint: 768, 
-      settings: { 
-        slidesToShow: 3 
-      } 
-    }, 
-    { 
-      breakpoint: 1000, 
-      settings: { 
-        slidesToShow: 4
-      } 
-    }]
-  },
-  render: function() {
-    var list = this.props.videos.map(function(video) {
-      return <div><Link to={"/playback/"+ video.id}>
+  render() {
+    var settings = {
+      arrows: true,
+      dots: false,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 5,
+      slidesToScroll: 5,
+      responsive: [
+      {
+        breakpoint: 320,
+        settings: {
+          slidesToShow: 3
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 3
+        }
+      },
+      {
+        breakpoint: 1000,
+        settings: {
+          slidesToShow: 4
+        }
+      }]
+    }
+
+    const {videos, category } = this.props
+
+    let list = videos.map(function(video, index) {
+      return (<div>
         <div className="tile">
           <div className="tile__media">
             <div>
-              <img className="tile__img" src={"http://img.youtube.com/vi/"+ video.id +"/0.jpg"}  />
+              <Thumbnail className="tile__img" url={video.url} />
             </div>
           </div>
           <div className="tile__details">
             <div className="tile__title">
-              {video.title}
+              {video.description}
             </div>
           </div>
-        </div></Link>
-      </div>
+        </div>
+      </div>)
     });
 
     return (
       <div className="row">
-        <span className="video-category">{this.props.category}</span>
-        <Slider {...this.settings}>
-          {list}
-        </Slider>
+        <span className="video-category">{category}</span>
+          <Slider {...settings}>
+            {list}
+          </Slider>
       </div>
     );
   }
+}
 
-});
+export default VideoRow

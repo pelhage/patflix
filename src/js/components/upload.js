@@ -1,6 +1,5 @@
 import React from 'react';
 import VideoData from '../library-data.js';
-import Requests from '../utils/api.jsx';
 
 module.exports = React.createClass({
 
@@ -13,17 +12,6 @@ module.exports = React.createClass({
       isValidId: false,
       isFeatured: false
     };
-  },
-
-  testAuth: function() {
-    // Make API Call to Save Library
-    fetch('http://localhost:8080/dummyData').then(function(response) {
-      response.text().then(function(text) {
-        console.log('response text: ', text);
-      });
-    }).catch(function(err) {
-      console.log(err);
-    });
   },
 
   handleSubmit: function() {
@@ -165,10 +153,6 @@ module.exports = React.createClass({
     <div className="upload-container">
       <div>{currentLib}</div>
     </div>
-    <form action="/test" method="post">
-      <button type="submit">Submit TEST</button>
-    </form>
-    <input type="button" onClick={this.testAuth} value="Test Auth MiddleWare"/>
     </div>
     );
   }

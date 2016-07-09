@@ -14,13 +14,14 @@ module.exports = {
     newLibrary.featured = req.body.featured;
     newLibrary.categories = req.body.categories;
     newLibrary.videos = req.body.videos;
-    newLibrary.ownerId = ObjectID(req.headers.userId);
+    newLibrary.numOfVideos = req.body.videos.length;
+    newLibrary.ownerId = ObjectID(req.user._id);
 
     newLibrary.save(function(err) {
       if (err) { throw err; }
     });
 
-    User.find({ 'auth.email': req.user.email }, function(err, user) {
+    User.find({ 'auth.email': req.user.auth.email }, function(err, user) {
       user.libraries.push(newLibrary);
     });
 
@@ -35,15 +36,10 @@ module.exports = {
     });
   },
 
-  // Show all user libraries
+  // Show a user's libraries
   showAll: function(req, res) {
-    Library.find({}, function(err, libraries) {
-      var libraryMap = {};
-
-      libraries.forEach(function(library) {
-        libraryMap[library._id] = library;
-      });
-      res.send(libraryMap);
+    User.find({ 'auth.email': req.user._id }, function(err, user) {
+      res.send(user.libraries);
     });
   }
 

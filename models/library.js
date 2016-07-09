@@ -7,6 +7,7 @@ var librarySchema = Schema({
   featured: [],
   categories: [String],
   videos: [],
+  numOfVideos: Number,
   ownerId: {type: Schema.Types.ObjectId, ref: 'User'}
 });
 

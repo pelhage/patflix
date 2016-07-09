@@ -9,6 +9,7 @@ class Header extends Component {
       return <Link to="/signout" className="nav__item">Sign Out</Link>
     }
     return [
+      <Link to="/about" className="nav__item">About Patflix</Link>,
       <Link to="/signin" className="nav__item">Sign In</Link>,
       <Link to="/signup" className="nav__item">Sign Up</Link>
     ];
@@ -19,9 +20,7 @@ class Header extends Component {
         <Link to="/" className="nav__item nav__item--brand">PATFLIX</Link>
         <span className="nav__item--pull-right">
           <Link to="/dashboard" className="nav__item">Create Library</Link>
-          <Link to="/about" className="nav__item">About Patflix</Link>
           { this.authButton() }
-          <Link to="/upload" className="nav__item">Upload</Link>
         </span>
       </nav>
     );

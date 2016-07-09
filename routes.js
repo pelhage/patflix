@@ -37,9 +37,9 @@ module.exports = function(app) {
    * LIBRARY
    */
   // Create
-  app.post('/l', requireAuth, libraryController.create);
+  app.post('/library', requireAuth, libraryController.create);
   // Get a user library
-  app.get('/l/:id', libraryController.render);
+  app.get('/library/:id', libraryController.render);
   // Get all libraries
   app.get('/libraries', requireAuth, libraryController.showAll);
 

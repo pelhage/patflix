@@ -14,6 +14,12 @@
     margin: 0 0 10px 0;
     text-align: left;
   }
+  // img {
+  //   width: 100%;
+  //   height: 170px;
+  //   -o-object-fit: cover;
+  //      object-fit: cover;
+  // }
 }
 .video-is-valid {
   margin-left: 10px;
@@ -46,6 +52,7 @@
   background: #2B2B2B;
   color: #ddddd1;
 }
+
 
 .form__button {
   @extend .btn;
