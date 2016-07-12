@@ -13,14 +13,7 @@ class Preview extends Component {
     const { name, videos, allCategories } = this.props.currentLib
     return (<div>
       <h1>{name}</h1>
-      <div>
-        {/* {allCategories.map((category, index) => {
-          return <div key={index}>{category}</div>
-        })} */}
-      </div>
-      <div>
-        <Library videos={videos} categories={allCategories} />
-      </div>
+      <Library videos={videos} categories={allCategories} />
     </div>
     )
   }

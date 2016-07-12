@@ -6,11 +6,11 @@ import validate from './validateDeepForm'
 import * as actions from '../../actions';
 
 export const fields = [
+  'featuredCategories[]',
   'name',
-  'videos[].url',
-  'videos[].description',
-  'videos[].title',
   'videos[].categories',
+  'videos[].description',
+  'videos[].url',
   'videos[].isFeatured'
 ]
 
@@ -20,18 +20,59 @@ class DeepForm extends Component {
     // Bind member functions
     this.updateCurrentLib = this.updateCurrentLib.bind(this)
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
+    this.renderAllCategories = this.renderAllCategories.bind(this)
+  }
+
+  componentWillMount() {
+    let {
+      fields: { name, videos },
+      currentLib
+    } = this.props
+    // Ensures we don't lose form data when component Unmounts..
+    if (currentLib) {
+      name.value = currentLib.name;
+      currentLib.videos.forEach((video) => {
+        videos.addField({
+          categories: video.categories,
+          description: video.description,
+          isFeatured: video.isFeatured,
+          url: video.url
+        })
+      })
+    }
+    this.props.updateCurrentLib(this.props.values);
   }
 
   handleFormSubmit(formProps) {
-    console.log(formProps);
+    // console.log(formProps);
     this.props.createLibrary(formProps);
   }
 
   updateCurrentLib(formProps) {
-    console.log('update State, currentLib: ', formProps);
+    console.log('this form will now be saved to state: ', formProps);
     this.props.updateCurrentLib(formProps);
   }
 
+  componentDidUpdate() {
+    console.log('componentDidUpdate: ', this.props.values)
+    this.props.updateCurrentLib(this.props.values);
+  }
+
+  renderAllCategories() {
+    if (this.props.currentLib) {
+      let allCategories = this.props.currentLib.allCategories
+      if (allCategories) {
+        let all = allCategories.map((category, index) => {
+          return <label key={index}><input type="checkbox" value={category} onClick={() => {
+              // if (this.props.fields.featuredCategories.indexOf(category) === -1) {
+              //   this.props.fields.featuredCategories.addField(category)
+              // }
+          }} />{category}</label>
+        });
+        return (<div><h1>Select Your Featured Categories</h1><div><p>The following are all the categories that you've used when adding videos. Select the ones that you would like to feature on your library's page.</p>{all}</div></div>)
+      }
+    }
+  }
   render() {
 
     const {
@@ -43,9 +84,7 @@ class DeepForm extends Component {
       currentLib
     } = this.props
 
-    const formData = this.props.values;
-
-    return (<div className="form-container container--medium">
+    return (<div className="form-container">
       <form className="form" onSubmit={handleSubmit(this.handleFormSubmit)}>
         <div className="form__input-container">
           <label className="form__label">Library Name</label>
@@ -63,7 +102,6 @@ class DeepForm extends Component {
           <div className="form__input-container">
             <button className="form__button" type="button" onClick={() => {
               videos.removeField(index)
-              this.updateCurrentLib(formData);
             }}><i/> Remove Video
             </button>
           </div>
@@ -72,15 +110,14 @@ class DeepForm extends Component {
 
         {/* Add a Video to Form */}
         <div className="form__input-container">
-          <button className="form__button" type="button" onClick={() => {
-            this.updateCurrentLib(formData);
+          <button className="form__button" type="button" disabled={submitting || invalid} onClick={() => {
             videos.addField()   // pushes empty child field onto the end of the array
           }}><i/> Add a Video
           </button>
         </div>
 
         {/* Select Categories From Library */}
-
+        {this.renderAllCategories()}
         {/* Submit Library */}
         <div className="form__input-container">
           <button className="form__button" type="submit" disabled={submitting || invalid}>

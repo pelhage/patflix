@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react'
 class Thumbnail extends Component {
 
   validateYoutubeId(url) {
-    console.log('validating: ', url);
+    if (!url) { return undefined }
     var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(regExp);
 
@@ -14,7 +14,7 @@ class Thumbnail extends Component {
 
   render() {
     const { url } = this.props;
-    console.log('URL', url);
+
     return (<img className="tile__img" src={"http://img.youtube.com/vi/"+this.validateYoutubeId(url)+"/0.jpg"} />)
   }
 }

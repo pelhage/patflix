@@ -7,24 +7,19 @@ import Upload from './upload';
 
 class Dashboard extends Component {
 
-  componentWillMount() {
-    // this.props.fetchLibraries()
-  }
-
   render() {
-    // Go through each category
-    console.log(this.props);
     const { currentLib } = this.props
-    console.log('dashboard, currentLib = ', currentLib);
+    const divStyle = {
+      height: window.innerHeight
+    }
+
     return (
-      <div className="contain" >
-        <div className="container--medium">
+      <div className="contain" style={divStyle}>
+        <div className="container--sidebar">
           <DeepForm />
         </div>
-        <div className="contain">
-          <div className="row">
-            <Preview />
-          </div>
+        <div className="container--main">
+          <Preview />
         </div>
       </div>
     );

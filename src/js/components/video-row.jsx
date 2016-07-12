@@ -37,7 +37,7 @@ class VideoRow extends Component {
     const {videos, category } = this.props
 
     let list = videos.map(function(video, index) {
-      return (<div>
+      return (<div key={index}>
         <div className="tile">
           <div className="tile__media">
             <div>

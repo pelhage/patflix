@@ -79,10 +79,14 @@ export function updateCurrentLib(library) {
       let arrOfCats = currentVideo.categories.split(",").map(item => item.trim());
       return allCategories.concat(arrOfCats)
     }
-    console.log('updateCurrentLib allCategories: ', allCategories)
+
     return allCategories
 
   }, [])
+
+  library['featuredCategories'] = library.featuredCategories.filter((category) => {
+    return library['allCategories'].indexOf(category) !== -1
+  })
 
   return {
     type: ADD_LIB,

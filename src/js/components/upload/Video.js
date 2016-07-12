@@ -13,25 +13,25 @@ class Video extends Component {
 
 
   render() {
-    console.log('Video Component Props: ', this.props);
+    // console.log('Video Component Props: ', this.props);
     const { url, description, categories, isFeatured } = this.props
 
     return (<div>
       <div className="form__input-container">
-        <label className="form__label">YouTube URL</label>
+        <label className="form__label">YouTube URL {url.touched && url.error && <span>{url.error}</span>}</label>
         <PureInput type="text"
           placeholder="Video URL"
           field={url}
           title={url.error}
         />
-        {url.touched && url.error && <div>{url.error}</div>}
-        {url.touched && !url.error && <div><Thumbnail url={url.value} /></div>}
+        {!url.error && <div><Thumbnail url={url.value} /></div>}
       </div>
       <div className="form__input-container">
         <label>Feature this video in your library</label>
         <PureInput type="checkbox"
           className="form__checkbox"
           field={isFeatured}
+          checked={isFeatured.value}
           />
       </div>
       <div className="form__input-container">

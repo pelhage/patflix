@@ -1,9 +1,22 @@
 @import "mixins/_media-queries.scss";
 
 .contain {
-  padding-top: 60px;
+  padding-top: 70px;
   width: 100%;
 }
+
+
+.container--sidebar {
+  float: left;
+  width: 450px;
+  overflow-y: scroll;
+}
+.container--main {
+  float: left;
+  width: calc(100% - 450px);
+  overflow-y: scroll;
+}
+
 .container {
   width: 100%;
   margin: 0 auto;

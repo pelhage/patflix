@@ -5,6 +5,7 @@ const requireFields = (...names) => data =>
     }
     // Validate URL
     if (data['url']) {
+      console.log('data[url]', data['url']);
       var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
       var match = data['url'].match(regExp);
       if (!(match && match[2].length == 11)) {
