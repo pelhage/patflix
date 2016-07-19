@@ -1,18 +1,9 @@
 import React, { Component, PropTypes } from 'react'
-import { reduxForm, addArrayValue } from 'redux-form'
 import Video from './Video'
 import PureInput from './PureInput'
 import validate from './validateDeepForm'
 import * as actions from '../../actions';
-
-export const fields = [
-  'featuredCategories[]',
-  'name',
-  'videos[].categories',
-  'videos[].description',
-  'videos[].url',
-  'videos[].isFeatured'
-]
+import { connect } from 'react-redux';
 
 class DeepForm extends Component {
   constructor(props) {
@@ -23,28 +14,18 @@ class DeepForm extends Component {
     this.renderAllCategories = this.renderAllCategories.bind(this)
   }
 
-  componentWillMount() {
-    let {
-      fields: { name, videos },
-      currentLib
-    } = this.props
-    // Ensures we don't lose form data when component Unmounts..
-    if (currentLib) {
-      name.value = currentLib.name;
-      currentLib.videos.forEach((video) => {
-        videos.addField({
-          categories: video.categories,
-          description: video.description,
-          isFeatured: video.isFeatured,
-          url: video.url
-        })
-      })
-    }
-    this.props.updateCurrentLib(this.props.values);
-  }
+  // componentWillMount() {
+  //   let { currentLib } = this.props
+  //   // Ensures we don't lose form data when component Unmounts..
+  //   if (currentLib) {
+  //     name.value = currentLib.name;
+  //     currentLib.videos.forEach((video) => {
+  //     })
+  //   }
+  //   // this.props.updateCurrentLib(this.props.values);
+  // }
 
   handleFormSubmit(formProps) {
-    // console.log(formProps);
     this.props.createLibrary(formProps);
   }
 
@@ -54,8 +35,8 @@ class DeepForm extends Component {
   }
 
   componentDidUpdate() {
-    console.log('componentDidUpdate: ', this.props.values)
-    this.props.updateCurrentLib(this.props.values);
+    console.log('componentDidUpdate: ', this.props)
+    // this.props.updateCurrentLib(this.props.values);
   }
 
   renderAllCategories() {
@@ -75,53 +56,43 @@ class DeepForm extends Component {
   }
   render() {
 
-    const {
-      fields: { name, featuredCategories, allCategories, videos },
-      handleSubmit,
-      resetForm,
-      invalid,
-      submitting,
-      currentLib
-    } = this.props
+    const { currentLib } = this.props
 
     return (<div className="form-container">
-      <form className="form" onSubmit={handleSubmit(this.handleFormSubmit)}>
+      <form className="form" onSubmit={this.handleFormSubmit}>
         <div className="form__input-container">
           <label className="form__label">Library Name</label>
           <div>
-            <PureInput type="text" placeholder="Name" field={name} title={name.error}/>
+            // <PureInput type="text" placeholder="Name" field={name} title={name.error}/>
           </div>
         </div>
 
         {/* Display Message If Lib is Empty */}
-        {!videos.length && <div>Your Library is Empty.</div>}
+        {/* !videos.length && <div>Your Library is Empty.</div> */}
 
         {/* Display all current videos to be saved */}
-        {videos.map((video, index) => <div className="form-container bg--med" key={index}>
+        {/*videos.map((video, index) => <div className="form-container bg--med" key={index}>
           <Video {...video} />
           <div className="form__input-container">
             <button className="form__button" type="button" onClick={() => {
-              videos.removeField(index)
             }}><i/> Remove Video
             </button>
           </div>
         </div>
-        )}
+        )*/}
 
         {/* Add a Video to Form */}
         <div className="form__input-container">
-          <button className="form__button" type="button" disabled={submitting || invalid} onClick={() => {
-            videos.addField()   // pushes empty child field onto the end of the array
-          }}><i/> Add a Video
+          <button className="form__button" type="button"><i/> Add a Video
           </button>
         </div>
 
         {/* Select Categories From Library */}
-        {this.renderAllCategories()}
+        {/* this.renderAllCategories() */}
         {/* Submit Library */}
         <div className="form__input-container">
-          <button className="form__button" type="submit" disabled={submitting || invalid}>
-            {submitting ? <i/> : <i/>} Submit
+          <button className="form__button" type="submit">
+            {/* submitting ? <i/> : <i/> */} Submit
           </button>
         </div>
       </form>
@@ -130,20 +101,12 @@ class DeepForm extends Component {
   }
 }
 
-DeepForm.propTypes = {
-  fields: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  resetForm: PropTypes.func.isRequired,
-  invalid: PropTypes.bool.isRequired,
-  submitting: PropTypes.bool.isRequired
-}
+// DeepForm.propTypes = {
+//
+// }
 
 function mapStateToProps(state) {
   return { currentLib: state.libraries.currentLib };
 }
 
-export default reduxForm({
-  form: 'deep',
-  fields,
-  validate
-}, mapStateToProps, actions)(DeepForm)
+export default connect(mapStateToProps, actions)(DeepForm);
