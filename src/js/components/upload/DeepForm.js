@@ -63,7 +63,7 @@ class DeepForm extends Component {
         <div className="form__input-container">
           <label className="form__label">Library Name</label>
           <div>
-            // <PureInput type="text" placeholder="Name" field={name} title={name.error}/>
+            <PureInput type="text" placeholder="Name" field={name} />
           </div>
         </div>
 
@@ -89,7 +89,7 @@ class DeepForm extends Component {
 
         {/* Select Categories From Library */}
         {/* this.renderAllCategories() */}
-        {/* Submit Library */}
+        {/* Submit Library **/}
         <div className="form__input-container">
           <button className="form__button" type="submit">
             {/* submitting ? <i/> : <i/> */} Submit

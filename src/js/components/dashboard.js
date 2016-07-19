@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Preview from './upload/Preview';
 import DeepForm from './upload/DeepForm';
-import Upload from './upload';
+import UploadForm from './newupload/UploadForm';
 
 class Dashboard extends Component {
 
@@ -16,7 +16,7 @@ class Dashboard extends Component {
     return (
       <div className="contain" style={divStyle}>
         <div className="container--sidebar">
-          <DeepForm />
+          <UploadForm />
         </div>
         <div className="container--main">
           <Preview />
