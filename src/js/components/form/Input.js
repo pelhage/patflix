@@ -1,9 +1,11 @@
 import React, { Component, PropTypes, defaultProps } from 'react'
 
 class Input extends Component {
+  shouldComponentUpdate(nextProps) {
+    return this.props.value !== nextProps.value
+  }
 
   render() {
-
       return <input className="form__input" {...this.props}/>
   }
 }

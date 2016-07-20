@@ -4,3 +4,5 @@ export const AUTH_ERROR = 'auth_error';
 export const FETCH_LIBS = 'fetch_libs'
 export const ADD_LIB = 'add_lib'
 export const UPDATE_CATS = 'update_cats'
+export const CURR_VID = 'curr_vid'
+export const LIB_NAME = 'lib_name'

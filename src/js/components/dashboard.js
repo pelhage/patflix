@@ -29,7 +29,8 @@ class Dashboard extends Component {
 function mapStateToProps(state) {
   return {
     library: state.libraries.all,
-    currentLib: state.libraries.currentLib
+    currentLib: state.libraries.currentLib,
+    currentVideo: state.libraries.currentVideo
   }
 }
 export default connect(mapStateToProps, actions)(Dashboard);

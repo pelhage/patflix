@@ -4,7 +4,9 @@ import {
   AUTH_ERROR,
   FETCH_LIBS,
   ADD_LIB,
-  UPDATE_CATS
+  UPDATE_CATS,
+  CURR_VID,
+  LIB_NAME
 } from './types';
 
 import { browserHistory } from 'react-router';
@@ -72,25 +74,41 @@ export function createLibrary(library) {
 }
 
 export function updateCurrentLib(library) {
-  // Update Category Tags... NOT EFFICIENT...
-  library['allCategories'] = library.videos.reduce((allCategories, currentVideo) => {
-    if (currentVideo.categories &&
-      allCategories.indexOf(currentVideo.categories) === -1) {
-      let arrOfCats = currentVideo.categories.split(",").map(item => item.trim());
-      return allCategories.concat(arrOfCats)
-    }
+  if (library['allCategories'] && library['allCategories'].length) {
+    // Update Category Tags... NOT EFFICIENT...
+    library['allCategories'] = library.videos.reduce((allCategories, currentVideo) => {
+      if (currentVideo.categories &&
+        allCategories.indexOf(currentVideo.categories) === -1) {
+        let arrOfCats = currentVideo.categories.split(",").map(item => item.trim());
+        return allCategories.concat(arrOfCats)
+      }
 
-    return allCategories
+      return allCategories
 
-  }, [])
+    }, [])
+  }
 
-  library['featuredCategories'] = library.featuredCategories.filter((category) => {
-    return library['allCategories'].indexOf(category) !== -1
-  })
+  if (library['allCategories'] && library['allCategories'].length) {
+    library['featuredCategories'] = library.featuredCategories.filter((category) => {
+      return library['allCategories'].indexOf(category) !== -1
+    })
+  }
 
   return {
     type: ADD_LIB,
     payload: library
+  }
+}
+export function updateLibraryName(libraryName) {
+  return {
+    type: LIB_NAME,
+    payload: libraryName
+  }
+}
+export function updateCurrentVideo(video) {
+  return {
+    type: CURR_VID,
+    payload: video
   }
 }
 
