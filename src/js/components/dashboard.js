@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Preview from './upload/Preview';
-import DeepForm from './upload/DeepForm';
-import UploadForm from './newupload/UploadForm';
+import UploadForm from './upload-form/UploadForm';
 
 class Dashboard extends Component {
 

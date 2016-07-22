@@ -2,11 +2,8 @@ import React, { Component } from 'react'
 import * as actions from '../../actions'
 import { connect } from 'react-redux'
 
-import Input from '../form/Input'
-import TextArea from '../form/TextArea'
-import FormFieldset from '../form/FormFieldset'
-import FormLabel from '../form/FormLabel'
-import FormButton from '../form/FormButton'
+import { Input, TextArea, FormFieldset, FormLabel, FormButton } from '../form'
+import CategoriedInput from '../categoried_input/CategoriedInput'
 
 class VideoDetails extends Component {
   constructor(props) {
@@ -15,13 +12,7 @@ class VideoDetails extends Component {
     this.updateCurrentLib = this.updateCurrentLib.bind(this)
     this.isValidVideo = this.isValidVideo.bind(this)
     this.hasValidUrl = this.hasValidUrl.bind(this)
-    this.hasValidCategories = this.hasValidCategories.bind(this)
     this.updateCurrentVideo = this.updateCurrentVideo.bind(this)
-    this.normalizeCategories = this.normalizeCategories.bind(this)
-    this.renderCategories = this.renderCategories.bind(this)
-    // this.normalizeCategories = this.normalizeCategories.bind(this)
-    // this.normalizeCategories = this.normalizeCategories.bind(this)
-    // this.normalizeCategories = this.normalizeCategories.bind(this)
     // this.normalizeCategories = this.normalizeCategories.bind(this)
   }
 
@@ -39,56 +30,32 @@ class VideoDetails extends Component {
     }
   }
 
-  normalizeCategories(commaStr) {
-    return commaStr.split(',').map((category) => {
-      return category.trim()
-    }).filter((category) => {
-      return category.length
-    })
-  }
-
-  renderCategories(categories) {
-    let videoCategories = categories.map((category) => {
-      return <span>{category}</span>
-    })
-    return <div>{videoCategories}</div>
-  }
-
   isValidVideo(video) {
     let { url, categories } = video
     return this.hasValidUrl(url) && this.hasValidCategories(categories)
   }
 
-  hasValidCategories(categoriesStr) {
-    return categoriesStr.split(",").indexOf("") === -1
-  }
   // renderCategories
   updateCurrentVideo(e) {
-    let currentVideo = this.props.currentVideo
-    let { name, value } = e.target
-    let updatedVideo = {...currentVideo, [name]: value}
-    // console.log('updateCurrentVideo: ', currentVideo)
-    let isValid = this.isValidVideo(updatedVideo)
-    if (isValid) {
-      this.props.updateCurrentVideo({...updatedVideo, isValidVideo: isValid })
-      this.props.updateCurrentLib({...this.props.currentLib, videos: [updatedVideo] })
-    } else {
-      this.props.updateCurrentVideo({...updatedVideo, isValidVideo: isValid })
-    }
+    const currentVideo = this.props.currentVideo
+    const { name, value } = e.target
+    const updatedVideo = {...currentVideo, [name]: value}
+    const isValid = this.isValidVideo(updatedVideo)
 
+    if (isValid) {
+      this.props.updateCurrentLib({ ...this.props.currentLib, videos: [updatedVideo] })
+    }
+    this.props.updateCurrentVideo({...updatedVideo, isValidVideo: isValid })
   }
 
   handleDescriptionInput(e) {
-    normalizeCategories(e.target.value)
+    // normalizeCategories(e.target.value)
     this.updateCurrentVideo(e)
   }
 
 
   updateCurrentLib() {
-    let currentLib = this.props.currentLib
-    if (this.isValidVideo()) {
-      this.props.updateCurrentLib()
-    }
+    this.props.updateCurrentLib()
   }
 
   render() {
@@ -122,11 +89,9 @@ class VideoDetails extends Component {
 
     <FormFieldset>
       <FormLabel>Categories</FormLabel>
-      <TextArea
-        name="categories"
-        placeholder="e.g. enter, categories, separated by, commas"
-        value={categories}
-        onChange={this.handleCategories} />
+      <CategoriedInput
+        onCategoryChange={this.updateCurrentVideo}
+        placeholder="e.g. enter, categories, separated by, commas" />
     </FormFieldset>
 
     <FormFieldset>
