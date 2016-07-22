@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
@@ -11,6 +10,7 @@ class Preview extends Component {
       return <div>Preview of Your Library!</div>
     }
     const { name, videos, allCategories } = this.props.currentLib
+    console.log('Preview Component render. this.props.currentLib:', this.props.currentLib)
     return (<div>
       <h1>{name}</h1>
       <Library videos={videos} categories={allCategories} />

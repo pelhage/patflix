@@ -76,8 +76,8 @@ class UploadForm extends Component {
     console.log('handleUrl', e)
   }
 
-  handleCategoryInput(e) {
-    console.log('handleCategoryInput', e)
+  handleCategoryInput(category) {
+    console.log('handleCategoryInput via UploadForm: ', category);
   }
 
   render() {
@@ -104,18 +104,18 @@ class UploadForm extends Component {
           description={description}
           onUserInput={this.updateCurrentVideo} />
 
-        <VideoCategories onUserInput={this.handleCategoryInput} />
+        <VideoCategories categories={categories} onUserInput={this.handleCategoryInput} />
 
-{/* <FormFieldset>
+        <FormFieldset>
           <FormButton onClick={() => {
             // let { currentLib, currentVideo } = this.props
             let updatedVideos = [...this.props.currentLib.videos, this.props.currentVideo]
-            let categories = this.props.currentVideo.categories.split(",")
+            let categories = this.props.currentVideo.categories
             let newLib = {...this.props.currentLib, videos: updatedVideos, allCategories: categories }
 
             this.props.updateCurrentLib(newLib)
           }}>Add A Video</FormButton>
-        </FormFieldset>*/}
+        </FormFieldset>
 
         <FormFieldset>
           <FormButton>Save Library</FormButton>

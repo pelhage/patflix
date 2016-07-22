@@ -1,9 +1,5 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router'
-import { connect } from 'react-redux'
-import * as actions from '../../actions'
-
-import Input from '../form/Input'
+import React, { Component, PropTypes } from 'react'
+import { Input } from '../form'
 import RenderedCategories from './RenderedCategories'
 
 class CategoriedInput extends Component {
@@ -11,38 +7,45 @@ class CategoriedInput extends Component {
     super(props)
     this.state = {
       currentCategory: '',
-      categories: this.props.currentVideo.categories || []
+      categories: props.categories || []
     }
-
+    // Bind helper methods
     this.addToCategories = this.addToCategories.bind(this)
     this.handleCategories = this.handleCategories.bind(this)
     this.removeFromCategories = this.removeFromCategories.bind(this)
-
   }
-
+  // Push a category to the component's state
   addToCategories(e) {
-    if ((e.which === 9 || e.which === 9) ||
-        (e.keyCode === 188 || e.keyCode === 188)) {
+    // Check the key the user has pressed
+    const commaOrTabPress = (e.which === 9 || e.which === 9) ||
+        (e.keyCode === 188 || e.keyCode === 188)
+    const inputValue = e.target.value.trim()
+
+    if (commaOrTabPress) {
       e.preventDefault()
-      let categories = this.state.categories.slice()
-      if (categories.indexOf(e.target.value === -1)) {
-        categories.push(e.target.value)
+      if (inputValue.length) {
+        let categories = this.state.categories.slice()
+        if (categories.indexOf(inputValue) === -1) {
+          categories.push(inputValue)
+        }
+        this.setState({ currentCategory: '', categories })
+        this.props.onCategoryChange(categories)
       }
-      this.setState({ currentCategory: '', categories })
     }
   }
-
+  // Update the current category being worked on
   handleCategories(e) {
     this.setState({ currentCategory: e.target.value })
   }
 
+  // Remove the category from component state, and call
   removeFromCategories(e) {
     const category = e.target.getAttribute('data-category')
     const categories = this.state.categories.slice()
 
     categories.splice(categories.indexOf(category), 1)
     this.setState({ categories })
-    this.props.onCategoryChange()
+    this.props.onCategoryChange(e)
   }
 
   render() {
@@ -54,11 +57,12 @@ class CategoriedInput extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { currentVideo: state.libraries.currentVideo };
+CategoriedInput.propTypes = {
+  onCategoryChange: React.PropTypes.func.isRequired,
+  categories: React.PropTypes.array.isRequired
 }
 
-export default connect(mapStateToProps, actions)(CategoriedInput);
+export default CategoriedInput;
 
 
 

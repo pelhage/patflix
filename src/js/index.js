@@ -20,7 +20,6 @@ import Signin from './components/auth/signin';
 // import Upload from './components/upload';
 import SignUp from './components/auth/signup';
 import SignOut from './components/auth/signout';
-import DeepForm from './components/upload/DeepForm';
 import Preview from './components/upload/Preview';
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
@@ -36,14 +35,12 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={App}>
         <Route path="dashboard" component={requireAuth(Dashboard)}>
-          <Route path="/upload" component={requireAuth(DeepForm)}></Route>
           <Route path="/preview" component={requireAuth(Preview)}></Route>
         </Route>
         <Route path="about" component={About}></Route>
         <Route path="signin" component={Signin}></Route>
         <Route path="signup" component={SignUp}></Route>
         <Route path="signout" component={SignOut}></Route>
-        <Route path="form" component={DeepForm}></Route>
       </Route>
 
     </Router>

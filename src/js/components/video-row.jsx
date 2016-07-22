@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Slider from 'react-slick';
 
-import Thumbnail from './upload/Thumbnail';
+// import Thumbnail from './upload/Thumbnail';
 
 class VideoRow extends Component {
 
@@ -41,7 +41,7 @@ class VideoRow extends Component {
         <div className="tile">
           <div className="tile__media">
             <div>
-              <Thumbnail className="tile__img" url={video.url} />
+              {/*<Thumbnail className="tile__img" url={video.url} /> */}
             </div>
           </div>
           <div className="tile__details">

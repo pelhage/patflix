@@ -5,12 +5,13 @@ import { CategoriedInput } from '../categoried_input'
 class VideoCategories extends Component {
 
   render() {
-    const { onUserInput } = this.props
+    const { categories, onUserInput } = this.props
 
     return (<FormFieldset>
       <FormLabel>Categories</FormLabel>
       <CategoriedInput
-        onCategoryChange={this.onUserInput}
+        categories={categories}
+        onCategoryChange={onUserInput}
         placeholder="e.g. enter, categories, separated by, commas" />
     </FormFieldset>)
   }

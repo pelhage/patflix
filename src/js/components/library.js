@@ -5,8 +5,9 @@ import VideoRow from './video-row.jsx';
 class Library extends Component {
 
   render() {
-    const { videos, categories } = this.props;
 
+    const { videos, categories } = this.props;
+    console.log('videos',videos, 'categories',categories)
     // Go through each category
     var VideoRows = categories.map((category, index) => {
       // Grab videos that contain that category's tag
