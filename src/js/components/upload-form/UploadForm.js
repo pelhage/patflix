@@ -74,9 +74,9 @@ class UploadForm extends Component {
       updatedVideo.id = this.extractId(value)
     }
 
-    if (isValid) {
-      this.props.updateCurrentLib({ ...this.props.currentLib, videos: [updatedVideo] })
-    }
+    // if (isValid) {
+    //   this.props.updateCurrentLib({ ...this.props.currentLib, videos: [updatedVideo] })
+    // }
 
     this.props.updateCurrentVideo({ ...updatedVideo, isValidVideo: isValid })
   }

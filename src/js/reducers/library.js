@@ -6,13 +6,17 @@ import {
   ADD_VID
 } from '../actions/types'
 
+import * as _ from 'lodash'
 // For ID Hashing
 import Hashids from 'hashids'
-const hashids = new Hashids('Patflix Is The Best!')
-
+const hashids = new Hashids()
+console.log(Hashids)
+console.log(_)
 
 const initialState = {
   currentLib: {
+    size: 0,
+    vidsAdded: 0,
     name: '',
     videos: {},
     allCategories: [],
@@ -42,10 +46,12 @@ export default function(state = initialState, action) {
       return { ...state, currentLib: newLib }
     }
     case ADD_VID: {
-      let hashId = hashids.encode(state.vidsAdded)
-      const updatedLib = { ...state.currentLib, hashId: action.payload }
-      console.log(updatedLib)
-      return { ...state, currentLib: updatedLib }
+      let hashId = hashids.encode(state.currentLib.vidsAdded)
+      console.log('hashId',hashId)
+      let videos = _.cloneDeep(state.currentLib.videos)
+      videos[hashId] = action.payload
+      console.log('ADD_VID', videos)
+      return { ...state, currentLib: videos }
     }
   }
 
