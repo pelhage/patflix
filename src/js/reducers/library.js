@@ -2,26 +2,34 @@ import {
   FETCH_LIBS,
   ADD_LIB,
   CURR_VID,
-  LIB_NAME
-} from '../actions/types';
+  LIB_NAME,
+  ADD_VID
+} from '../actions/types'
+
+// For ID Hashing
+import Hashids from 'hashids'
+const hashids = new Hashids('Patflix Is The Best!')
 
 
-export default function(state = {
+const initialState = {
   currentLib: {
     name: '',
-    videos: [],
+    videos: {},
     allCategories: [],
     featuredVideos: []
   },
   currentVideo: {
     id: '',
     url: '',
-    isValidVideo: '',
+    isValidVideo: false,
     isFeatured: false,
     description: '',
-    categories: ''
+    categories: []
   }
-}, action) {
+}
+
+// If current url is valid, set id, if not set id to null
+export default function(state = initialState, action) {
   switch (action.type) {
     case FETCH_LIBS:
       return { ...state, all: action.payload }
@@ -32,6 +40,12 @@ export default function(state = {
     case LIB_NAME: {
       const newLib = { ...state.currentLib, name: action.payload }
       return { ...state, currentLib: newLib }
+    }
+    case ADD_VID: {
+      let hashId = hashids.encode(state.vidsAdded)
+      const updatedLib = { ...state.currentLib, hashId: action.payload }
+      console.log(updatedLib)
+      return { ...state, currentLib: updatedLib }
     }
   }
 

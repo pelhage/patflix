@@ -1,26 +1,30 @@
 import React, { Component } from 'react'
 
-import VideoRow from './video-row.jsx';
+import VideoRow from './video-row.js';
 
 class Library extends Component {
 
   render() {
 
-    const { videos, categories } = this.props;
+    const { videos, categories, onVideoClick } = this.props;
     console.log('videos',videos, 'categories',categories)
     // Go through each category
+
     var VideoRows = categories.map((category, index) => {
       // Grab videos that contain that category's tag
-      let categorizedVideos = videos.filter(function(video) {
-        if (video.categories) {
-          return video.categories.split(",").map(item => item.trim()).indexOf(category) > -1;
+      let categorizedVideos = categories.reduce((categorizedVideos, currVideo, currVideoIndex) => {
+        if (currVideo.categories.indexOf(category) > -1) {
+          let categorizedVideo = Object.assign(currVideo, { videoIndex: currVideoIndex })
+          categorizedVideos.push(categorizedVideo)
         }
-        return false;
-      });
+      }, [])
 
-      return <VideoRow videos={categorizedVideos} category={category} />
+      return (<VideoRow
+        videos={categorizedVideos}
+        category={category}
+        onVideoClick={onVideoClick} />)
 
-    });
+    })
 
     return (
       <div>

@@ -17,7 +17,7 @@ import Library from './components/library';
 import Dashboard from './components/dashboard';
 import About from './components/about';
 import Signin from './components/auth/signin';
-// import Upload from './components/upload';
+// import Upload from './components/upload  kjs';
 import SignUp from './components/auth/signup';
 import SignOut from './components/auth/signout';
 import Preview from './components/upload/Preview';

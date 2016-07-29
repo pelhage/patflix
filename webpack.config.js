@@ -1,23 +1,39 @@
-var webpack = require('webpack');
 var path = require('path');
+var webpack = require('webpack');
 
 var BUILD_DIR = path.resolve(__dirname, 'dist');
 var APP_DIR = path.resolve(__dirname, 'src');
 
 var config = {
-  entry: {
-    app: APP_DIR + '/js/index.js'
-  },
+  devtool: 'eval',
+
+  entry: [
+    './src/js/index.js',
+    'webpack-hot-middleware/client?reload=true'
+  ],
+
   output: {
-    path: BUILD_DIR,
-    filename: '[name].js'
+    filename: 'bundle.js',
+    path: path.join(__dirname, 'dist'),
+    publicPath: '/dist/'
   },
+
+  resolve: {
+    root: path.resolve(__dirname),
+    extensions: ['', '.js']
+  },
+
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ],
+
   module: {
     loaders: [
       {
-        test: /\.jsx?/,
-        include: APP_DIR,
-        loader: 'babel'
+        test: /\.js$/,
+        loaders: ['babel'],
+        include: [path.join(__dirname, 'src')]
       },
       {
         test: /style.scss/,

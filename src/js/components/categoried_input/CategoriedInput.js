@@ -45,7 +45,7 @@ class CategoriedInput extends Component {
 
     categories.splice(categories.indexOf(category), 1)
     this.setState({ categories })
-    this.props.onCategoryChange(e)
+    this.props.onCategoryChange(categories)
   }
 
   render() {

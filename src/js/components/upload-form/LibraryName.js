@@ -6,7 +6,7 @@ class LibraryName extends Component {
   render() {
     const { onUserInput } = this.props
     return (<FormFieldset>
-      <FormLabel>Library Name</FormLabel>
+      <FormLabel>Library Names</FormLabel>
       <Input placeholder="Name Your Library" onChange={onUserInput}/>
     </FormFieldset>)
   }

@@ -6,7 +6,8 @@ import {
   ADD_LIB,
   UPDATE_CATS,
   CURR_VID,
-  LIB_NAME
+  LIB_NAME,
+  ADD_VID
 } from './types';
 
 import { browserHistory } from 'react-router';
@@ -79,7 +80,7 @@ export function updateCurrentLib(library) {
     library['allCategories'] = library.videos.reduce((allCategories, currentVideo) => {
       if (currentVideo.categories &&
         allCategories.indexOf(currentVideo.categories) === -1) {
-        let arrOfCats = currentVideo.categories.split(",").map(item => item.trim());
+        let arrOfCats = currentVideo.categories;
         return allCategories.concat(arrOfCats)
       }
 
@@ -89,9 +90,10 @@ export function updateCurrentLib(library) {
   }
 
   if (library['allCategories'] && library['allCategories'].length) {
-    library['featuredCategories'] = library.featuredCategories.filter((category) => {
-      return library['allCategories'].indexOf(category) !== -1
-    })
+    library['featuredCategories'] = library['allCategories']
+    // library['featuredCategories'] = library.featuredCategories.filter((category) => {
+    //   return library['allCategories'].indexOf(category) !== -1
+    // })
   }
 
   return {
@@ -105,6 +107,14 @@ export function updateLibraryName(libraryName) {
     payload: libraryName
   }
 }
+
+export function addVideoToLibrary(video) {
+  return {
+    type: ADD_VID,
+    payload: video
+  }
+}
+
 export function updateCurrentVideo(video) {
   return {
     type: CURR_VID,

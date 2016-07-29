@@ -17,7 +17,7 @@ class Header extends Component {
   render() {
     return (
       <nav className="nav">
-        <Link to="/" className="nav__item nav__item--brand">PATFLIX</Link>
+        <Link to="/" className="nav__item nav__item--brand">PATFLIX!</Link>
         <span className="nav__item--pull-right">
           <Link to="/dashboard" className="nav__item">Create Library</Link>
           { this.authButton() }

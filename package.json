@@ -7,7 +7,7 @@
     "webpack:build": "webpack -p",
     "scss": "node-sass -w --output-style compressed -o dist/css src/scss",
     "dev": "run-p scss webpack:dev server",
-    "server": "nodemon server.js"
+    "server": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -55,6 +55,8 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "react-hot-loader": "^1.3.0",
-    "style-loader": "^0.13.1"
+    "style-loader": "^0.13.1",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.12.2"
   }
 }

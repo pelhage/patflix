@@ -20,7 +20,7 @@ class UploadForm extends Component {
     this.updateCurrentLib = this.updateCurrentLib.bind(this)
     this.handleNameChange = this.handleNameChange.bind(this)
     // URL METHODS //
-    this.updateCurrentVideo = this.updateCurrentVideo.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
     /* */
     this.handleFeaturedCheck = this.handleFeaturedCheck.bind(this)
     // this.renderAllCategories = this.renderAllCategories.bind(this)
@@ -34,7 +34,7 @@ class UploadForm extends Component {
     this.props.updateCurrentLib()
   }
   handleDescriptionChange(e) {
-    this.updateCurrentVideo(e)
+    this.handleInputChange(e)
   }
 
   handleNameChange(e) {
@@ -43,10 +43,19 @@ class UploadForm extends Component {
   // URL METHODS //
   hasValidUrl(url) {
     if (url) {
-      const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-      const match = url.match(regExp);
+      let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      let match = url.match(regExp);
       return match && match[2].length == 11
     }
+  }
+
+  extractId(url) {
+    if (this.hasValidUrl(url)) {
+      let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      let match = url.match(regExp);
+      return match[2]
+    }
+    return ''
   }
 
   isValidVideo(video) {
@@ -55,29 +64,29 @@ class UploadForm extends Component {
   }
 
   // renderCategories
-  updateCurrentVideo(e) {
+  handleInputChange(e) {
     const currentVideo = this.props.currentVideo
     const { name, value } = e.target
     const updatedVideo = {...currentVideo, [name]: value}
     const isValid = this.isValidVideo(updatedVideo)
 
+    if (name === 'url') {
+      updatedVideo.id = this.extractId(value)
+    }
+
     if (isValid) {
-      console.log('VIDEO IS VALID!')
       this.props.updateCurrentLib({ ...this.props.currentLib, videos: [updatedVideo] })
     }
+
     this.props.updateCurrentVideo({ ...updatedVideo, isValidVideo: isValid })
   }
 
   handleFeaturedCheck(e) {
     console.log(e.target.value)
   }
-  // handleUrlValidation() {}
-  handleUrlChange(e) {
-    console.log('handleUrl', e)
-  }
 
-  handleCategoryInput(category) {
-    console.log('handleCategoryInput via UploadForm: ', category);
+  handleCategoryInput(categories) {
+    this.props.updateCurrentVideo({ ...this.props.currentVideo, categories })
   }
 
   render() {
@@ -97,23 +106,20 @@ class UploadForm extends Component {
         {/* Current Video's Details */}
         <VideoUrl
           url={url}
-          onUserInput={this.updateCurrentVideo} />
+          onUserInput={this.handleInputChange} />
+
         <VideoFeatured onUserCheck={this.handleFeaturedCheck} />
 
         <VideoDescription
           description={description}
-          onUserInput={this.updateCurrentVideo} />
+          onUserInput={this.handleInputChange} />
 
         <VideoCategories categories={categories} onUserInput={this.handleCategoryInput} />
 
         <FormFieldset>
           <FormButton onClick={() => {
-            // let { currentLib, currentVideo } = this.props
-            let updatedVideos = [...this.props.currentLib.videos, this.props.currentVideo]
-            let categories = this.props.currentVideo.categories
-            let newLib = {...this.props.currentLib, videos: updatedVideos, allCategories: categories }
-
-            this.props.updateCurrentLib(newLib)
+            let { currentVideo } = this.props
+            this.props.addVideoToLibrary(currentVideo)
           }}>Add A Video</FormButton>
         </FormFieldset>
 
@@ -140,11 +146,90 @@ export default connect(mapStateToProps, actions)(UploadForm)
 /*
 setId(url) {
   if (hasValidUrl(url)) {
-    this.props.updateCurrentVideo({...currentVideo, 'id': this.extractedId() })
+    this.props.handleInputChange({...currentVideo, 'id': this.extractedId() })
   }
 }
 
+TODO:
 
+-
+// setCurrentVideo(index)
+
+// By default, the currentVideo.position is equal to currentLib.size++
+
+// When the user clicks a video, we scan the array and compute its position using indexOf()
+// We use that as the reference point for updating or deleting it.
+
+// findIndexOfVideo()
+
+// setCurrentVideo(index)
+  // If video index !== currentLib.size++
+    // set state to 'update' instead of 'add'
+    // enable 'remove' button
+
+// updateCurrentVideo(index)
+
+      // push video to currentLib.videos
+  // removeCurrentVideo(index)
+    // updatedLib = currentLib.videos.splice(index ,1)
+    // currentLib.size--
+
+
+featureCategory() {
+
+}
+
+
+[{},{},{},{},{}]
+
+[{},{},{},{},{}]
+
+[{},{},{},{},{}]
+
+[{},{},{},{},{}]
+
+[{},{},{},{},{}]
+
+currentVideo = {
+  index: Number,
+  id: String,
+  url: String,
+  isFeatured: Boolean,
+  categories: Array,
+}
+
+addVideoToLibrary(currentvideo) {
+  // let hashId = hashId.encode(currentLib.vidsAdded)
+  // currentVideo.videoId = hashId
+  // currentLib[hashId] = currentVideo
+  // updateState with new video
+}
+
+updateVideoInLibrary(hashId, newData) {
+  currentLib.videos[hashId] = newData
+}
+
+deleteVideoInLibrary(hashId) {
+  delete currentLib.videos[hashId]
+}
+
+currentLib = {
+  size: Integer,
+  vidsAdded: Integer, // used to generate unique hashids
+  ID: String,
+  videos: {
+    hashId1: {
+
+    },
+    hashId2: {
+
+    }
+  },
+
+  categories: Array,
+  featuredVideos: Array,
+  name: String
+}
 
 
 */

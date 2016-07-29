@@ -6,7 +6,7 @@ class VideoThumbnail extends Component {
     const { onUserCheck } = this.props
 
     return (<FormFieldset>
-      <label>Feature this video in your library</label>
+      <label>Feature this video in your library!</label>
       <Input type="checkbox" onChange={onUserCheck} />
     </FormFieldset>)
   }
