@@ -3,15 +3,15 @@ import {
   ADD_LIB,
   CURR_VID,
   LIB_NAME,
-  ADD_VID
+  ADD_VID,
+  ADD_CATEGORY,
+  REPLACE_CURRENT_VIDEO
 } from '../actions/types'
 
 import * as _ from 'lodash'
 // For ID Hashing
 import Hashids from 'hashids'
 const hashids = new Hashids()
-console.log(Hashids)
-console.log(_)
 
 const initialState = {
   currentLib: {
@@ -47,11 +47,20 @@ export default function(state = initialState, action) {
     }
     case ADD_VID: {
       let hashId = hashids.encode(state.currentLib.vidsAdded)
-      console.log('hashId',hashId)
-      let videos = _.cloneDeep(state.currentLib.videos)
-      videos[hashId] = action.payload
-      console.log('ADD_VID', videos)
-      return { ...state, currentLib: videos }
+      let library = _.cloneDeep(state.currentLib)
+      library.videos[hashId] = {...action.payload, videoId: hashId}
+      library.vidsAdded += 1
+      library.size += 1
+      return { ...state, currentVideo: initialState.currentVideo, currentLib: library }
+    }
+    case ADD_CATEGORY: {
+      let library = _.cloneDeep(state.currentLib)
+      library.allCategories = [...library.allCategories, ...action.payload]
+      return { ...state, currentLib: library }
+    }
+    case REPLACE_CURRENT_VIDEO: {
+      let video = _.cloneDeep(state.currentLib.videos[action.payload])
+      return {...state, currentVideo: video }
     }
   }
 

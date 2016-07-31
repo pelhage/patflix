@@ -4,10 +4,11 @@ import {
   AUTH_ERROR,
   FETCH_LIBS,
   ADD_LIB,
-  UPDATE_CATS,
+  ADD_CATEGORY,
   CURR_VID,
   LIB_NAME,
-  ADD_VID
+  ADD_VID,
+  REPLACE_CURRENT_VIDEO
 } from './types';
 
 import { browserHistory } from 'react-router';
@@ -101,6 +102,13 @@ export function updateCurrentLib(library) {
     payload: library
   }
 }
+
+export function replaceCurrentVideo(videoId) {
+  return {
+    type: REPLACE_CURRENT_VIDEO,
+    payload: videoId
+  }
+}
 export function updateLibraryName(libraryName) {
   return {
     type: LIB_NAME,
@@ -114,7 +122,12 @@ export function addVideoToLibrary(video) {
     payload: video
   }
 }
-
+export function addCategoryToLibrary(categories) {
+  return {
+    type: ADD_CATEGORY,
+    payload: categories
+  }
+}
 export function updateCurrentVideo(video) {
   return {
     type: CURR_VID,

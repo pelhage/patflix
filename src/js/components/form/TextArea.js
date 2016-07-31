@@ -6,7 +6,6 @@ class TextArea extends Component {
   }
 
   render() {
-    console.log('this.props.value', this.props)
     return <textarea className="form_textarea" {...this.props}></textarea>
   }
 }

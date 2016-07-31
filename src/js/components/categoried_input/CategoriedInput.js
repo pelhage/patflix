@@ -6,8 +6,7 @@ class CategoriedInput extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentCategory: '',
-      categories: props.categories || []
+      currentCategory: ''
     }
     // Bind helper methods
     this.addToCategories = this.addToCategories.bind(this)
@@ -24,7 +23,7 @@ class CategoriedInput extends Component {
     if (commaOrTabPress) {
       e.preventDefault()
       if (inputValue.length) {
-        let categories = this.state.categories.slice()
+        let categories = this.props.categories.slice()
         if (categories.indexOf(inputValue) === -1) {
           categories.push(inputValue)
         }
@@ -49,10 +48,9 @@ class CategoriedInput extends Component {
   }
 
   render() {
-
     return (<div>
       <Input onKeyDown={this.addToCategories} onChange={this.handleCategories} value={this.state.currentCategory} />
-      <RenderedCategories categories={this.state.categories} handleClick={this.removeFromCategories} />
+      <RenderedCategories categories={this.props.categories} handleClick={this.removeFromCategories} />
     </div>)
   }
 }

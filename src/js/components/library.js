@@ -7,25 +7,29 @@ class Library extends Component {
   render() {
 
     const { videos, categories, onVideoClick } = this.props;
-    console.log('videos',videos, 'categories',categories)
-    // Go through each category
-
-    var VideoRows = categories.map((category, index) => {
-      // Grab videos that contain that category's tag
-      let categorizedVideos = categories.reduce((categorizedVideos, currVideo, currVideoIndex) => {
-        if (currVideo.categories.indexOf(category) > -1) {
-          let categorizedVideo = Object.assign(currVideo, { videoIndex: currVideoIndex })
-          categorizedVideos.push(categorizedVideo)
+    // For each category, create a categorizedVideoRow by
+    // checking entire library for the category per video
+    // @TODO: clearly need to reduce this sorting method.....
+    const VideoRows = categories.map((category, index) => {
+      // console.log('Begin iterating through categories.')
+      // console.log('Current category: ', category)
+      // console.log('Begin iterating through all videos.')
+      let categorizedVideos = []
+      for (var videoId in videos) {
+        // console.log('for ', videoId, ' in ', videos)
+        // console.log('Printing current video: ', videos[videoId])
+        if (videos[videoId].categories.indexOf(category) > -1) {
+          categorizedVideos.push(videos[videoId])
+          // console.log('found ', category, ' in ', videos[videoId])
         }
-      }, [])
+      }
 
-      return (<VideoRow
+      return (<div><VideoRow
         videos={categorizedVideos}
         category={category}
-        onVideoClick={onVideoClick} />)
+        onVideoClick={onVideoClick} /></div>)
 
     })
-
     return (
       <div>
         {/* <Hero featured={this.props.featured} /> */}

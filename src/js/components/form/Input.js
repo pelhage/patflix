@@ -6,7 +6,8 @@ class Input extends Component {
   }
 
   render() {
-      return <input className="form__input" {...this.props}/>
+    console.log('rendering Input.js')
+    return <input className="form__input" {...this.props}/>
   }
 }
 

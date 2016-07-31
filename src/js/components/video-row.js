@@ -4,12 +4,19 @@ import Slider from 'react-slick';
 // import Thumbnail from './upload/Thumbnail';
 
 class VideoRow extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  callVideoClickFunction(val) {
+    this.props.onVideoClick(val)
+  }
 
   render() {
     var settings = {
       arrows: true,
       dots: false,
-      infinite: true,
+      infinite: false,
       speed: 500,
       slidesToShow: 5,
       slidesToScroll: 5,
@@ -34,10 +41,11 @@ class VideoRow extends Component {
       }]
     }
 
-    const { videos, category, onVideoClick } = this.props
+    const { videos, category } = this.props
+    //, onVideoClick
 
     let list = videos.map(function(video, index) {
-      return (<div key={video.videoIndex} onClick={onVideoClick}>
+      return (<div key={video.videoId} onClick={this.callVideoClickFunction.bind(this, video.videoId)}>
         <div className="tile">
           <div className="tile__media">
             <div>
@@ -51,7 +59,7 @@ class VideoRow extends Component {
           </div>
         </div>
       </div>)
-    });
+    }, this);
 
     return (
       <div className="row">

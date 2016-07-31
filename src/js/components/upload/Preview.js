@@ -5,10 +5,17 @@ import * as actions from '../../actions';
 import Library from '../library';
 
 class Preview extends Component {
+  constructor(props) {
+    super(props)
+    this.handleVideoClick = this.handleVideoClick.bind(this)
+  }
+
   // Update Current Video
-  handleVideoClick(e) {
-    console.log('value of video',e.target.value)
-    console.log('name of video?',e.target.name)
+  handleVideoClick(videoId) {
+    console.log('[Preview.js] invoking handleVideoClick('+videoId+')')
+    console.log('this.props.replaceCurrentVideo('+videoId+')');
+    this.props.replaceCurrentVideo(videoId)
+    console.log('[Preview.js] finished handleVideoClick('+videoId+')')
   }
 
   render() {
@@ -16,10 +23,9 @@ class Preview extends Component {
       return <div>Preview of Your Library!</div>
     }
     const { name, videos, allCategories } = this.props.currentLib
-    console.log('Preview Component render. this.props.currentLib:', this.props.currentLib)
     return (<div>
       <h1>{name}</h1>
-      <Library videos={videos} categories={allCategories} onVideoClick={this.handleVideoClick.bind(this)} />
+      <Library videos={videos} categories={allCategories} onVideoClick={this.handleVideoClick} />
     </div>
     )
   }

@@ -1,19 +1,22 @@
 import React, { Component, PropTypes } from 'react'
 
+import { FormFieldset } from '../form'
+
 class VideoThumbnail extends Component {
 
   render() {
-    const { onUserCheck } = this.props
+    const { videoId } = this.props
 
     return (<FormFieldset>
-      <label>Feature this video in your library!</label>
-      <Input type="checkbox" onChange={onUserCheck} />
+      <div>
+        <img className="tile__img" src={"http://img.youtube.com/vi/"+videoId+"/0.jpg"} />
+      </div>
     </FormFieldset>)
   }
 }
 
-VideoFeatured.propTypes = {
-  onUserCheck: React.PropTypes.func.isRequired
+VideoThumbnail.propTypes = {
+  videoId: React.PropTypes.string
 }
 
-export default VideoFeatured
+export default VideoThumbnail

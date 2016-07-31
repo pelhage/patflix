@@ -10,6 +10,7 @@ import VideoUrl from './VideoUrl'
 import VideoFeatured from './VideoFeatured'
 import VideoDescription from './VideoDescription'
 import VideoCategories from './VideoCategories'
+import VideoThumbnail from './VideoThumbnail'
 
 class UploadForm extends Component {
 
@@ -65,9 +66,9 @@ class UploadForm extends Component {
 
   // renderCategories
   handleInputChange(e) {
-    const currentVideo = this.props.currentVideo
-    const { name, value } = e.target
-    const updatedVideo = {...currentVideo, [name]: value}
+    let currentVideo = this.props.currentVideo
+    let { name, value } = e.target
+    let updatedVideo = {...currentVideo, [name]: value}
     const isValid = this.isValidVideo(updatedVideo)
 
     if (name === 'url') {
@@ -81,8 +82,10 @@ class UploadForm extends Component {
     this.props.updateCurrentVideo({ ...updatedVideo, isValidVideo: isValid })
   }
 
-  handleFeaturedCheck(e) {
-    console.log(e.target.value)
+  handleFeaturedCheck() {
+    let isChecked = !this.props.currentVideo.isFeatured
+    let currentVideo = this.props.currentVideo
+    this.props.updateCurrentVideo({ ...currentVideo, isFeatured: isChecked })
   }
 
   handleCategoryInput(categories) {
@@ -90,15 +93,13 @@ class UploadForm extends Component {
   }
 
   render() {
+    console.log('currentVideo',this.props.currentVideo)
     const {
-      currentLib,
       currentVideo: {
-        url, isFeatured, description, categories
+        url, id, isFeatured, description, categories,
       }
     } = this.props
-
     return (<div className="form-container">
-      <h2>Add Videos to Your Library</h2>
       <Form onFormSubmit={this.handleFormSubmit}>
         {/* Library Name */}
         <LibraryName onUserInput={this.handleNameChange} />
@@ -107,8 +108,11 @@ class UploadForm extends Component {
         <VideoUrl
           url={url}
           onUserInput={this.handleInputChange} />
-
-        <VideoFeatured onUserCheck={this.handleFeaturedCheck} />
+        <VideoThumbnail videoId={id} />
+        <VideoFeatured
+          onUserCheck={this.handleFeaturedCheck}
+          checked={isFeatured}
+          />
 
         <VideoDescription
           description={description}
@@ -119,6 +123,7 @@ class UploadForm extends Component {
         <FormFieldset>
           <FormButton onClick={() => {
             let { currentVideo } = this.props
+            this.props.addCategoryToLibrary(currentVideo.categories)
             this.props.addVideoToLibrary(currentVideo)
           }}>Add A Video</FormButton>
         </FormFieldset>
@@ -135,7 +140,6 @@ class UploadForm extends Component {
 
 function mapStateToProps(state) {
   return {
-    currentLib: state.libraries.currentLib,
     currentVideo: state.libraries.currentVideo
   }
 }
@@ -160,7 +164,6 @@ TODO:
 // When the user clicks a video, we scan the array and compute its position using indexOf()
 // We use that as the reference point for updating or deleting it.
 
-// findIndexOfVideo()
 
 // setCurrentVideo(index)
   // If video index !== currentLib.size++
