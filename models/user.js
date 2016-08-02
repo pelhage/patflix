@@ -7,7 +7,7 @@ var userSchema = Schema({
     email: { type: String, unique: true, lowercase: true },
     password: String
   },
-  libraries: [{ type: Schema.Types.ObjectId, ref: 'Library' }]
+  libraries: Schema.Types.Mixed
 });
 
 userSchema.pre('save', function(next) {
@@ -20,6 +20,7 @@ userSchema.pre('save', function(next) {
       if (err) { return next(err) }
 
       user.auth.password = hash; // password contains salt + hashed password
+      console.log('creating user.. : ', user)
       next();
     })
   });

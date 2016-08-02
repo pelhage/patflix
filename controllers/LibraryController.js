@@ -10,19 +10,24 @@ module.exports = {
   create: function(req, res) {
     var newLibrary = new Library();
     console.log('Trying to create new library.. \n');
+    console.log('Creating new library, req.body:', req.body);
     newLibrary.libraryId = hashids.encodeHex(newLibrary._id);
-    newLibrary.featured = req.body.featured;
-    newLibrary.categories = req.body.categories;
+    newLibrary.size = req.body.size;
+    newLibrary.vidsAdded = req.body.vidsAdded;
+    newLibrary.name = req.body.name;
     newLibrary.videos = req.body.videos;
-    newLibrary.numOfVideos = req.body.videos.length;
+    newLibrary.featuredVideos = req.body.featuredVideos;
+    newLibrary.allCategories = req.body.allCategories;
     newLibrary.ownerId = ObjectID(req.user._id);
-
     newLibrary.save(function(err) {
       if (err) { throw err; }
     });
 
-    User.find({ 'auth.email': req.user.auth.email }, function(err, user) {
-      user.libraries.push(newLibrary);
+    User.findOne({ 'auth.email': req.user.auth.email }, function(err, user) {
+      user.libraries[newLibrary.libraryId] = newLibrary;
+      user.save(function(err) {
+        if (err) { throw err; }
+      })
     });
 
     res.send(newLibrary);

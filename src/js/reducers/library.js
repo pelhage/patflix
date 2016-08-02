@@ -15,6 +15,7 @@ const hashids = new Hashids()
 
 const initialState = {
   currentLib: {
+    libraryId: null,
     size: 0,
     vidsAdded: 0,
     name: '',

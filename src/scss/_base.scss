@@ -41,3 +41,6 @@ a:hover {
   color: #7f8c8d;
   text-decoration: underline;
 }
+input:focus, textarea:focus {
+  outline: none;
+}

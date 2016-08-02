@@ -26,6 +26,7 @@ class UploadForm extends Component {
     this.handleFeaturedCheck = this.handleFeaturedCheck.bind(this)
     // this.renderAllCategories = this.renderAllCategories.bind(this)
     this.handleCategoryInput = this.handleCategoryInput.bind(this)
+    this.fetchLibraries = this.fetchLibraries.bind(this)
   }
   // CONFIRMED
   handleFormSubmit() {
@@ -63,6 +64,11 @@ class UploadForm extends Component {
     let { url, categories } = video
     return this.hasValidUrl(url) //&& this.hasValidCategories(categories)
   }
+  fetchLibraries() {
+    this.props.fetchLibraries()
+    console.log('props after fetching lib', this.props)
+    console.log('heebee', this.props.heebee);
+  }
 
   // renderCategories
   handleInputChange(e) {
@@ -95,11 +101,13 @@ class UploadForm extends Component {
   render() {
     console.log('currentVideo',this.props.currentVideo)
     const {
+      currentLib,
       currentVideo: {
         url, id, isFeatured, description, categories,
       }
     } = this.props
     return (<div className="form-container">
+    <input type="button" onClick={this.fetchLibraries} />
       <Form onFormSubmit={this.handleFormSubmit}>
         {/* Library Name */}
         <LibraryName onUserInput={this.handleNameChange} />
@@ -129,7 +137,10 @@ class UploadForm extends Component {
         </FormFieldset>
 
         <FormFieldset>
-          <FormButton>Save Library</FormButton>
+          <FormButton onClick={() => {
+              console.log('Trying to submit library', this.props.currentLib)
+              this.props.createLibrary(this.props.currentLib)
+            }}>Save Library</FormButton>
         </FormFieldset>
 
       </Form>
@@ -140,7 +151,8 @@ class UploadForm extends Component {
 
 function mapStateToProps(state) {
   return {
-    currentVideo: state.libraries.currentVideo
+    currentVideo: state.libraries.currentVideo,
+    currentLib: state.libraries.currentLib
   }
 }
 

@@ -61,6 +61,7 @@ export function signUpUser({email, password}) {
 }
 
 export function createLibrary(library) {
+  console.log('Calling createLibrary in action creator', library)
   return function(dispatch) {
     axios.post(`${API_URL}/library`, library, {
       headers: { authorization: localStorage.getItem('token') }
@@ -149,8 +150,7 @@ export function fetchLibraries() {
       headers: { authorization: localStorage.getItem('token') }
     })
     .then(response => {
-      console.log('fetchlibraries: ', response);
-      console.log('fetchlibraries dispatching: ', response.data.message);
+      console.log('fetchlibraries response.data: ', response.data);
       dispatch({
         type: FETCH_LIBS,
         payload: response.data
