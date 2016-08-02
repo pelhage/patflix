@@ -7,7 +7,13 @@ class Libraries extends Component {
     super(props)
     this.fetchLibraries = this.fetchLibraries.bind(this)
   }
+  componentWillMount() {
+    this.props.fetchLibraries()
+  }
 
+  // setCurrentLib(libId) {}
+    // click on one of these libs, who have id props passed to them on the button
+      // this will set currentLib = this.props.all[libId]
   fetchLibraries() {
     this.props.fetchLibraries()
   }
@@ -28,8 +34,8 @@ class Libraries extends Component {
   render() {
     const { libraries } = this.props
     let libs = this.renderLibraries().map((library) => {
-      console.log('item', library)
-      return (<div>
+    {/*console.log('item', library) */}
+      return (<div className="bg--med">
         <h2>{library.libName}</h2>
         <p>Num of videos: {library.size}</p>
         <p>Go to lib: /l/{library.libraryId}</p>
@@ -37,7 +43,7 @@ class Libraries extends Component {
     })
 
     return (<div>
-      <div onClick={this.fetchLibraries.bind(this)}>Render</div>
+      <div className="form__button" onClick={this.fetchLibraries.bind(this)}>Render</div>
       {libs}
     </div>)
   }
