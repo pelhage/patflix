@@ -27,11 +27,9 @@ export function signinUser({email, password}) {
       localStorage.setItem('token', response.data.token);
       // redirect route to '/dashboard'
       browserHistory.push('/dashboard')
-      console.log(response.data);
     })
     .catch(function(err) {
       // If bad request, show error
-      console.log('ERROR 2', err)
       dispatch(authError('Bad login info'))
     });
   }
@@ -46,8 +44,9 @@ export function signUpUser({email, password}) {
       dispatch({ type: AUTH_USER });
       // save the jwt token
       localStorage.setItem('token', response.data.token);
-      // redirect route to '/dashboard'
-      browserHistory.push('/dashboard')
+      // redirect route to '/d'
+      browserHistory.push('/d')
+      dispatch(fetchLibraries())
       console.log(response.data);
     })
     .catch(function(err) {
@@ -72,6 +71,7 @@ export function createLibrary(library) {
         type: ADD_LIB,
         payload: response.data
       })
+      dispatch(fetchLibraries())
     })
   }
 }
@@ -110,25 +110,33 @@ export function replaceCurrentVideo(videoId) {
     payload: videoId
   }
 }
+
+//
 export function updateLibraryName(libraryName) {
+  console.log('update library name!: ', libraryName)
   return {
     type: LIB_NAME,
     payload: libraryName
   }
 }
 
+//
 export function addVideoToLibrary(video) {
   return {
     type: ADD_VID,
     payload: video
   }
 }
+
+//
 export function addCategoryToLibrary(categories) {
   return {
     type: ADD_CATEGORY,
     payload: categories
   }
 }
+
+//
 export function updateCurrentVideo(video) {
   return {
     type: CURR_VID,
@@ -136,6 +144,7 @@ export function updateCurrentVideo(video) {
   }
 }
 
+//
 export function authError(error) {
   return {
     type: AUTH_ERROR,
@@ -143,14 +152,15 @@ export function authError(error) {
   }
 }
 
-
+//
 export function fetchLibraries() {
+  console.log('Im trying to fetch libraries')
   return function(dispatch) {
     axios.get(`${API_URL}/libraries`, {
       headers: { authorization: localStorage.getItem('token') }
     })
     .then(response => {
-      console.log('fetchlibraries response.data: ', response.data);
+      console.log('fetchlibraries response: ', response.data);
       dispatch({
         type: FETCH_LIBS,
         payload: response.data

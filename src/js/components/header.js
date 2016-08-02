@@ -20,6 +20,7 @@ class Header extends Component {
         <Link to="/" className="nav__item nav__item--brand">PATFLIX!</Link>
         <span className="nav__item--pull-right">
           <Link to="/dashboard" className="nav__item">Create Library</Link>
+          <Link to="/d" className="nav__item">Dashboard</Link>
           { this.authButton() }
         </span>
       </nav>

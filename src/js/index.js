@@ -13,6 +13,7 @@ import reducers from './reducers';
 import requireAuth from './components/require_auth';
 // All Components for Patflix
 import App from './components/app';
+import Libraries from './components/libraries'
 import Library from './components/library';
 import Dashboard from './components/dashboard';
 import About from './components/about';
@@ -34,13 +35,12 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
-        <Route path="dashboard" component={requireAuth(Dashboard)}>
-          <Route path="/preview" component={requireAuth(Preview)}></Route>
-        </Route>
-        <Route path="about" component={About}></Route>
-        <Route path="signin" component={Signin}></Route>
-        <Route path="signup" component={SignUp}></Route>
-        <Route path="signout" component={SignOut}></Route>
+        <Route path="d" component={requireAuth(Libraries)} />
+        <Route path="dashboard" component={requireAuth(Dashboard)} />
+        <Route path="about" component={About} />
+        <Route path="signin" component={Signin} />
+        <Route path="signup" component={SignUp} />
+        <Route path="signout" component={SignOut} />
       </Route>
 
     </Router>

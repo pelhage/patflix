@@ -4,8 +4,9 @@ var Video = require('../models/video');
 
 var librarySchema = Schema({
   libraryId: String,
+  libName: String,
   featured: [],
-  categories: [String],
+  allCategories: [String],
   videos: {},
   numOfVideos: Number,
   ownerId: {type: Schema.Types.ObjectId, ref: 'User'}

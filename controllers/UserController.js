@@ -35,9 +35,7 @@ exports.signup = function(req, res, next) {
     var newUser = new User();
     newUser.auth.email = email;
     newUser.auth.password = password;
-    newUser.libraries = {
-      numOfLibs: 0
-    };
+    newUser.libraries = {};
     newUser.save(function(err) {
       if (err) { return next(err); }
       console.log('User saved successfully');

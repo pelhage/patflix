@@ -20,29 +20,13 @@ class UploadForm extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
     this.updateCurrentLib = this.updateCurrentLib.bind(this)
     this.handleNameChange = this.handleNameChange.bind(this)
-    // URL METHODS //
     this.handleInputChange = this.handleInputChange.bind(this)
-    /* */
     this.handleFeaturedCheck = this.handleFeaturedCheck.bind(this)
-    // this.renderAllCategories = this.renderAllCategories.bind(this)
     this.handleCategoryInput = this.handleCategoryInput.bind(this)
     this.fetchLibraries = this.fetchLibraries.bind(this)
   }
-  // CONFIRMED
-  handleFormSubmit() {
-    this.props.createLibrary(this.props.currentLib)
-  }
-  updateCurrentLib() {
-    this.props.updateCurrentLib()
-  }
-  handleDescriptionChange(e) {
-    this.handleInputChange(e)
-  }
 
-  handleNameChange(e) {
-    this.props.updateLibraryName(e.target.value)
-  }
-  // URL METHODS //
+  // Helper methods
   hasValidUrl(url) {
     if (url) {
       let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -50,7 +34,6 @@ class UploadForm extends Component {
       return match && match[2].length == 11
     }
   }
-
   extractId(url) {
     if (this.hasValidUrl(url)) {
       let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -59,18 +42,29 @@ class UploadForm extends Component {
     }
     return ''
   }
-
   isValidVideo(video) {
     let { url, categories } = video
     return this.hasValidUrl(url) //&& this.hasValidCategories(categories)
   }
+
+  handleFormSubmit() {
+    this.props.createLibrary(this.props.currentLib)
+  }
+  updateCurrentLib() {
+    this.props.updateCurrentLib()
+  }
+  handleNameChange(e) {
+    this.props.updateLibraryName(e.target.value)
+  }
+  handleDescriptionChange(e) {
+    this.handleInputChange(e)
+  }
+
   fetchLibraries() {
     this.props.fetchLibraries()
     console.log('props after fetching lib', this.props)
-    console.log('heebee', this.props.heebee);
   }
 
-  // renderCategories
   handleInputChange(e) {
     let currentVideo = this.props.currentVideo
     let { name, value } = e.target
@@ -80,11 +74,9 @@ class UploadForm extends Component {
     if (name === 'url') {
       updatedVideo.id = this.extractId(value)
     }
-
     // if (isValid) {
     //   this.props.updateCurrentLib({ ...this.props.currentLib, videos: [updatedVideo] })
     // }
-
     this.props.updateCurrentVideo({ ...updatedVideo, isValidVideo: isValid })
   }
 
@@ -100,6 +92,7 @@ class UploadForm extends Component {
 
   render() {
     console.log('currentVideo',this.props.currentVideo)
+    console.log('currentLib',this.props.currentLib)
     const {
       currentLib,
       currentVideo: {
@@ -111,21 +104,20 @@ class UploadForm extends Component {
       <Form onFormSubmit={this.handleFormSubmit}>
         {/* Library Name */}
         <LibraryName onUserInput={this.handleNameChange} />
-
         {/* Current Video's Details */}
         <VideoUrl
           url={url}
           onUserInput={this.handleInputChange} />
         <VideoThumbnail videoId={id} />
+        {/* Whether Current Video is Featured in Hero */}
         <VideoFeatured
           onUserCheck={this.handleFeaturedCheck}
-          checked={isFeatured}
-          />
-
+          checked={isFeatured} />
+        {/* Description of Current Video */}
         <VideoDescription
           description={description}
           onUserInput={this.handleInputChange} />
-
+        {/* Dynamic Category Enter & Delete */}
         <VideoCategories categories={categories} onUserInput={this.handleCategoryInput} />
 
         <FormFieldset>
@@ -160,11 +152,6 @@ export default connect(mapStateToProps, actions)(UploadForm)
 
 
 /*
-setId(url) {
-  if (hasValidUrl(url)) {
-    this.props.handleInputChange({...currentVideo, 'id': this.extractedId() })
-  }
-}
 
 TODO:
 

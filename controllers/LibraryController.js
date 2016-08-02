@@ -8,26 +8,31 @@ module.exports = {
 
   // Save a New Library
   create: function(req, res) {
+    console.log('Invoked [create] Library endpoint. \n');
+    console.log('[create] req.body:', req.body);
+
     var newLibrary = new Library();
-    console.log('Trying to create new library.. \n');
-    console.log('Creating new library, req.body:', req.body);
     newLibrary.libraryId = hashids.encodeHex(newLibrary._id);
     newLibrary.size = req.body.size;
     newLibrary.vidsAdded = req.body.vidsAdded;
-    newLibrary.name = req.body.name;
+    newLibrary.libName = req.body.libName;
     newLibrary.videos = req.body.videos;
     newLibrary.featuredVideos = req.body.featuredVideos;
     newLibrary.allCategories = req.body.allCategories;
     newLibrary.ownerId = ObjectID(req.user._id);
+
     newLibrary.save(function(err) {
       if (err) { throw err; }
-    });
 
-    User.findOne({ 'auth.email': req.user.auth.email }, function(err, user) {
-      user.libraries[newLibrary.libraryId] = newLibrary;
-      user.save(function(err) {
-        if (err) { throw err; }
-      })
+      User.findOne({ 'auth.email': req.user.auth.email }, function(err, user) {
+        console.log('user when creating lib: ', user);
+        var copy = Object.assign({}, user.libraries);
+        copy[newLibrary.libraryId] = newLibrary;
+        user.libraries = copy;
+        user.save(function(err) {
+          if (err) { throw err; }
+        })
+      });
     });
 
     res.send(newLibrary);
@@ -43,9 +48,12 @@ module.exports = {
 
   // Show a user's libraries
   showAll: function(req, res) {
-    User.find({ 'auth.email': req.user._id }, function(err, user) {
-      res.send(user.libraries);
-    });
+    User
+      .findOne({ 'auth.email': req.user.auth.email })
+      .exec(function(err, user) {
+        console.log('user',user.libraries)
+        res.send(user.libraries);
+      })
   }
 
 };

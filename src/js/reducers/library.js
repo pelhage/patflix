@@ -18,7 +18,7 @@ const initialState = {
     libraryId: null,
     size: 0,
     vidsAdded: 0,
-    name: '',
+    libName: '',
     videos: {},
     allCategories: [],
     featuredVideos: []
@@ -43,8 +43,9 @@ export default function(state = initialState, action) {
     case CURR_VID:
       return { ...state, currentVideo: action.payload }
     case LIB_NAME: {
-      const newLib = { ...state.currentLib, name: action.payload }
-      return { ...state, currentLib: newLib }
+      let library = _.cloneDeep(state.currentLib)
+      library.libName = action.payload
+      return { ...state, currentLib: library }
     }
     case ADD_VID: {
       let hashId = hashids.encode(state.currentLib.vidsAdded)
