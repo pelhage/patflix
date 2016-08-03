@@ -4,10 +4,13 @@ import { Input, FormFieldset, FormLabel } from '../form'
 class LibraryName extends Component {
 
   render() {
-    const { onUserInput } = this.props
+    const { onUserInput, value } = this.props
     return (<FormFieldset>
       <FormLabel>Library Names</FormLabel>
-      <Input placeholder="Name Your Library" onChange={onUserInput}/>
+      <Input
+        value={value}
+        placeholder="Name Your Library"
+        onChange={onUserInput}/>
     </FormFieldset>)
   }
 }

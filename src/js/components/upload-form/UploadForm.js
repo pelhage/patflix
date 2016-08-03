@@ -23,7 +23,6 @@ class UploadForm extends Component {
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleFeaturedCheck = this.handleFeaturedCheck.bind(this)
     this.handleCategoryInput = this.handleCategoryInput.bind(this)
-    this.fetchLibraries = this.fetchLibraries.bind(this)
   }
 
   // Helper methods
@@ -60,11 +59,6 @@ class UploadForm extends Component {
     this.handleInputChange(e)
   }
 
-  fetchLibraries() {
-    this.props.fetchLibraries()
-    console.log('props after fetching lib', this.props)
-  }
-
   handleInputChange(e) {
     let currentVideo = this.props.currentVideo
     let { name, value } = e.target
@@ -72,7 +66,7 @@ class UploadForm extends Component {
     const isValid = this.isValidVideo(updatedVideo)
 
     if (name === 'url') {
-      updatedVideo.id = this.extractId(value)
+      updatedVideo.youtubeId = this.extractId(value)
     }
     // if (isValid) {
     //   this.props.updateCurrentLib({ ...this.props.currentLib, videos: [updatedVideo] })
@@ -96,19 +90,18 @@ class UploadForm extends Component {
     const {
       currentLib: { libName },
       currentVideo: {
-        url, id, isFeatured, description, categories,
+        url, youtubeId, isFeatured, description, categories,
       }
     } = this.props
     return (<div className="form-container">
-    <input type="button" onClick={this.fetchLibraries} />
       <Form onFormSubmit={this.handleFormSubmit}>
         {/* Library Name */}
-        <LibraryName value={name} onUserInput={this.handleNameChange} />
+        <LibraryName value={libName} onUserInput={this.handleNameChange} />
         {/* Current Video's Details */}
         <VideoUrl
           url={url}
           onUserInput={this.handleInputChange} />
-        <VideoThumbnail videoId={id} />
+        <VideoThumbnail videoId={youtubeId} />
         {/* Whether Current Video is Featured in Hero */}
         <VideoFeatured
           onUserCheck={this.handleFeaturedCheck}
@@ -123,6 +116,7 @@ class UploadForm extends Component {
         <FormFieldset>
           <FormButton onClick={() => {
             let { currentVideo } = this.props
+            console.log('the currentVideo to be passed to addVideoToLibrary', currentVideo)
             this.props.addCategoryToLibrary(currentVideo.categories)
             this.props.addVideoToLibrary(currentVideo)
           }}>Add A Video</FormButton>

@@ -49,7 +49,7 @@ class VideoRow extends Component {
         <div className="tile">
           <div className="tile__media">
             <div>
-              <img className="tile__img" src={"http://img.youtube.com/vi/"+video.id+"/0.jpg"} />
+              <img className="tile__img" src={"http://img.youtube.com/vi/"+video.youtubeId+"/0.jpg"} />
             </div>
           </div>
           <div className="tile__details">

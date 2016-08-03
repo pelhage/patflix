@@ -26,7 +26,8 @@ const initialState = {
     featuredVideos: []
   },
   currentVideo: {
-    id: '',
+    videoId: '',
+    youtubeId: '',
     url: '',
     isValidVideo: false,
     isFeatured: false,
@@ -54,11 +55,18 @@ export default function(state = initialState, action) {
       return { ...state, currentLib: library }
     }
     case ADD_VID: {
-      let hashId = hashids.encode(state.currentLib.vidsAdded)
       let library = _.cloneDeep(state.currentLib)
+      let hashId = ''
+      console.log('action.payload.videoId: ', action.payload.videoId)
+      if (!action.payload.videoId) {
+         hashId = hashids.encode(state.currentLib.vidsAdded)
+      } else {
+        hashId = action.payload.videoId
+      }
       library.videos[hashId] = {...action.payload, videoId: hashId}
       library.vidsAdded += 1
       library.size += 1
+
       return { ...state, currentVideo: initialState.currentVideo, currentLib: library }
     }
     case ADD_CATEGORY: {

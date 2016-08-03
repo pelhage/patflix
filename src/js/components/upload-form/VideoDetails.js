@@ -18,15 +18,23 @@ class VideoDetails extends Component {
 
   hasValidUrl(url) {
     if (url) {
-      const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-      const match = url.match(regExp);
+      let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      let match = url.match(regExp);
       return match && match[2].length == 11
+    }
+  }
+
+  extractedId(url) {
+    if (url) {
+      let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      let match = url.match(regExp);
+      return match[2]
     }
   }
 
   setId(url) {
     if (hasValidUrl(url)) {
-      this.props.updateCurrentVideo({...currentVideo, 'id': this.extractedId() })
+      this.props.updateCurrentVideo({...currentVideo, 'youtubeId': this.extractedId(url) })
     }
   }
 

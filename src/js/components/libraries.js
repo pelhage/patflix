@@ -14,11 +14,6 @@ class Libraries extends Component {
   fetchLibraries() {
     this.props.fetchLibraries()
   }
-  setCurrentLib(libId) {
-    // click on one of these libs, who have id props passed to them on the button
-      // this will set currentLib = this.props.all[libId]
-    this.props.setCurrentLib(libId)
-  }
   // Render the libraries once they've been
   // dispatched -> down to props
   renderLibraries() {
@@ -34,7 +29,6 @@ class Libraries extends Component {
   }
 
   render() {
-    console.log('Params', this.props.params)
     const { libraries } = this.props
     let libs = this.renderLibraries().map((library) => {
     {/*console.log('item', library) */}
@@ -42,13 +36,12 @@ class Libraries extends Component {
         <h2>{library.libName}</h2>
         <p>Num of videos: {library.size}</p>
         <p>Go to lib: /l/{library.libraryId}</p>
-        <button className="form__button" onClick={() => this.setCurrentLib(library.libraryId)}></button>
-        <Link to={"/d/"+library.libraryId}>Link to the lib!</Link>
+        <Link className="btn btn-secondary" to={"/d/"+library.libraryId}>Edit Library</Link>
+        <Link className="btn btn-secondary" to={"/d/"+library.libraryId}>View Library</Link>
       </div>)
     })
 
     return (<div>
-      <div className="form__button" onClick={this.fetchLibraries.bind(this)}>Render</div>
       {libs}
     </div>)
   }
