@@ -3,9 +3,11 @@ import {
   ADD_LIB,
   CURR_VID,
   LIB_NAME,
+  FETCH_LIB_BY_ID,
   ADD_VID,
   ADD_CATEGORY,
-  REPLACE_CURRENT_VIDEO
+  REPLACE_CURRENT_VIDEO,
+  REPLACE_CURRENT_LIBRARY
 } from '../actions/types'
 
 import * as _ from 'lodash'
@@ -36,8 +38,12 @@ const initialState = {
 // If current url is valid, set id, if not set id to null
 export default function(state = initialState, action) {
   switch (action.type) {
-    case FETCH_LIBS:
+    case FETCH_LIBS: {
       return { ...state, all: action.payload }
+    }
+    case FETCH_LIB_BY_ID: {
+      return { ...state, currentLib: action.payload }
+    }
     case ADD_LIB:
       return { ...state, currentLib: action.payload }
     case CURR_VID:
@@ -63,6 +69,12 @@ export default function(state = initialState, action) {
     case REPLACE_CURRENT_VIDEO: {
       let video = _.cloneDeep(state.currentLib.videos[action.payload])
       return {...state, currentVideo: video }
+    }
+    case REPLACE_CURRENT_LIBRARY: {
+      console.log('Invoking REPLACE_CURRENT_LIBRARY reducer with: ', action.payload)
+      let allLibs = _.cloneDeep(state.all)
+      console.log('REPLACE_CURRENT_LIBRARY allLibs: ', allLibs)
+      return {...state, currentLib: allLibs[action.payload]}
     }
   }
 

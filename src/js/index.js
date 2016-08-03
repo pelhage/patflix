@@ -23,6 +23,8 @@ import SignUp from './components/auth/signup';
 import SignOut from './components/auth/signout';
 import Preview from './components/upload/Preview';
 
+// import Dummy from './components/libraries/LibraryRow'
+
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 // Ensure user with local token is auth'd
@@ -35,7 +37,8 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
-        <Route path="d" component={requireAuth(Libraries)} />
+        <Route path="d" component={requireAuth(Libraries)}></Route>
+        <Route path="d/:libId"  component={requireAuth(Dashboard)} />
         <Route path="dashboard" component={requireAuth(Dashboard)} />
         <Route path="about" component={About} />
         <Route path="signin" component={Signin} />

@@ -3,12 +3,14 @@ import {
   DEAUTH_USER,
   AUTH_ERROR,
   FETCH_LIBS,
+  FETCH_LIB_BY_ID,
   ADD_LIB,
   ADD_CATEGORY,
   CURR_VID,
   LIB_NAME,
   ADD_VID,
-  REPLACE_CURRENT_VIDEO
+  REPLACE_CURRENT_VIDEO,
+  REPLACE_CURRENT_LIBRARY
 } from './types';
 
 import { browserHistory } from 'react-router';
@@ -111,6 +113,13 @@ export function replaceCurrentVideo(videoId) {
   }
 }
 
+export function setCurrentLib(libId) {
+  return {
+    type: REPLACE_CURRENT_LIBRARY,
+    payload: libId
+  }
+}
+
 //
 export function updateLibraryName(libraryName) {
   console.log('update library name!: ', libraryName)
@@ -170,6 +179,18 @@ export function fetchLibraries() {
       // If bad request show error
       console.log('fetchLibraries err: ', err)
     });
+  }
+}
+
+export function fetchLibById(libraryId) {
+  return function(dispatch) {
+    axios.get(`${API_URL}/library/${libraryId}`)
+      .then(response => {
+        dispatch({
+          type: FETCH_LIB_BY_ID,
+          payload: response.data
+        })
+      })
   }
 }
 

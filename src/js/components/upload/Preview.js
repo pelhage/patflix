@@ -22,9 +22,9 @@ class Preview extends Component {
     if (!this.props.currentLib) {
       return <div>Preview of Your Library!</div>
     }
-    const { name, videos, allCategories } = this.props.currentLib
+    const { libName, videos, allCategories } = this.props.currentLib
     return (<div>
-      <h1>{name}</h1>
+      <h1>{libName}</h1>
       <Library videos={videos} categories={allCategories} onVideoClick={this.handleVideoClick} />
     </div>
     )

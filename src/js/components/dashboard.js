@@ -5,9 +5,14 @@ import Preview from './upload/Preview';
 import UploadForm from './upload-form/UploadForm';
 
 class Dashboard extends Component {
-
+  // Initialize data if we don't already have any
+  componentWillMount() {
+    if (this.props.params.libId) {
+      this.props.fetchLibById(this.props.params.libId)
+    }
+  }
   render() {
-    const { currentLib } = this.props
+    const { currentLib, all } = this.props
     const divStyle = {
       height: window.innerHeight
     }
@@ -27,7 +32,7 @@ class Dashboard extends Component {
 
 function mapStateToProps(state) {
   return {
-    library: state.libraries.all,
+    libraries: state.libraries.all,
     currentLib: state.libraries.currentLib,
     currentVideo: state.libraries.currentVideo
   }

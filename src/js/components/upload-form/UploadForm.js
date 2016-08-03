@@ -94,7 +94,7 @@ class UploadForm extends Component {
     console.log('currentVideo',this.props.currentVideo)
     console.log('currentLib',this.props.currentLib)
     const {
-      currentLib,
+      currentLib: { libName },
       currentVideo: {
         url, id, isFeatured, description, categories,
       }
@@ -103,7 +103,7 @@ class UploadForm extends Component {
     <input type="button" onClick={this.fetchLibraries} />
       <Form onFormSubmit={this.handleFormSubmit}>
         {/* Library Name */}
-        <LibraryName onUserInput={this.handleNameChange} />
+        <LibraryName value={name} onUserInput={this.handleNameChange} />
         {/* Current Video's Details */}
         <VideoUrl
           url={url}

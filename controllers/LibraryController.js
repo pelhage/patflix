@@ -43,7 +43,7 @@ module.exports = {
   render: function(req, res) {
     var libID = hashids.decodeHex(req.params.id)
     Library
-      .findOne({'_id': new ObjectID(libID)}, {'_id': 0, '_v': 0})
+      .findOne({'_id': new ObjectID(libID)})
       .exec(function(err, doc) {
         res.send(doc)
       })
