@@ -1,38 +1,38 @@
 import React, { Component } from 'react'
 
-import VideoRow from './video-row.js';
+import Hero from './hero'
+import VideoRow from './video-row'
 
 class Library extends Component {
-
   render() {
 
-    const { videos, categories, onVideoClick } = this.props;
+    const { videos, categories, onVideoClick, featured } = this.props;
     // For each category, create a categorizedVideoRow by
     // checking entire library for the category per video
     // @TODO: clearly need to reduce this sorting method.....
-    const VideoRows = categories.map((category, index) => {
-      // console.log('Begin iterating through categories.')
-      // console.log('Current category: ', category)
-      // console.log('Begin iterating through all videos.')
-      let categorizedVideos = []
-      for (var videoId in videos) {
-        // console.log('for ', videoId, ' in ', videos)
-        // console.log('Printing current video: ', videos[videoId])
-        if (videos[videoId].categories.indexOf(category) > -1) {
-          categorizedVideos.push(videos[videoId])
-          // console.log('found ', category, ' in ', videos[videoId])
-        }
+    const VideoRows = []
+
+    console.log('LIBRARY COMPONENT TO RENDER ALL THE ROWS: ')
+    console.log('VIDEOS: ', videos)
+    console.log('CATEGORIES', categories)
+
+    // for each category object in categories
+    for (var category in categories) {
+      // 
+      if (categories[category].length) {
+        let categorizedVideos = categories[category].map((videoId) => {
+          return videos[videoId]
+        })
+        VideoRows.push(<div><VideoRow
+          videos={categorizedVideos}
+          category={category}
+          onVideoClick={onVideoClick} /></div>)
       }
+    }
 
-      return (<div><VideoRow
-        videos={categorizedVideos}
-        category={category}
-        onVideoClick={onVideoClick} /></div>)
-
-    })
     return (
       <div>
-        {/* <Hero featured={this.props.featured} /> */}
+        <Hero featured={featured} videos={videos} />
         {VideoRows}
       </div>
     );
@@ -40,3 +40,13 @@ class Library extends Component {
 }
 
 export default Library
+
+
+/*
+VideoRows.push(<div><VideoRow
+  videos={categorizedVideos}
+  category={category}
+  onVideoClick={onVideoClick} /></div>)
+
+
+*/

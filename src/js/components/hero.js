@@ -1,11 +1,11 @@
-var React = require('react');
-var Slider = require('react-slick');
+import React from 'react'
+import Slider from 'react-slick'
 
 var Router = require('react-router');
 var Link = Router.Link;
 
 module.exports = React.createClass({
-  
+
 
   render: function() {
     var settings = {
@@ -18,34 +18,38 @@ module.exports = React.createClass({
       autoplay: true,
       autoplaySpeed: 6500
     };
+    const { videos, featured } = this.props
+    if (featured.length) {
+      var list = featured.map(function(videoId) {
 
-    var list = this.props.featured.map(function(video) {
-
-      var imageStyle = {
-        'backgroundImage': 'url(https://img.youtube.com/vi/'+ video.id +'/sddefault.jpg)',
-        'backgroundSize': 'cover'
-      };
-      return (<div><div className="hero-row">
-        <div className="hero">
-          <div className="hero-image" style={imageStyle}></div>
-          <div className="vignette"></div>
-          <div className="hero-info">
-            <div className="hero-details">
-              <h1 className="hero-details__title">{video.title}</h1>
-              <p className="hero-details__description">{video.description}</p>
-              <div>
-                <Link className="upload-video__button upload-video__button--primary"
-                   to={"/playback/"+ video.id}>
-                   &#x25b6;&#xFE0E; Play
-                </Link>
+        var imageStyle = {
+          'backgroundImage': 'url(https://img.youtube.com/vi/'+ videos[videoId].youtubeId +'/0.jpg)',
+          'backgroundSize': 'cover'
+        };
+        return (<div><div className="hero-row">
+          <div className="hero">
+            <div className="hero-image" style={imageStyle}></div>
+            <div className="vignette"></div>
+            <div className="hero-info">
+              <div className="hero-details">
+                <h1 className="hero-details__title">{videos[videoId].title}</h1>
+                <p className="hero-details__description">{videos[videoId].description}</p>
+                <div>
+                  <Link className="btn btn-primary"
+                     to={"/playback/"+ videos[videoId].youtubeId}>
+                     &#x25b6;&#xFE0E; Play
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      </div>);
-    });
-    
+        </div>);
+      });
+    } else {
+      return <div>FUCK</div>
+    }
+
     return (<div className="hero-wrapper">
       <Slider {...settings}>
       {list}

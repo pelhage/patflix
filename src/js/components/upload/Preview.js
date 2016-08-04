@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import * as actions from '../../actions'
 
 import Library from '../library';
+import Hero from '../hero'
 
 class Preview extends Component {
   constructor(props) {
@@ -22,10 +23,12 @@ class Preview extends Component {
     if (!this.props.currentLib) {
       return <div>Preview of Your Library!</div>
     }
-    const { libName, videos, allCategories } = this.props.currentLib
+    const { libName, videos, allCategories, featuredVideos } = this.props.currentLib
+    console.log('featuredVideos', featuredVideos)
+    console.log('allCategories', allCategories)
     return (<div>
       <h1>{libName}</h1>
-      <Library videos={videos} categories={allCategories} onVideoClick={this.handleVideoClick} />
+      <Library videos={videos} categories={allCategories} featured={featuredVideos} onVideoClick={this.handleVideoClick} />
     </div>
     )
   }

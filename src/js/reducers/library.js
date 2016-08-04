@@ -22,7 +22,9 @@ const initialState = {
     vidsAdded: 0,
     libName: '',
     videos: {},
-    allCategories: [],
+    allCategories: {
+      Uncategorized: []
+    },
     featuredVideos: []
   },
   currentVideo: {
@@ -39,12 +41,10 @@ const initialState = {
 // If current url is valid, set id, if not set id to null
 export default function(state = initialState, action) {
   switch (action.type) {
-    case FETCH_LIBS: {
+    case FETCH_LIBS:
       return { ...state, all: action.payload }
-    }
-    case FETCH_LIB_BY_ID: {
+    case FETCH_LIB_BY_ID:
       return { ...state, currentLib: action.payload }
-    }
     case ADD_LIB:
       return { ...state, currentLib: action.payload }
     case CURR_VID:
@@ -57,22 +57,80 @@ export default function(state = initialState, action) {
     case ADD_VID: {
       let library = _.cloneDeep(state.currentLib)
       let hashId = ''
-      console.log('action.payload.videoId: ', action.payload.videoId)
-      if (!action.payload.videoId) {
-         hashId = hashids.encode(state.currentLib.vidsAdded)
+      let video = action.payload
+      // If there's no videoId, then its a new video.
+      if (!video.videoId) {
+         hashId = hashids.encode(library.vidsAdded)
+         library.vidsAdded += 1
+         library.size += 1
+         video.videoId = hashId
       } else {
-        hashId = action.payload.videoId
+        hashId = video.videoId
       }
       library.videos[hashId] = {...action.payload, videoId: hashId}
-      library.vidsAdded += 1
-      library.size += 1
+
+      // Now we have to reflect these changes in featured....
+      // If the video is featured...
+      if (video.isFeatured) {
+        // If it doesn't exist in the featuredVideos array, add it
+        if (library.featuredVideos.indexOf(video.videoId) === -1) {
+          library.featuredVideos.push(video.videoId)
+        }
+      } else {
+        // If it is in the featured videos array, then it should be removed
+        let featuredIndex = library.featuredVideos.indexOf(video.videoId)
+        if (featuredIndex > -1) {
+          library.featuredVideos.splice(featuredIndex, 1)
+        }
+      }
 
       return { ...state, currentVideo: initialState.currentVideo, currentLib: library }
     }
     case ADD_CATEGORY: {
       let library = _.cloneDeep(state.currentLib)
-      library.allCategories = [...library.allCategories, ...action.payload]
-      return { ...state, currentLib: library }
+      let allCategories = library.allCategories
+      let currentVideo = _.cloneDeep(state.currentVideo)
+      let hashId = ''
+
+      let categories = action.payload
+
+      if (!currentVideo.videoId) {
+         currentVideo.videoId = hashids.encode(library.vidsAdded)
+      }
+
+      if (categories.length) {
+        // If the video is currently uncategorized, remove it from uncategorized
+        let uncategorizedIndex = allCategories['Uncategorized'].indexOf(currentVideo.videoId)
+        if (uncategorizedIndex > -1) {
+          allCategories['Uncategorized'].splice(uncategorizedIndex, 1)
+        }
+        //
+        categories.forEach((category) => {
+          if (!allCategories[category] || !allCategories[category].length) {
+            allCategories[category] = [currentVideo.videoId]
+          }
+          // Just double check to make sure that we don't duplicate..
+          if (allCategories[category] && allCategories.length) {
+            if (allCategories[category].indexOf(currentVideo.videoId) === -1) {
+              allCategories[category].push(currentVideo.videoId)
+            }
+          }
+        })
+      }
+
+      // Now check to make sure that the categories don't exist somewhere they're not supposed to
+      for (var category in allCategories) {
+        if (allCategories[category].indexOf(currentVideo.videoId) > -1 &&
+            categories.indexOf(category) === -1) {
+          let categoryIndex = allCategories[category].indexOf(currentVideo.videoId)
+          allCategories[category].splice(categoryIndex, 1)
+        }
+      }
+      if (!categories.length) {
+        allCategories['Uncategorized'].push(currentVideo.videoId)
+      }
+
+      return { ...state, currentLib: library, currentVideo }
     }
     case REPLACE_CURRENT_VIDEO: {
       let video = _.cloneDeep(state.currentLib.videos[action.payload])

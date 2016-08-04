@@ -119,7 +119,7 @@ class UploadForm extends Component {
             console.log('the currentVideo to be passed to addVideoToLibrary', currentVideo)
             this.props.addCategoryToLibrary(currentVideo.categories)
             this.props.addVideoToLibrary(currentVideo)
-          }}>Add A Video</FormButton>
+          }}>Save Video</FormButton>
         </FormFieldset>
 
         <FormFieldset>
@@ -177,33 +177,11 @@ featureCategory() {
 
 
 [{},{},{},{},{}]
-
+[{},{},{},{},{}]
+[{},{},{},{},{}]
+[{},{},{},{},{}]
 [{},{},{},{},{}]
 
-[{},{},{},{},{}]
-
-[{},{},{},{},{}]
-
-[{},{},{},{},{}]
-
-currentVideo = {
-  index: Number,
-  id: String,
-  url: String,
-  isFeatured: Boolean,
-  categories: Array,
-}
-
-addVideoToLibrary(currentvideo) {
-  // let hashId = hashId.encode(currentLib.vidsAdded)
-  // currentVideo.videoId = hashId
-  // currentLib[hashId] = currentVideo
-  // updateState with new video
-}
-
-updateVideoInLibrary(hashId, newData) {
-  currentLib.videos[hashId] = newData
-}
 
 deleteVideoInLibrary(hashId) {
   delete currentLib.videos[hashId]
@@ -222,10 +200,32 @@ currentLib = {
     }
   },
 
-  categories: Array,
+  categories: []Array,
   featuredVideos: Array,
   name: String
 }
 
+categories: {
+  'uncategorized': [],
+  'music': ['id1','id2','id3','id4'],
+  'soul': ['id4','id5','id4']
+}
 
+//
+
+// If this video has no categories, assign it to uncategorized
+if (!currentVideo.categories) {
+  currentLib.uncategorized.push(currentVideo.videoId),
+}
+
+// If category is removed from video...
+// Check to see if it exists in currentLib
+if (currentLib.categories[category].indexOf(currentVideo.videoId)) {
+
+}
+
+addCategoryToVideo(category) {
+
+}
+  currentLib.categories.music.push(currentVideo.id)
 */

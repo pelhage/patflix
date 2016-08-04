@@ -6,7 +6,9 @@ var librarySchema = Schema({
   libraryId: String,
   libName: String,
   featured: [],
-  allCategories: [String],
+  allCategories: {
+    Uncategorized: []
+  },
   videos: {},
   numOfVideos: Number,
   ownerId: {type: Schema.Types.ObjectId, ref: 'User'}

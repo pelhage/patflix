@@ -13,7 +13,7 @@ class VideoDetails extends Component {
     this.isValidVideo = this.isValidVideo.bind(this)
     this.hasValidUrl = this.hasValidUrl.bind(this)
     this.updateCurrentVideo = this.updateCurrentVideo.bind(this)
-    // this.normalizeCategories = this.normalizeCategories.bind(this)
+    this.extractedId = this.extractedId.bind(this)
   }
 
   hasValidUrl(url) {
