@@ -14,18 +14,19 @@ module.exports = React.createClass({
       speed: 500,
       slidesToShow: 1,
       draggable: false,
+      slickGoTo: 1,
       slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 6500
+      autoplay: false
     };
     const { videos, featured } = this.props
     if (featured.length) {
-      var list = featured.map(function(videoId) {
+      var list = featured.map(function(videoId, index) {
 
         var imageStyle = {
           'backgroundImage': 'url(https://img.youtube.com/vi/'+ videos[videoId].youtubeId +'/0.jpg)',
           'backgroundSize': 'cover'
         };
+
         return (<div><div className="hero-row">
           <div className="hero">
             <div className="hero-image" style={imageStyle}></div>

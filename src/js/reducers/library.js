@@ -106,11 +106,14 @@ export default function(state = initialState, action) {
         }
         //
         categories.forEach((category) => {
+          console.log('Going through each category for this video: ', category, ' :', currentVideo);
           if (!allCategories[category] || !allCategories[category].length) {
+            console.log('NO CATEGORY FOUND');
             allCategories[category] = [currentVideo.videoId]
           }
           // Just double check to make sure that we don't duplicate..
-          if (allCategories[category] && allCategories.length) {
+          else if (allCategories[category] && allCategories[category].length) {
+            console.log('CATEGORY FOUND');
             if (allCategories[category].indexOf(currentVideo.videoId) === -1) {
               allCategories[category].push(currentVideo.videoId)
             }

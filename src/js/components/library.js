@@ -18,12 +18,12 @@ class Library extends Component {
 
     // for each category object in categories
     for (var category in categories) {
-      // 
+      //
       if (categories[category].length) {
         let categorizedVideos = categories[category].map((videoId) => {
           return videos[videoId]
         })
-        VideoRows.push(<div><VideoRow
+        VideoRows.push(<div key={category}><VideoRow
           videos={categorizedVideos}
           category={category}
           onVideoClick={onVideoClick} /></div>)
