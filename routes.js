@@ -42,6 +42,8 @@ module.exports = function(app) {
   app.get('/library/:id', libraryController.render);
   // Delete a user library
   app.delete('/library/:id', requireAuth, libraryController.remove);
+  // Update a user's library
+  app.put('/library/:id', requireAuth, libraryController.update);
   // Get all libraries
   app.get('/libraries', requireAuth, libraryController.showAll);
 

@@ -46,6 +46,7 @@ export default function(state = initialState, action) {
     case FETCH_LIBS:
       return { ...state, all: action.payload }
     case FETCH_LIB_BY_ID:
+      console.log('reducer for fetch lib by id', action.payload)
       return { ...state, currentLib: action.payload }
     case ADD_LIB:
       return { ...state, currentLib: action.payload }

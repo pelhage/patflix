@@ -20,19 +20,19 @@ module.exports = {
     newLibrary.featuredVideos = req.body.featuredVideos
     newLibrary.allCategories = req.body.allCategories
     newLibrary.ownerId = ObjectID(req.user._id)
+    console.log('newLibrary: ', newLibrary)
+
+    var updatedLibraries = Object.assign({}, req.user.libraries)
+    updatedLibraries[newLibrary.libraryId] = newLibrary
 
     newLibrary.save(function(err) {
       if (err) { throw err }
 
       User
-        .findOne({ 'auth.email': req.user.auth.email })
-        .exec(function(err, user) {
-          var copy = Object.assign({}, user.libraries)
-          copy[newLibrary.libraryId] = newLibrary
-          user.libraries = copy
-          user.save(function(err) {
-            if (err) { throw err }
-          })
+        .update({ 'auth.email': req.user.auth.email }, {
+          libraries: updatedLibraries
+        }, function(err) {
+          if (err) { throw err }
         })
     })
 
@@ -40,9 +40,6 @@ module.exports = {
   },
 
   remove: function(req, res) {
-    // console.log('Hitting [remove] endpoint', req.user)
-    // console.log('req.user._id', req.user._id)
-    // console.log('ObjectID(req.user._id)', ObjectID(req.user._id))
     var libraryId = req.params.id
 
     User
@@ -56,6 +53,25 @@ module.exports = {
           res.send(user.libraries)
         })
       })
+  },
+
+  update: function(req, res) {
+    var libraryId = hashids.decodeHex(req.params.id)
+    var updatedLib = req.body
+    var updatedLibraries = Object.assign({}, req.user.libraries)
+
+    updatedLibraries[libraryId] = updatedLib
+    Library
+      .update({'_id': new ObjectID(libraryId)}, updatedLib, function(err) {
+        if (err) { throw err }
+        User
+          .update({ 'auth.email': req.user.auth.email }, {
+            libraries: updatedLibraries
+          }, function(err) {
+            if (err) { throw err }
+          })
+      })
+    res.send('ITS ALL GOOD IN THE HOOD')
   },
 
   // Get a user library

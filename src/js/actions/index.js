@@ -70,12 +70,25 @@ export function createLibrary(library) {
       headers: { authorization: localStorage.getItem('token') }
     })
     .then(response => {
-      console.log(response.data);
+      console.log('response from creating library', response.data)
       dispatch({
         type: ADD_LIB,
         payload: response.data
       })
       dispatch(fetchLibraries())
+    })
+  }
+}
+
+// Update the currentLibrary
+export function updateLibrary(libraryId, library) {
+  console.log('updateLibrary with: ', library)
+  return function(dispatch) {
+    axios.put(`${API_URL}/library/${libraryId}`, library, {
+      headers: { authorization: localStorage.getItem('token') }
+    })
+    .then(response => {
+      browserHistory.push('/d')
     })
   }
 }
@@ -132,7 +145,7 @@ export function updateLibraryName(libraryName) {
   }
 }
 
-//
+// 
 export function addVideoToLibrary(video) {
   return {
     type: ADD_VID,
@@ -204,7 +217,10 @@ export function fetchLibById(libraryId) {
   }
 }
 
-//
+
+
+
+// Remove the currentLibrary
 export function removeLibrary(libraryId) {
   return function(dispatch) {
     axios.delete(`${API_URL}/library/${libraryId}`, {
@@ -219,6 +235,7 @@ export function removeLibrary(libraryId) {
     })
   }
 }
+
 
 export function signoutUser() {
   localStorage.removeItem('token');

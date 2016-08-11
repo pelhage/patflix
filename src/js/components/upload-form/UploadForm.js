@@ -132,7 +132,11 @@ class UploadForm extends Component {
         <FormFieldset>
           <FormButton onClick={() => {
               console.log('Trying to submit library', this.props.currentLib)
+              if (this.props.currentLib.libraryId) {
+                this.props.updateLibrary(this.props.currentLib.libraryId, this.props.currentLib)
+              } else {
               this.props.createLibrary(this.props.currentLib)
+              }
             }}>Save Library</FormButton>
         </FormFieldset>
 
