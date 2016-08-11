@@ -39,6 +39,25 @@ module.exports = {
     res.send(newLibrary);
   },
 
+  remove: function(req, res) {
+    // console.log('Hitting [remove] endpoint', req.user)
+    // console.log('req.user._id', req.user._id)
+    // console.log('ObjectID(req.user._id)', ObjectID(req.user._id))
+    var libraryId = req.params.id
+
+    User
+      .findOne({ 'auth.email': req.user.auth.email })
+      .exec(function(err, user) {
+        var copy = Object.assign({}, user.libraries)
+        delete copy[libraryId]
+        user.libraries = copy
+        user.save(function(err) {
+          if (err) { throw err }
+          res.send(user.libraries)
+        })
+      })
+  },
+
   // Get a user library
   render: function(req, res) {
     var libID = hashids.decodeHex(req.params.id)
@@ -54,7 +73,7 @@ module.exports = {
     User
       .findOne({ 'auth.email': req.user.auth.email })
       .exec(function(err, user) {
-        console.log('user',user.libraries)
+        // console.log('user',user.libraries)
         res.send(user.libraries)
       })
   }

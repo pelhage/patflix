@@ -40,6 +40,8 @@ module.exports = function(app) {
   app.post('/library', requireAuth, libraryController.create);
   // Get a user library
   app.get('/library/:id', libraryController.render);
+  // Delete a user library
+  app.delete('/library/:id', requireAuth, libraryController.remove);
   // Get all libraries
   app.get('/libraries', requireAuth, libraryController.showAll);
 

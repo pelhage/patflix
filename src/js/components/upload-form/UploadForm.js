@@ -23,6 +23,7 @@ class UploadForm extends Component {
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleFeaturedCheck = this.handleFeaturedCheck.bind(this)
     this.handleCategoryInput = this.handleCategoryInput.bind(this)
+    this.removeVideoFromLibrary = this.removeVideoFromLibrary.bind(this)
   }
 
   // Helper methods
@@ -84,6 +85,10 @@ class UploadForm extends Component {
     this.props.updateCurrentVideo({ ...this.props.currentVideo, categories })
   }
 
+  removeVideoFromLibrary(videoId) {
+    this.props.removeVideoFromLibrary(videoId)
+  }
+
   render() {
     console.log('currentVideo',this.props.currentVideo)
     console.log('currentLib',this.props.currentLib)
@@ -95,8 +100,10 @@ class UploadForm extends Component {
     } = this.props
     return (<div className="form-container">
       <Form onFormSubmit={this.handleFormSubmit}>
-        {/* Library Name */}
-        <LibraryName value={libName} onUserInput={this.handleNameChange} />
+        {/* Library Name
+            <LibraryName value={libName} onUserInput={this.handleNameChange} />
+        */}
+
         {/* Current Video's Details */}
         <VideoUrl
           url={url}
@@ -129,6 +136,11 @@ class UploadForm extends Component {
             }}>Save Library</FormButton>
         </FormFieldset>
 
+        <FormFieldset>
+          <FormButton onClick={() => {
+              this.props.removeVideoFromLibrary(this.props.currentVideo.videoId)
+            }}>Remove Video</FormButton>
+        </FormFieldset>
       </Form>
 
     </div>)

@@ -5,7 +5,7 @@ var Video = require('../models/video');
 var librarySchema = Schema({
   libraryId: String,
   libName: String,
-  featured: [],
+  featuredVideos: [],
   allCategories: {
     Uncategorized: []
   },

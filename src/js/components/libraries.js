@@ -37,7 +37,7 @@ class Libraries extends Component {
         <p>Num of videos: {library.size}</p>
         <p>Go to lib: /l/{library.libraryId}</p>
         <Link className="btn btn-secondary" to={"/d/"+library.libraryId}>Edit Library</Link>
-        <Link className="btn btn-secondary" to={"/d/"+library.libraryId}>View Library</Link>
+        <Link className="btn btn-secondary" to={"/r/"+library.libraryId}>DELETE Library</Link>
       </div>)
     })
 

@@ -7,7 +7,9 @@ import {
   ADD_VID,
   ADD_CATEGORY,
   REPLACE_CURRENT_VIDEO,
-  REPLACE_CURRENT_LIBRARY
+  REPLACE_CURRENT_LIBRARY,
+  REMOVE_VIDEO,
+  REMOVE_LIB
 } from '../actions/types'
 
 import * as _ from 'lodash'
@@ -144,6 +146,36 @@ export default function(state = initialState, action) {
       let allLibs = _.cloneDeep(state.all)
       console.log('REPLACE_CURRENT_LIBRARY allLibs: ', allLibs)
       return {...state, currentLib: allLibs[action.payload]}
+    }
+
+    case REMOVE_VIDEO: {
+      let currentLib = _.cloneDeep(state.currentLib)
+      let allCategories = currentLib.allCategories
+      let featuredVideos = currentLib.featuredVideos
+      let video = currentLib.videos[action.payload]
+
+      // Remove the video from the list of featured Videos
+      if (video.isFeatured) {
+        featuredVideos.splice(featuredVideos.indexOf(action.payload), 1)
+      }
+
+      // Now remove the video from allCategories
+      video.categories.forEach((category) => {
+        var currCategory = allCategories[category]
+        currCategory.splice(currCategory.indexOf(category), 1)
+        // If there are no more videos for this category, delete it
+        if (!currCategory.length) {
+          delete allCategories[category]
+        }
+      })
+      delete currentLib.videos[action.payload]
+      currentLib.size -= 1
+      let currentVideo = initialState.currentVideo
+      return {...state, currentLib, currentVideo }
+    }
+
+    case REMOVE_LIB: {
+      return {...state, all: action.payload}
     }
   }
 

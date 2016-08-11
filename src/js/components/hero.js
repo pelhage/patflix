@@ -19,7 +19,7 @@ module.exports = React.createClass({
       autoplay: false
     };
     const { videos, featured } = this.props
-    if (featured.length) {
+    if (featured && featured.length) {
       var list = featured.map(function(videoId, index) {
 
         var imageStyle = {

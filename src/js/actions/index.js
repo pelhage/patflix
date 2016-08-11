@@ -10,7 +10,9 @@ import {
   LIB_NAME,
   ADD_VID,
   REPLACE_CURRENT_VIDEO,
-  REPLACE_CURRENT_LIBRARY
+  REPLACE_CURRENT_LIBRARY,
+  REMOVE_VIDEO,
+  REMOVE_LIB
 } from './types';
 
 import { browserHistory } from 'react-router';
@@ -138,6 +140,13 @@ export function addVideoToLibrary(video) {
   }
 }
 
+export function removeVideoFromLibrary(videoId) {
+  return {
+    type: REMOVE_VIDEO,
+    payload: videoId
+  }
+}
+
 //
 export function addCategoryToLibrary(categories) {
   return {
@@ -192,6 +201,22 @@ export function fetchLibById(libraryId) {
           payload: response.data
         })
       })
+  }
+}
+
+//
+export function removeLibrary(libraryId) {
+  return function(dispatch) {
+    axios.delete(`${API_URL}/library/${libraryId}`, {
+      headers: { authorization: localStorage.getItem('token') }
+    })
+    .then(response => {
+      browserHistory.push('/d')
+      // dispatch({
+      //   type: REMOVE_LIB,
+      //   payload: response.data
+      // })
+    })
   }
 }
 

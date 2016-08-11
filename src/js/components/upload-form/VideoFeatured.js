@@ -5,8 +5,8 @@ class VideoFeatured extends Component {
   render() {
     const { onUserCheck, checked } = this.props
     return (<FormFieldset>
-      <label>Feature this video in your library</label>
-      <Input type="checkbox" checked={checked} value={checked} onChange={onUserCheck} />
+      <input id="featured" type="checkbox" checked={checked} value={checked} onChange={onUserCheck} />
+      <label htmlFor="featured">Feature this video in your library</label>
     </FormFieldset>)
   }
 }

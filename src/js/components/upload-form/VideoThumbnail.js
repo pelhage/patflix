@@ -6,12 +6,14 @@ class VideoThumbnail extends Component {
 
   render() {
     const { videoId } = this.props
+    let imgUrl = 'http://img.youtube.com/vi/'+videoId+'/0.jpg'
+    if (!videoId) {
+      imgUrl = '/dist/nyan.svg'
+    }
 
-    return (<FormFieldset>
-      <div>
-        <img className="tile__img" src={"http://img.youtube.com/vi/"+videoId+"/0.jpg"} />
-      </div>
-    </FormFieldset>)
+    return (<div>
+      <img className="tile__img" src={imgUrl} />
+    </div>)
   }
 }
 

@@ -13,12 +13,9 @@ class Dashboard extends Component {
   }
   render() {
     const { currentLib, all } = this.props
-    const divStyle = {
-      height: window.innerHeight
-    }
 
     return (
-      <div className="contain" style={divStyle}>
+      <div className="contain">
         <div className="container--sidebar">
           <UploadForm />
         </div>
