@@ -150,31 +150,7 @@ export default function(state = initialState, action) {
     }
 
     case REMOVE_VIDEO: {
-
-      let currentLib = _.cloneDeep(state.currentLib)
-      let allCategories = currentLib.allCategories
-      let featuredVideos = currentLib.featuredVideos
-      let video = currentLib.videos[action.payload]
-      console.log('REMOVING VIDEO FROM LIB: ', currentLib)
-      // Remove the video from the list of featured Videos
-      if (video.isFeatured) {
-        featuredVideos.splice(featuredVideos.indexOf(action.payload), 1)
-      }
-
-      // Now remove the video from allCategories
-      video.categories.forEach((category) => {
-        var currCategory = allCategories[category]
-        currCategory.splice(currCategory.indexOf(category), 1)
-        // If there are no more videos for this category, delete it
-        if (!currCategory.length) {
-          delete allCategories[category]
-        }
-      })
-      delete currentLib.videos[action.payload]
-      currentLib.size -= 1
-      let currentVideo = initialState.currentVideo
-      console.log('REMOVING VIDEO FROM LIB AFTER: ', currentLib)
-      return {...state, currentLib, currentVideo }
+      return {...state, currentLib: action.payload, currentVideo: initialState.currentVideo}
     }
 
     case REMOVE_LIB: {

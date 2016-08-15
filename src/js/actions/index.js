@@ -70,7 +70,7 @@ export function createLibrary(library) {
       headers: { authorization: localStorage.getItem('token') }
     })
     .then(response => {
-      console.log('response from creating library', response.data)
+      console.log('response from creating library',response.data);
       dispatch({
         type: ADD_LIB,
         payload: response.data
@@ -145,7 +145,7 @@ export function updateLibraryName(libraryName) {
   }
 }
 
-// 
+//
 export function addVideoToLibrary(video) {
   return {
     type: ADD_VID,
@@ -153,10 +153,36 @@ export function addVideoToLibrary(video) {
   }
 }
 
+
 export function removeVideoFromLibrary(videoId) {
-  return {
-    type: REMOVE_VIDEO,
-    payload: videoId
+  return function(dispatch, getState) {
+    let currentLib = _.cloneDeep(getState().libraries.currentLib)
+    let allCategories = currentLib.allCategories
+    let featuredVideos = currentLib.featuredVideos
+    let video = currentLib.videos[videoId]
+    console.log('REMOVING VIDEO FROM LIB: ', currentLib)
+    // Remove the video from the list of featured Videos
+    if (video.isFeatured) {
+      featuredVideos.splice(featuredVideos.indexOf(videoId), 1)
+    }
+
+    // Now remove the video from allCategories
+    video.categories.forEach((category) => {
+      var currCategory = allCategories[category]
+      currCategory.splice(currCategory.indexOf(category), 1)
+      // If there are no more videos for this category, delete it
+      if (!currCategory.length) {
+        delete allCategories[category]
+      }
+    })
+    delete currentLib.videos[videoId]
+    currentLib.size -= 1
+    console.log('REMOVING VIDEO FROM LIB AFTER: ', currentLib)
+    //
+    dispatch({
+      type: REMOVE_VIDEO,
+      payload: currentLib
+    })
   }
 }
 
