@@ -141,10 +141,7 @@ export default function(state = initialState, action) {
       return {...state, currentVideo: action.payload }
     }
     case REPLACE_CURRENT_LIBRARY: {
-      // console.log('Invoking REPLACE_CURRENT_LIBRARY reducer with: ', action.payload)
-      let allLibs = _.cloneDeep(state.all)
-      // console.log('REPLACE_CURRENT_LIBRARY allLibs: ', allLibs)
-      return {...state, currentLib: allLibs[action.payload]}
+      return {...state, currentLib: action.payload }
     }
 
     case REMOVE_VIDEO: {

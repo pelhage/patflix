@@ -133,9 +133,14 @@ export function replaceCurrentVideo(videoId) {
 
 //
 export function setCurrentLib(libId) {
-  return {
-    type: REPLACE_CURRENT_LIBRARY,
-    payload: libId
+
+  return function(dispatch, getState) {
+    let allLibs = _.cloneDeep(getState().libraries.all)
+    let newLib = allLibs[libId]
+    dispatch({
+      type: REPLACE_CURRENT_LIBRARY,
+      payload: newLib
+    })
   }
 }
 
