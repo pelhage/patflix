@@ -51,11 +51,8 @@ export default function(state = initialState, action) {
       return { ...state, currentLib: action.payload }
     case CURR_VID:
       return { ...state, currentVideo: action.payload }
-    case LIB_NAME: {
-      let library = _.cloneDeep(state.currentLib)
-      library.libName = action.payload
-      return { ...state, currentLib: library }
-    }
+    case LIB_NAME:
+      return { ...state, currentLib: action.payload }
     case ADD_VID: {
       let library = _.cloneDeep(state.currentLib)
       let hashId = ''
@@ -143,11 +140,9 @@ export default function(state = initialState, action) {
     case REPLACE_CURRENT_LIBRARY: {
       return {...state, currentLib: action.payload }
     }
-
     case REMOVE_VIDEO: {
       return {...state, currentLib: action.payload, currentVideo: initialState.currentVideo}
     }
-
     case REMOVE_LIB: {
       return {...state, all: action.payload}
     }

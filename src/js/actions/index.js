@@ -146,9 +146,14 @@ export function setCurrentLib(libId) {
 
 //
 export function updateLibraryName(libraryName) {
-  return {
-    type: LIB_NAME,
-    payload: libraryName
+  return function(dispatch, getState) {
+    let library = _.cloneDeep(getState.libraries.currentLib)
+    library.libName = libraryName
+
+    dispatch({
+      type: LIB_NAME,
+      payload: library
+    })
   }
 }
 
