@@ -5,10 +5,16 @@ import * as actions from '../../actions'
 import Library from '../library';
 import Hero from '../hero'
 
-class Preview extends Component {
+class ViewLib extends Component {
   constructor(props) {
     super(props)
     this.handleVideoClick = this.handleVideoClick.bind(this)
+  }
+
+  componentWillMount() {
+    if (this.props.params.libId) {
+      this.props.fetchLibById(this.props.params.libId)
+    }
   }
 
   // Update Current Video
@@ -33,4 +39,4 @@ function mapStateToProps(state) {
   return { currentLib: state.libraries.currentLib };
 }
 
-export default connect(mapStateToProps, actions)(Preview);
+export default connect(mapStateToProps, actions)(ViewLib);

@@ -12,14 +12,11 @@ class Library extends Component {
     // @TODO: clearly need to reduce this sorting method.....
     const VideoRows = []
 
-    console.log('LIBRARY COMPONENT TO RENDER ALL THE ROWS: ')
-    console.log('VIDEOS: ', videos)
-    console.log('CATEGORIES', categories)
-
     // for each category object in categories
     for (var category in categories) {
       //
-      if (categories[category].length) {
+      console.log('iterating to create video-row', videos)
+      if (categories[category].length && videos) {
         let categorizedVideos = categories[category].map((videoId) => {
           return videos[videoId]
         })

@@ -46,7 +46,7 @@ export default function(state = initialState, action) {
     case FETCH_LIBS:
       return { ...state, all: action.payload }
     case FETCH_LIB_BY_ID:
-      console.log('reducer for fetch lib by id', action.payload)
+      // console.log('reducer for fetch lib by id', action.payload)
       return { ...state, currentLib: action.payload }
     case ADD_LIB:
       return { ...state, currentLib: action.payload }
@@ -109,14 +109,14 @@ export default function(state = initialState, action) {
         }
         //
         categories.forEach((category) => {
-          console.log('Going through each category for this video: ', category, ' :', currentVideo);
+          // console.log('Going through each category for this video: ', category, ' :', currentVideo);
           if (!allCategories[category] || !allCategories[category].length) {
-            console.log('NO CATEGORY FOUND');
+            // console.log('NO CATEGORY FOUND');
             allCategories[category] = [currentVideo.videoId]
           }
           // Just double check to make sure that we don't duplicate..
           else if (allCategories[category] && allCategories[category].length) {
-            console.log('CATEGORY FOUND');
+            // console.log('CATEGORY FOUND');
             if (allCategories[category].indexOf(currentVideo.videoId) === -1) {
               allCategories[category].push(currentVideo.videoId)
             }
@@ -143,18 +143,19 @@ export default function(state = initialState, action) {
       return {...state, currentVideo: video }
     }
     case REPLACE_CURRENT_LIBRARY: {
-      console.log('Invoking REPLACE_CURRENT_LIBRARY reducer with: ', action.payload)
+      // console.log('Invoking REPLACE_CURRENT_LIBRARY reducer with: ', action.payload)
       let allLibs = _.cloneDeep(state.all)
-      console.log('REPLACE_CURRENT_LIBRARY allLibs: ', allLibs)
+      // console.log('REPLACE_CURRENT_LIBRARY allLibs: ', allLibs)
       return {...state, currentLib: allLibs[action.payload]}
     }
 
     case REMOVE_VIDEO: {
+
       let currentLib = _.cloneDeep(state.currentLib)
       let allCategories = currentLib.allCategories
       let featuredVideos = currentLib.featuredVideos
       let video = currentLib.videos[action.payload]
-
+      console.log('REMOVING VIDEO FROM LIB: ', currentLib)
       // Remove the video from the list of featured Videos
       if (video.isFeatured) {
         featuredVideos.splice(featuredVideos.indexOf(action.payload), 1)
@@ -172,6 +173,7 @@ export default function(state = initialState, action) {
       delete currentLib.videos[action.payload]
       currentLib.size -= 1
       let currentVideo = initialState.currentVideo
+      console.log('REMOVING VIDEO FROM LIB AFTER: ', currentLib)
       return {...state, currentLib, currentVideo }
     }
 

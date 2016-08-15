@@ -25,7 +25,6 @@ module.exports = React.createClass({
 
   content: function() {
     var data = this.state.data;
-    console.log('CONTENT dATA LOADED: ', data);
     return (<Library {...data} />);
   },
 

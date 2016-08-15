@@ -24,7 +24,7 @@ import SignOut from './components/auth/signout'
 import Preview from './components/upload/Preview'
 import Welcome from './components/welcome'
 import DeleteLib from './components/libraries/deleteLib'
-// import Dummy from './components/libraries/LibraryRow'
+import ViewLib from './components/libraries/ViewLib'
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
 const store = createStoreWithMiddleware(reducers)
@@ -41,6 +41,7 @@ ReactDOM.render(
         <IndexRoute component={requireAuth(Welcome)}></IndexRoute>
         <Route path="d" component={requireAuth(Libraries)}></Route>
         <Route path="d/:libId"  component={requireAuth(Dashboard)} />
+        <Route path="l/:libId"  component={ViewLib} />
         <Route path="r/:libId"  component={requireAuth(DeleteLib)} />
         <Route path="dashboard" component={requireAuth(Dashboard)} />
         <Route path="about" component={About} />

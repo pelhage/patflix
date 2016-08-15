@@ -34,13 +34,11 @@ module.exports = React.createClass({
   },
 
   handleFeatureChange: function(e) {
-    console.log('is Featured: ', e.target.checked);
     this.setState({ featured: e.target.checked });
   },
 
   addVideoToLib: function() {
     if (this.state.isValidId) {
-      console.log('Adding Video To Library');
       // Copy state & push to library's array
       var videosArr = this.state.videos.slice();
       videosArr.push({
@@ -59,7 +57,6 @@ module.exports = React.createClass({
   },
 
   validateYoutubeId: function(url) {
-    console.log('validating: ', url);
     var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(regExp);
     if (match && match[2].length == 11) {
