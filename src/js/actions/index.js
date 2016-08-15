@@ -239,9 +239,51 @@ export function removeVideoFromLibrary(videoId) {
 
 //
 export function addCategoryToLibrary(categories) {
-  return {
-    type: ADD_CATEGORY,
-    payload: categories
+  return function(dispatch, getState) {
+    let currentLib = _.cloneDeep(getState().libraries.currentLib)
+    let allCategories = currentLib.allCategories
+    let currentVideo = _.cloneDeep(getState().libraries.currentVideo)
+    let hashId = ''
+
+    if (!currentVideo.videoId) {
+       currentVideo.videoId = hashids.encode(currentLib.vidsAdded)
+    }
+
+    if (categories.length) {
+      // If the video is currently uncategorized, remove it from uncategorized
+      let uncategorizedIndex = allCategories['Uncategorized'].indexOf(currentVideo.videoId)
+      if (uncategorizedIndex > -1) {
+        allCategories['Uncategorized'].splice(uncategorizedIndex, 1)
+      }
+      //
+      categories.forEach((category) => {
+        // console.log('Going through each category for this video: ', category, ' :', currentVideo);
+        if (!allCategories[category] || !allCategories[category].length) {
+          allCategories[category] = [currentVideo.videoId]
+        } // Just double check to make sure that we don't duplicate..
+        else if (allCategories[category] && allCategories[category].length) {
+          if (allCategories[category].indexOf(currentVideo.videoId) === -1) {
+            allCategories[category].push(currentVideo.videoId)
+          }
+        }
+      })
+    }
+
+    // Now check to make sure that the categories don't exist somewhere they're not supposed to
+    for (var category in allCategories) {
+      if (allCategories[category].indexOf(currentVideo.videoId) > -1 &&
+          categories.indexOf(category) === -1) {
+        let categoryIndex = allCategories[category].indexOf(currentVideo.videoId)
+        allCategories[category].splice(categoryIndex, 1)
+      }
+    }
+    if (!categories.length) {
+      allCategories['Uncategorized'].push(currentVideo.videoId)
+    }
+    dispatch({
+      type: ADD_CATEGORY,
+      payload: { currentLib, currentVideo }
+    })
   }
 }
 

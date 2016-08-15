@@ -56,66 +56,17 @@ export default function(state = initialState, action) {
     case ADD_VID:
       return { ...state, currentVideo: initialState.currentVideo, currentLib: action.payload }
     case ADD_CATEGORY: {
-      let library = _.cloneDeep(state.currentLib)
-      let allCategories = library.allCategories
-      let currentVideo = _.cloneDeep(state.currentVideo)
-      let hashId = ''
-
-      let categories = action.payload
-
-      if (!currentVideo.videoId) {
-         currentVideo.videoId = hashids.encode(library.vidsAdded)
-      }
-
-      if (categories.length) {
-        // If the video is currently uncategorized, remove it from uncategorized
-        let uncategorizedIndex = allCategories['Uncategorized'].indexOf(currentVideo.videoId)
-        if (uncategorizedIndex > -1) {
-          allCategories['Uncategorized'].splice(uncategorizedIndex, 1)
-        }
-        //
-        categories.forEach((category) => {
-          // console.log('Going through each category for this video: ', category, ' :', currentVideo);
-          if (!allCategories[category] || !allCategories[category].length) {
-            // console.log('NO CATEGORY FOUND');
-            allCategories[category] = [currentVideo.videoId]
-          }
-          // Just double check to make sure that we don't duplicate..
-          else if (allCategories[category] && allCategories[category].length) {
-            // console.log('CATEGORY FOUND');
-            if (allCategories[category].indexOf(currentVideo.videoId) === -1) {
-              allCategories[category].push(currentVideo.videoId)
-            }
-          }
-        })
-      }
-
-      // Now check to make sure that the categories don't exist somewhere they're not supposed to
-      for (var category in allCategories) {
-        if (allCategories[category].indexOf(currentVideo.videoId) > -1 &&
-            categories.indexOf(category) === -1) {
-          let categoryIndex = allCategories[category].indexOf(currentVideo.videoId)
-          allCategories[category].splice(categoryIndex, 1)
-        }
-      }
-      if (!categories.length) {
-        allCategories['Uncategorized'].push(currentVideo.videoId)
-      }
-
-      return { ...state, currentLib: library, currentVideo }
+      let { currentLib, currentVideo } = action.payload
+      return { ...state, currentLib, currentVideo }
     }
-    case REPLACE_CURRENT_VIDEO: {
+    case REPLACE_CURRENT_VIDEO:
       return {...state, currentVideo: action.payload }
-    }
-    case REPLACE_CURRENT_LIBRARY: {
+    case REPLACE_CURRENT_LIBRARY:
       return {...state, currentLib: action.payload }
-    }
-    case REMOVE_VIDEO: {
-      return {...state, currentLib: action.payload, currentVideo: initialState.currentVideo}
-    }
-    case REMOVE_LIB: {
-      return {...state, all: action.payload}
-    }
+    case REMOVE_VIDEO:
+      return { ...state, currentLib: action.payload, currentVideo: initialState.currentVideo }
+    case REMOVE_LIB:
+      return { ...state, all: action.payload }
   }
 
   return state;
