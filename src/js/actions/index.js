@@ -122,9 +122,12 @@ export function updateCurrentLib(library) {
 }
 
 export function replaceCurrentVideo(videoId) {
-  return {
-    type: REPLACE_CURRENT_VIDEO,
-    payload: videoId
+  return function(dispatch, getState) {
+    let video = _.cloneDeep(getState().libraries.currentLib.videos[videoId])
+    dispatch({
+      type: REPLACE_CURRENT_VIDEO,
+      payload: video
+    })
   }
 }
 
@@ -138,7 +141,6 @@ export function setCurrentLib(libId) {
 
 //
 export function updateLibraryName(libraryName) {
-  console.log('update library name!: ', libraryName)
   return {
     type: LIB_NAME,
     payload: libraryName

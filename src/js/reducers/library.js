@@ -46,7 +46,6 @@ export default function(state = initialState, action) {
     case FETCH_LIBS:
       return { ...state, all: action.payload }
     case FETCH_LIB_BY_ID:
-      // console.log('reducer for fetch lib by id', action.payload)
       return { ...state, currentLib: action.payload }
     case ADD_LIB:
       return { ...state, currentLib: action.payload }
@@ -139,8 +138,7 @@ export default function(state = initialState, action) {
       return { ...state, currentLib: library, currentVideo }
     }
     case REPLACE_CURRENT_VIDEO: {
-      let video = _.cloneDeep(state.currentLib.videos[action.payload])
-      return {...state, currentVideo: video }
+      return {...state, currentVideo: action.payload }
     }
     case REPLACE_CURRENT_LIBRARY: {
       // console.log('Invoking REPLACE_CURRENT_LIBRARY reducer with: ', action.payload)
