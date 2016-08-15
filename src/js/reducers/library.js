@@ -12,11 +12,6 @@ import {
   REMOVE_LIB
 } from '../actions/types'
 
-import * as _ from 'lodash'
-// For ID Hashing
-import Hashids from 'hashids'
-const hashids = new Hashids()
-
 const initialState = {
   currentLib: {
     libraryId: null,
@@ -40,7 +35,6 @@ const initialState = {
   }
 }
 
-// If current url is valid, set id, if not set id to null
 export default function(state = initialState, action) {
   switch (action.type) {
     case FETCH_LIBS:
@@ -55,10 +49,8 @@ export default function(state = initialState, action) {
       return { ...state, currentLib: action.payload }
     case ADD_VID:
       return { ...state, currentVideo: initialState.currentVideo, currentLib: action.payload }
-    case ADD_CATEGORY: {
-      let { currentLib, currentVideo } = action.payload
-      return { ...state, currentLib, currentVideo }
-    }
+    case ADD_CATEGORY:
+      return { ...state, ...action.payload }
     case REPLACE_CURRENT_VIDEO:
       return {...state, currentVideo: action.payload }
     case REPLACE_CURRENT_LIBRARY:
