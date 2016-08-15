@@ -13,7 +13,7 @@ class Dashboard extends Component {
   }
   render() {
     const { currentLib, all } = this.props
-
+    console.log('DASHBOARD currentLib: ', currentLib)
     return (
       <div className="contain">
         <div className="container--sidebar">

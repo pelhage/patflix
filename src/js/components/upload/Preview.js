@@ -21,6 +21,7 @@ class Preview extends Component {
       return <div>Preview of Your Library!</div>
     }
     const { libName, videos, allCategories, featuredVideos } = this.props.currentLib
+    console.log('PREVIEW currentLib.allCategories', this.props.currentLib.allCategories)
     return (<div>
       <h1>{libName}</h1>
       <Library videos={videos} categories={allCategories} featured={featuredVideos} onVideoClick={this.handleVideoClick} />

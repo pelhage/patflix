@@ -42,24 +42,29 @@ class VideoRow extends Component {
     }
 
     const { videos, category } = this.props
+    // console.log('Videos passed: ', videos)
     //, onVideoClick
-
-    let list = videos.map(function(video, index) {
-      return (<div key={video.videoId} onClick={this.callVideoClickFunction.bind(this, video.videoId)}>
-        <div className="tile">
-          <div className="tile__media">
-            <div>
-              <img className="tile__img" src={"http://img.youtube.com/vi/"+video.youtubeId+"/0.jpg"} />
+    if (videos) {
+      var list = videos.map(function(video, index) {
+        // console.log('video', video);
+        return (<div key={index} onClick={this.callVideoClickFunction.bind(this, video.videoId)}>
+          <div className="tile">
+            <div className="tile__media">
+              <div>
+                <img className="tile__img" src={"http://img.youtube.com/vi/"+video.youtubeId+"/0.jpg"} />
+              </div>
+            </div>
+            <div className="tile__details">
+              <div className="tile__title">
+                {video.description}
+              </div>
             </div>
           </div>
-          <div className="tile__details">
-            <div className="tile__title">
-              {video.description}
-            </div>
-          </div>
-        </div>
-      </div>)
-    }, this);
+        </div>)
+      }, this);
+    } else {
+      var list = '<div>Hello</div>'
+    }
 
     return (
       <div className="row">

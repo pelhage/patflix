@@ -15,11 +15,16 @@ class Library extends Component {
     // for each category object in categories
     for (var category in categories) {
       //
-      console.log('iterating to create video-row', videos)
+      // console.log('iterating to create video-row', videos)
+
       if (categories[category].length && videos) {
+        // console.log('We have categories..?: ', categories)
+        // console.log('We have categories[category]?: ', categories[category])
+        // console.log('..and videos..?', videos)
         let categorizedVideos = categories[category].map((videoId) => {
           return videos[videoId]
         })
+        console.log('[',category,']: ', categorizedVideos)
         VideoRows.push(<div key={category}><VideoRow
           videos={categorizedVideos}
           category={category}
