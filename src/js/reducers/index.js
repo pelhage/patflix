@@ -10,3 +10,4 @@ const rootReducer = combineReducers({
 });
 
 export default rootReducer;
+// TODO: consider breaking out video reducers into own currentVideo prop
