@@ -256,38 +256,27 @@ export function addVideoToLibrary(video) {
  * @param  {String} videoId the Id of the selectedVideo
  */
 export function removeVideoFromLibrary(videoId) {
-  console.log('removeVideoFromLibrary invoked')
   return function(dispatch, getState) {
     let currentLib = _.cloneDeep(getState().libraries.currentLib)
     let allCategories = currentLib.allCategories
     let featuredVideos = currentLib.featuredVideos
     let video = currentLib.videos[videoId]
-    console.log('[Removing video [',videoId,'] from currentLib: ', currentLib.videos.videoId)
     // Remove the video from the list of featured Videos
-    if (video.isFeatured) {
+    if (video.isFeatured && featuredVideos.indexOf(videoId) > -1) {
       featuredVideos.splice(featuredVideos.indexOf(videoId), 1)
     }
-
     // Now remove the video from allCategories
     video.categories.forEach((category) => {
       var currCategory = allCategories[category]
-      console.log('currCategory[',category,'] before', currCategory)
-      currCategory.splice(currCategory.indexOf(category), 1)
-      console.log('currCategory after', currCategory)
+      currCategory.splice(currCategory.indexOf(videoId), 1)
       // If there are no more videos for this category, delete it
       if (!currCategory.length) {
-        console.log('AHH, NO CATEGORY LENGTH LEFT!!')
-        console.log('currentLib.allCategories before deleting:', currentLib.allCategories)
-        console.log('allCategories before deleting:',allCategories)
         delete allCategories[category]
-        console.log('allCategories after deleting:', currentLib.allCategories)
-        console.log('allCategories after deleting:', allCategories)
       }
     })
-    console.log('DELETING THE VIDEO...')
+    // Delete the video from the library
     delete currentLib.videos[videoId]
     currentLib.size -= 1
-    console.log('REMOVING VIDEO FROM LIB AFTER: ', currentLib)
 
     dispatch({
       type: REMOVE_VIDEO,
