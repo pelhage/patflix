@@ -8,9 +8,6 @@ module.exports = {
 
   // Save a New Library
   create: function(req, res) {
-    console.log('\nInvoked [create] Library endpoint. \n')
-    console.log('[create] req.body:', req.body)
-
     var newLibrary = new Library()
     newLibrary.libraryId = hashids.encodeHex(newLibrary._id)
     newLibrary.size = req.body.size
@@ -20,7 +17,6 @@ module.exports = {
     newLibrary.featuredVideos = req.body.featuredVideos
     newLibrary.allCategories = req.body.allCategories
     newLibrary.ownerId = ObjectID(req.user._id)
-    console.log('newLibrary: ', newLibrary)
 
     var updatedLibraries = Object.assign({}, req.user.libraries)
     updatedLibraries[newLibrary.libraryId] = newLibrary
@@ -43,7 +39,6 @@ module.exports = {
     var libraryId = req.params.id
     var libMongoId = hashids.decodeHex(libraryId)
     var copiedLibs = Object.assign({}, req.user.libraries)
-    console.log('Does the lib,', libraryId, ', exist?', copiedLibs)
     // Delete the library
     delete copiedLibs[libraryId]
 
@@ -54,11 +49,11 @@ module.exports = {
           .update({ '_id': req.user._id }, {
             libraries: copiedLibs
           }, function(err) {
-            console.log('GONNA UPDATE THE USER')
             if (err) { throw err }
+            res.send(copiedLibs)
           })
       })
-    res.send('I LOVE TURTLES')
+    res.send('Not working')
   },
 
   update: function(req, res) {

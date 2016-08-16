@@ -290,9 +290,72 @@ export function removeVideoFromLibrary(videoId) {
  * addCategoryToLibrary - adds the categories
  * of currentVideo to currentLib.allCategories
  *
+ * TODO: Remove logic related to assigning videoId
  * @param  {Array} categories categories of currentVideo
  */
 export function addCategoryToLibrary(categories) {
+  return function(dispatch, getState) {
+    let currentLib = _.cloneDeep(getState().libraries.currentLib)
+    let allCategories = currentLib.allCategories
+    let currentVideo = _.cloneDeep(getState().libraries.currentVideo)
+    let hashId = ''
+
+    if (!currentVideo.videoId) {
+       currentVideo.videoId = hashids.encode(currentLib.vidsAdded)
+    }
+
+    if (categories.length) {
+      // If the video is currently uncategorized, remove it from uncategorized
+      let uncategorizedIndex = allCategories['Uncategorized'].indexOf(currentVideo.videoId)
+      if (uncategorizedIndex > -1) {
+        allCategories['Uncategorized'].splice(uncategorizedIndex, 1)
+      }
+      // Iterate through each category to ensure it exists in allCategories
+      categories.forEach((category) => {
+        if (!allCategories[category] || !allCategories[category].length) {
+          allCategories[category] = [currentVideo.videoId]
+        } // Just double check to make sure that we don't duplicate..
+        else if (allCategories[category] && allCategories[category].length) {
+          // If it's not in the category, then add it
+          if (allCategories[category].indexOf(currentVideo.videoId) === -1) {
+            allCategories[category].push(currentVideo.videoId)
+          }
+        }
+      })
+    }
+    // Now check to make sure that the categories don't exist somewhere they're not supposed to
+    for (var category in allCategories) {
+      // If the video is in a category that it does not have listed,
+      // then we need to remove it from allCategories
+      if (allCategories[category].indexOf(currentVideo.videoId) > -1 &&
+          categories.indexOf(category) === -1) {
+        let categoryIndex = allCategories[category].indexOf(currentVideo.videoId)
+        allCategories[category].splice(categoryIndex, 1)
+        // Now if that category is now empty, delete it!
+        if (!allCategories[category].length) {
+          delete allCategories[category]
+        }
+      }
+    }
+    if (!categories.length) {
+      allCategories['Uncategorized'].push(currentVideo.videoId)
+    }
+
+    dispatch({
+      type: ADD_CATEGORY,
+      payload: { currentLib, currentVideo }
+    })
+  }
+}
+
+
+/**
+ * addCategoryToLibrary - adds the categories
+ * of currentVideo to currentLib.allCategories
+ *
+ * @param  {Array} categories categories of currentVideo
+ */
+export function removeCategoryFromLibrary(categories) {
   return function(dispatch, getState) {
     let currentLib = _.cloneDeep(getState().libraries.currentLib)
     let allCategories = currentLib.allCategories

@@ -5,6 +5,7 @@ import RenderedCategories from './RenderedCategories'
 class CategoriedInput extends Component {
   constructor(props) {
     super(props)
+    console.log('CategoriedInput re-render: ', props)
     this.state = {
       currentCategory: ''
     }
@@ -13,6 +14,12 @@ class CategoriedInput extends Component {
     this.handleCategories = this.handleCategories.bind(this)
     this.removeFromCategories = this.removeFromCategories.bind(this)
   }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('Component receiving next props: ', nextProps)
+    this.setState({ categories: nextProps.categories })
+  }
+
   // Push a category to the component's state
   addToCategories(e) {
     // Check the key the user has pressed
@@ -34,14 +41,15 @@ class CategoriedInput extends Component {
   }
   // Update the current category being worked on
   handleCategories(e) {
+    // console.log('CategoriedInput state', this.state)
     this.setState({ currentCategory: e.target.value })
   }
 
   // Remove the category from component state, and call
   removeFromCategories(e) {
     const category = e.target.getAttribute('data-category')
+    console.log('remove ', category, ' from', this.state.categories)
     const categories = this.state.categories.slice()
-
     categories.splice(categories.indexOf(category), 1)
     this.setState({ categories })
     this.props.onCategoryChange(categories)
