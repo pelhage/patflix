@@ -159,10 +159,10 @@ export function removeLibrary(libraryId) {
     })
     .then(response => {
       browserHistory.push('/d')
-      // dispatch({
-      //   type: REMOVE_LIB,
-      //   payload: response.data
-      // })
+      dispatch({
+        type: REMOVE_LIB,
+        payload: response.data
+      })
     })
   }
 }

@@ -58,7 +58,7 @@ export default function(state = initialState, action) {
     case REMOVE_VIDEO:
       return { ...state, currentLib: action.payload, currentVideo: initialState.currentVideo }
     case REMOVE_LIB:
-      return { ...state, all: action.payload }
+      return { ...state, currentLib: initialState.currentLib, currentVideo: initialState.currentVideo }
   }
 
   return state;
