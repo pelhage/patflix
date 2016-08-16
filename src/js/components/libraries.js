@@ -32,9 +32,10 @@ class Libraries extends Component {
     const { libraries } = this.props
     let libs = this.renderLibraries().map((library, index) => {
       return (<div key={index} className="bg--med">
-        <h2>{library.libName}</h2>
-        <p>Num of videos: {library.size}</p>
-        <p>Go to lib: /l/{library.libraryId}</p>
+        // <h2>{library.libName}</h2>
+        <p>Library Size: <strong>{library.size}</strong> videos</p>
+        <p>Library _id:    {library._id}</p>
+        <p>Library libraryId:    {library.libraryId}</p>
         <Link className="btn btn-secondary" to={"/d/"+library.libraryId}>Edit Library</Link>
         <Link className="btn btn-secondary" to={"/r/"+library.libraryId}>DELETE Library</Link>
         <Link className="btn btn-secondary" to={"/l/"+library.libraryId}>VIEW Library</Link>

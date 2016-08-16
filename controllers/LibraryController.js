@@ -39,6 +39,11 @@ module.exports = {
     var libraryId = req.params.id
     var libMongoId = hashids.decodeHex(libraryId)
     var copiedLibs = Object.assign({}, req.user.libraries)
+
+    console.log('libraryId passed: ', libraryId)
+    console.log('The MongoId of the lib: ', libMongoId)
+    console.log('The Libraries we have: ', copiedLibs)
+    console.log('Does ours exist?: ', copiedLibs[libraryId])
     // Delete the library
     delete copiedLibs[libraryId]
 
@@ -53,17 +58,18 @@ module.exports = {
             res.send(copiedLibs)
           })
       })
-    res.send('Not working')
+    // res.send('Not working')
   },
 
   update: function(req, res) {
-    var libraryId = hashids.decodeHex(req.params.id)
+    var libraryId = req.params.id
+    var libMongoId = hashids.decodeHex(libraryId)
     var updatedLib = req.body
     var updatedLibraries = Object.assign({}, req.user.libraries)
 
     updatedLibraries[libraryId] = updatedLib
     Library
-      .update({'_id': new ObjectID(libraryId)}, updatedLib, function(err) {
+      .update({'_id': new ObjectID(libMongoId)}, updatedLib, function(err) {
         if (err) { throw err }
         User
           .update({ 'auth.email': req.user.auth.email }, {

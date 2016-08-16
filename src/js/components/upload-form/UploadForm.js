@@ -133,8 +133,10 @@ class UploadForm extends Component {
           <FormButton onClick={() => {
               console.log('Trying to submit library', this.props.currentLib)
               if (this.props.currentLib.libraryId) {
+                console.log('This lib has a libraryId already. So I will update it.')
                 this.props.updateLibrary(this.props.currentLib.libraryId, this.props.currentLib)
               } else {
+              console.log('This lib does not have a libraryId already. So I will create it.')
               this.props.createLibrary(this.props.currentLib)
               }
             }}>Save Library</FormButton>
