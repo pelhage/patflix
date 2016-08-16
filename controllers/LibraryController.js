@@ -41,18 +41,24 @@ module.exports = {
 
   remove: function(req, res) {
     var libraryId = req.params.id
+    var libMongoId = hashids.decodeHex(libraryId)
+    var copiedLibs = Object.assign({}, req.user.libraries)
+    console.log('Does the lib,', libraryId, ', exist?', copiedLibs)
+    // Delete the library
+    delete copiedLibs[libraryId]
 
-    User
-      .findOne({ 'auth.email': req.user.auth.email })
-      .exec(function(err, user) {
-        var copy = Object.assign({}, user.libraries)
-        delete copy[libraryId]
-        user.libraries = copy
-        user.save(function(err) {
-          if (err) { throw err }
-          res.send(user.libraries)
-        })
+    Library
+      .remove({'_id': new ObjectID(libMongoId)}, function(err) {
+        if (err) { throw err }
+        User
+          .update({ '_id': req.user._id }, {
+            libraries: copiedLibs
+          }, function(err) {
+            console.log('GONNA UPDATE THE USER')
+            if (err) { throw err }
+          })
       })
+    res.send('I LOVE TURTLES')
   },
 
   update: function(req, res) {

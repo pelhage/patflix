@@ -20,7 +20,7 @@ userSchema.pre('save', function(next) {
       if (err) { return next(err) }
 
       user.auth.password = hash; // password contains salt + hashed password
-      console.log('creating user.. : ', user)
+      // console.log('creating user.. : ', user)
       next();
     })
   });
