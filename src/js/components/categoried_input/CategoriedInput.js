@@ -57,7 +57,7 @@ class CategoriedInput extends Component {
 
   render() {
     return (<div>
-      <Input onKeyDown={this.addToCategories} onChange={this.handleCategories} value={this.state.currentCategory} />
+      <Input onKeyDown={this.addToCategories} placeholder={this.props.placeholder} onChange={this.handleCategories} value={this.state.currentCategory} />
       <RenderedCategories categories={this.props.categories} handleClick={this.removeFromCategories} />
     </div>)
   }

@@ -12,7 +12,7 @@ class VideoCategories extends Component {
       <CategoriedInput
         categories={categories}
         onCategoryChange={onUserInput}
-        placeholder="e.g. enter, categories, separated by, commas" />
+        placeholder="enter categories, separated, by, commas" />
     </FormFieldset>)
   }
 }

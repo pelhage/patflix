@@ -119,7 +119,7 @@ class UploadForm extends Component {
           onUserInput={this.handleInputChange} />
         {/* Dynamic Category Enter & Delete */}
         <VideoCategories categories={categories} onUserInput={this.handleCategoryInput} />
-
+        {/*
         <FormFieldset>
           <FormButton onClick={() => {
             let { currentVideo } = this.props
@@ -147,6 +147,7 @@ class UploadForm extends Component {
               this.props.removeVideoFromLibrary(this.props.currentVideo.videoId)
             }}>Remove Video</FormButton>
         </FormFieldset>
+        */}
       </Form>
 
     </div>)

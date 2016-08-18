@@ -48,7 +48,7 @@ module.exports = React.createClass({
         </div>);
       });
     } else {
-      return <div>FUCK</div>
+      return <div><img src="/dist/hero.png" /></div>
     }
 
     return (<div className="hero-wrapper">

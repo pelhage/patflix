@@ -30,6 +30,9 @@ class Libraries extends Component {
 
   render() {
     const { libraries } = this.props
+    if (!libraries) {
+      return (<div>You don't have any libraries</div>);
+    }
     let libs = this.renderLibraries().map((library, index) => {
       return (<div key={index} className="bg--med">
         // <h2>{library.libName}</h2>

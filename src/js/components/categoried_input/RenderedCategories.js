@@ -7,7 +7,7 @@ class RenderedCategories extends Component {
     if (categories.length) {
       return (<div>
         {categories.map((category, index) => {
-          return (<span className="category-tag" key={index}>{category} <span data-category={category} onClick={handleClick}>x</span></span>)
+          return (<span className="category-tag" key={index}>{category} <span className="category-close" data-category={category} onClick={handleClick}>x</span></span>)
         })}
       </div>)
     }

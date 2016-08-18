@@ -30,7 +30,7 @@
   color: #E50914;
 }
 .form__input-container {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
   .form__label {
     display: block;
@@ -51,6 +51,7 @@
   font-size: 1rem;
   background: #2B2B2B;
   color: #ddddd1;
+  margin-bottom: 10px;
 }
 
 
@@ -69,7 +70,21 @@
 
 //
 .category-tag {
-  background: #ccc;
-  padding: 5px 10px;
-  color: #444;
+  margin-right: 10px;
+  padding: 5px 0 5px 10px;
+  border-radius: 5px;
+  border-color: #000;
+  background: #1d1d1d;
+  color: #fff;
+  span {
+    display: inline-block;
+  }
+}
+.category-close {
+  width: 25px;
+  color: #555;
+  padding: 10px 5px;
+  &:hover {
+    cursor: pointer;
+  }
 }
