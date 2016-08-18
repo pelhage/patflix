@@ -11,16 +11,11 @@ var srcPath = path.resolve(__dirname, 'src');
 var appPath = path.resolve(__dirname, 'src', 'js', 'index.js');
 
 var config = {
-  devtool: 'eval',
-
-  entry: [
-    appPath,
-    'webpack-hot-middleware/client?reload=true'
-  ],
-
+  devtool: 'source-map',
+  entry: appPath,
   output: {
-    filename: 'bundle.js',
     path: buildPath,
+    filename: 'bundle.js',
     publicPath: '/dist/'
   },
 
@@ -29,30 +24,21 @@ var config = {
     extensions: ['', '.js']
   },
 
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  ],
-
   module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        loaders: ['babel'],
-        include: [srcPath]
-      },
-      {
-        test: /style.scss/,
-        include: cssPath,
-        loaders: [
-            'style',
-            'css',
-            'autoprefixer?browsers=last 3 versions',
-            'sass?outputStyle=expanded'
-        ]
-      },
-
-    ]
+    loaders: [{
+      test: /\.js$/,
+      loaders: ['babel'],
+      include: [srcPath]
+    },{
+      test: /style.scss/,
+      include: cssPath,
+      loaders: [
+          'style',
+          'css',
+          'autoprefixer?browsers=last 3 versions',
+          'sass?outputStyle=compressed'
+      ]
+    }]
   }
 };
 
