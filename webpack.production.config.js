@@ -23,7 +23,11 @@ var config = {
     root: path.resolve(__dirname),
     extensions: ['', '.js']
   },
-
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    })
+  ],
   module: {
     loaders: [{
       test: /\.js$/,
