@@ -4,8 +4,9 @@ import Slider from 'react-slick'
 var Router = require('react-router');
 var Link = Router.Link;
 
-module.exports = React.createClass({
+import heroImage from './hero.png'
 
+module.exports = React.createClass({
 
   render: function() {
     var settings = {
@@ -48,7 +49,7 @@ module.exports = React.createClass({
         </div>);
       });
     } else {
-      return <div><img src="/dist/hero.png" /></div>
+      return <div><img src={heroImage} /></div>
     }
 
     return (<div className="hero-wrapper">
