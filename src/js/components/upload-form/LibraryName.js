@@ -16,7 +16,7 @@ class LibraryName extends Component {
 }
 
 LibraryName.propTypes = {
-  onUserInput: React.PropTypes.func.isRequired
+  onUserInput: PropTypes.func.isRequired
 }
 
 export default LibraryName

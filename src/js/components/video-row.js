@@ -4,10 +4,6 @@ import Slider from 'react-slick';
 // import Thumbnail from './upload/Thumbnail';
 
 class VideoRow extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   callVideoClickFunction(val) {
     this.props.onVideoClick(val)
   }

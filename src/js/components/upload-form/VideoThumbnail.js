@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 
-import { FormFieldset } from '../form'
 import nyan from './nyan.svg'
 
 class VideoThumbnail extends Component {
@@ -13,13 +12,13 @@ class VideoThumbnail extends Component {
     }
 
     return (<div>
-      <img className="tile__img" src={imgUrl} />
+      <img className="tile__img" src={imgUrl} role="presentation" />
     </div>)
   }
 }
 
 VideoThumbnail.propTypes = {
-  videoId: React.PropTypes.string
+  videoId: PropTypes.string
 }
 
 export default VideoThumbnail

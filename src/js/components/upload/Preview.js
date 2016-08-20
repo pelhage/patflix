@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
 import Library from '../library';
-import Hero from '../hero'
 
 class Preview extends Component {
   constructor(props) {

@@ -4,7 +4,7 @@ import { Input, FormFieldset, FormLabel } from '../form'
 class VideoUrl extends Component {
 
   render() {
-    const { url, onUserInput, validate } = this.props
+    const { url, onUserInput } = this.props
 
     return (<FormFieldset>
       <FormLabel>YouTube URL </FormLabel>
@@ -18,14 +18,14 @@ class VideoUrl extends Component {
 }
 
 VideoUrl.propTypes = {
-  url: React.PropTypes.string.isRequired,
-  validate: React.PropTypes.func,
-  onUserInput: React.PropTypes.func.isRequired
+  url: PropTypes.string.isRequired,
+  validate: PropTypes.func,
+  onUserInput: PropTypes.func.isRequired
 }
 
 export default VideoUrl
 
 /*
-{url && {validate(url)} && <span>not a valid youtube url</span>} 
+{url && {validate(url)} && <span>not a valid youtube url</span>}
 
 */

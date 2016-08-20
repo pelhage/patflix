@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Input, FormFieldset } from '../form'
+import { FormFieldset } from '../form'
 
 class VideoFeatured extends Component {
   render() {
@@ -12,7 +12,7 @@ class VideoFeatured extends Component {
 }
 
 VideoFeatured.propTypes = {
-  checked: React.PropTypes.bool
+  checked: PropTypes.bool
 }
 
 export default VideoFeatured
