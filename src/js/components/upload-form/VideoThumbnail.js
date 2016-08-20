@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
 import { FormFieldset } from '../form'
+import nyan from './nyan.svg'
 
 class VideoThumbnail extends Component {
 
@@ -8,7 +9,7 @@ class VideoThumbnail extends Component {
     const { videoId } = this.props
     let imgUrl = 'http://img.youtube.com/vi/'+videoId+'/0.jpg'
     if (!videoId) {
-      imgUrl = '/dist/nyan.svg'
+      imgUrl = nyan
     }
 
     return (<div>
