@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import * as actions from '../../actions'
 import { connect } from 'react-redux'
 
 /* Component Dependencies */
-import { Form, Input, FormFieldset, FormLabel, FormButton } from '../form'
+import { Form } from '../form'
 
-import LibraryName from './LibraryName'
+// import LibraryName from './LibraryName'
 import VideoUrl from './VideoUrl'
 import VideoFeatured from './VideoFeatured'
 import VideoDescription from './VideoDescription'
@@ -31,7 +31,7 @@ class UploadForm extends Component {
     if (url) {
       let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
       let match = url.match(regExp);
-      return match && match[2].length == 11
+      return match && match[2].length === 11
     }
   }
   extractId(url) {
@@ -43,8 +43,8 @@ class UploadForm extends Component {
     return ''
   }
   isValidVideo(video) {
-    let { url, categories } = video
-    return this.hasValidUrl(url) //&& this.hasValidCategories(categories)
+    let { url } = video
+    return this.hasValidUrl(url)
   }
 
   handleFormSubmit() {
@@ -69,9 +69,7 @@ class UploadForm extends Component {
     if (name === 'url') {
       updatedVideo.youtubeId = this.extractId(value)
     }
-    // if (isValid) {
-    //   this.props.updateCurrentLib({ ...this.props.currentLib, videos: [updatedVideo] })
-    // }
+
     this.props.updateCurrentVideo({ ...updatedVideo, isValidVideo: isValid })
   }
 
@@ -93,9 +91,9 @@ class UploadForm extends Component {
     // console.log('UploadForm currentVideo',this.props.currentVideo)
     // console.log('UploadForm currentLib',this.props.currentLib)
     const {
-      currentLib: { libName },
+      // currentLib: { libName },
       currentVideo: {
-        url, youtubeId, isFeatured, description, categories,
+        url, youtubeId, isFeatured, description, categories
       }
     } = this.props
     return (<div className="form-container">
@@ -119,35 +117,6 @@ class UploadForm extends Component {
           onUserInput={this.handleInputChange} />
         {/* Dynamic Category Enter & Delete */}
         <VideoCategories categories={categories} onUserInput={this.handleCategoryInput} />
-        {/*
-        <FormFieldset>
-          <FormButton onClick={() => {
-            let { currentVideo } = this.props
-            console.log('the currentVideo to be passed to addVideoToLibrary', currentVideo)
-            this.props.addCategoryToLibrary(currentVideo.categories)
-            this.props.addVideoToLibrary(currentVideo)
-          }}>Save Video</FormButton>
-        </FormFieldset>
-
-        <FormFieldset>
-          <FormButton onClick={() => {
-              console.log('Trying to submit library', this.props.currentLib)
-              if (this.props.currentLib.libraryId) {
-                console.log('This lib has a libraryId already. So I will update it.')
-                this.props.updateLibrary(this.props.currentLib.libraryId, this.props.currentLib)
-              } else {
-              console.log('This lib does not have a libraryId already. So I will create it.')
-              this.props.createLibrary(this.props.currentLib)
-              }
-            }}>Save Library</FormButton>
-        </FormFieldset>
-
-        <FormFieldset>
-          <FormButton onClick={() => {
-              this.props.removeVideoFromLibrary(this.props.currentVideo.videoId)
-            }}>Remove Video</FormButton>
-        </FormFieldset>
-        */}
       </Form>
 
     </div>)

@@ -22,8 +22,9 @@ module.exports = {
   ],
   output: {
     path: paths.appBuild,
-    filename: 'js/[name].[chunkhash:8].js',
-    chunkFilename: 'js/[name].[chunkhash:8].chunk.js',
+    // filename: 'js/[name].[chunkhash:8].js',
+    filename: 'js/[name].js',
+    chunkFilename: 'js/[name].chunk.js',
     publicPath: publicPath
   },
   resolve: {
@@ -91,33 +92,33 @@ module.exports = {
       }
     ]
   },
-  eslint: {
-    // TODO: consider separate config for production,
-    // e.g. to enable no-console and no-debugger only in prod.
-    configFile: path.join(__dirname, 'eslint.js'),
-    useEslintrc: false
-  },
+  // eslint: {
+  //   // TODO: consider separate config for production,
+  //   // e.g. to enable no-console and no-debugger only in prod.
+  //   configFile: path.join(__dirname, 'eslint.js'),
+  //   useEslintrc: false
+  // },
   postcss: function() {
     return [autoprefixer];
   },
   plugins: [
-    // new HtmlWebpackPlugin({
-    //   inject: true,
-    //   template: paths.appHtml,
-    //   favicon: paths.appFavicon,
-    //   minify: {
-    //     removeComments: true,
-    //     collapseWhitespace: true,
-    //     removeRedundantAttributes: true,
-    //     useShortDoctype: true,
-    //     removeEmptyAttributes: true,
-    //     removeStyleLinkTypeAttributes: true,
-    //     keepClosingSlash: true,
-    //     minifyJS: true,
-    //     minifyCSS: true,
-    //     minifyURLs: true
-    //   }
-    // }),
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: paths.appHtml,
+      favicon: paths.appFavicon,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true
+      }
+    }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),

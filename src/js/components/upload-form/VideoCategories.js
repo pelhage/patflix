@@ -18,7 +18,7 @@ class VideoCategories extends Component {
 }
 
 VideoCategories.propTypes = {
-  onUserInput: React.PropTypes.func.isRequired
+  onUserInput: PropTypes.func.isRequired
 }
 
 export default VideoCategories

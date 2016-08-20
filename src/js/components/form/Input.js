@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, defaultProps } from 'react'
+import React, { Component } from 'react'
 
 class Input extends Component {
   shouldComponentUpdate(nextProps) {

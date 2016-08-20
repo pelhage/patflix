@@ -1,1 +1,1 @@
-export {CategoriedInput} from './CategoriedInput'
+export CategoriedInput from './CategoriedInput'

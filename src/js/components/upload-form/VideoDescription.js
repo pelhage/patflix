@@ -18,8 +18,8 @@ class VideoDescription extends Component {
 }
 
 VideoDescription.propTypes = {
-  description: React.PropTypes.string,
-  onUserInput: React.PropTypes.func.isRequired
+  description: PropTypes.string,
+  onUserInput: PropTypes.func.isRequired
 }
 
 export default VideoDescription

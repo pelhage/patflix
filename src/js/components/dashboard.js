@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Preview from './upload/Preview';
 import UploadForm from './upload-form/UploadForm';
-import { Form, Input, FormFieldset, FormLabel, FormButton } from './form'
+import { FormButton } from './form'
 
 class Dashboard extends Component {
   // Initialize data if we don't already have any
@@ -13,7 +13,7 @@ class Dashboard extends Component {
     }
   }
   render() {
-    const { currentLib, all } = this.props
+    const { currentLib } = this.props
     console.log('DASHBOARD currentLib: ', currentLib)
     return (
       <div className="contain">
@@ -58,7 +58,6 @@ class Dashboard extends Component {
 
 function mapStateToProps(state) {
   return {
-    libraries: state.libraries.all,
     currentLib: state.libraries.currentLib,
     currentVideo: state.libraries.currentVideo
   }

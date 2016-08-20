@@ -64,8 +64,8 @@ class CategoriedInput extends Component {
 }
 
 CategoriedInput.propTypes = {
-  onCategoryChange: React.PropTypes.func.isRequired,
-  categories: React.PropTypes.array.isRequired
+  onCategoryChange: PropTypes.func.isRequired,
+  categories: PropTypes.array.isRequired
 }
 
 export default CategoriedInput;
