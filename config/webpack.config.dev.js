@@ -17,7 +17,7 @@ module.exports = {
     // Next line is not used in dev but WebpackDevServer crashes without it:
     path: paths.appBuild,
     pathinfo: true,
-    filename: 'static/js/bundle.js',
+    filename: 'js/bundle.js',
     publicPath: '/'
   },
   resolve: {
@@ -68,7 +68,7 @@ module.exports = {
         include: [paths.appSrc, paths.appNodeModules],
         loader: 'file',
         query: {
-          name: 'static/media/[name].[ext]'
+          name: 'media/[name].[ext]'
         }
       },
       {
@@ -77,7 +77,7 @@ module.exports = {
         loader: 'url',
         query: {
           limit: 10000,
-          name: 'static/media/[name].[ext]'
+          name: 'media/[name].[ext]'
         }
       }
     ]
@@ -90,11 +90,11 @@ module.exports = {
     return [autoprefixer];
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      inject: true,
-      template: paths.appHtml,
-      favicon: paths.appFavicon,
-    }),
+    // new HtmlWebpackPlugin({
+    //   inject: true,
+    //   template: paths.appHtml,
+    //   favicon: paths.appFavicon,
+    // }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
     // Note: only CSS is currently hot reloaded
     new webpack.HotModuleReplacementPlugin(),
