@@ -19,7 +19,7 @@
 }
 
 .btn-secondary {
-  @include button-variant($btn-secondary-color, $btn-secondary-bg);
+  @include button-variant($btn-secondary-color, #424242);
 }
 .btn-tertiary {
   @include button-variant(#666666, #1d1d1d);

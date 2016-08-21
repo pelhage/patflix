@@ -25,7 +25,7 @@ module.exports = React.createClass({
 
         var imageStyle = {
           'backgroundImage': 'url(https://img.youtube.com/vi/'+ videos[videoId].youtubeId +'/0.jpg)',
-          'backgroundSize': 'cover'
+          'backgroundSize': 'cover',
         };
 
         return (<div><div className="hero-row">
@@ -49,7 +49,7 @@ module.exports = React.createClass({
         </div>);
       });
     } else {
-      return <div><img src={heroImage} /></div>
+      return <div><img src={heroImage} className="hero-placeholder"/></div>
     }
 
     return (<div className="hero-wrapper">

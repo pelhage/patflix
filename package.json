@@ -5,7 +5,7 @@
   "scripts": {
     "webpack:dev": "webpack -d --watch",
     "webpack:build": "webpack -p",
-    "scss": "node-sass --output-style compressed -o dist/css src/scss",
+    "scss": "node-sass -w --output-style compressed -o dist/css src/scss",
     "dev": "run-p scss webpack:dev server",
     "server": "node server.js",
     "start": "node ./scripts/start.js",

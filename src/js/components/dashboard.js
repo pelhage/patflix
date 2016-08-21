@@ -5,6 +5,11 @@ import Preview from './upload/Preview';
 import UploadForm from './upload-form/UploadForm';
 import { FormButton } from './form'
 
+import removeVideoImg from './remove.svg'
+import heroImage from './hero.png'
+
+console.log('removeVideoImg', removeVideoImg);
+console.log('heroImage', heroImage);
 class Dashboard extends Component {
   // Initialize data if we don't already have any
   componentWillMount() {
@@ -13,8 +18,8 @@ class Dashboard extends Component {
     }
   }
   render() {
-    const { currentLib } = this.props
-    console.log('DASHBOARD currentLib: ', currentLib)
+    const { currentLib, currentVideo } = this.props
+
     return (
       <div className="contain">
         <div className="main-content">
@@ -28,18 +33,16 @@ class Dashboard extends Component {
         <footer>
           <div className="container--sidebar">
               <FormButton className="btn btn-secondary btn-main" onClick={() => {
-                let { currentVideo } = this.props
                 console.log('the currentVideo to be passed to addVideoToLibrary', currentVideo)
                 this.props.addCategoryToLibrary(currentVideo.categories)
                 this.props.addVideoToLibrary(currentVideo)
               }}>Save Video</FormButton>
-            <FormButton className="btn btn-tertiary"onClick={() => {
-                  this.props.removeVideoFromLibrary(this.props.currentVideo.videoId)
-                }}>Remove Video</FormButton>
+              <FormButton className="btn btn-tertiary" onClick={() => {
+                    this.props.removeVideoFromLibrary(this.props.currentVideo.videoId)
+                  }}><img className="remove-video" src={removeVideoImg} /></FormButton>
           </div>
-
           <div className="container--main">
-              <FormButton className="btn btn-primary" onClick={() => {
+              <FormButton className="btn btn-secondary btn-main" onClick={() => {
                   console.log('Trying to submit library', this.props.currentLib)
                   if (this.props.currentLib.libraryId) {
                     console.log('This lib has a libraryId already. So I will update it.')
@@ -48,7 +51,9 @@ class Dashboard extends Component {
                   console.log('This lib does not have a libraryId already. So I will create it.')
                   this.props.createLibrary(this.props.currentLib)
                   }
-                }}>Save Library</FormButton>
+                }}>
+                Save Library
+              </FormButton>
           </div>
         </footer>
       </div>
