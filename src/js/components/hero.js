@@ -3,7 +3,7 @@ import Slider from 'react-slick'
 
 var Router = require('react-router');
 var Link = Router.Link;
-
+//
 import heroImage from './hero.png'
 
 module.exports = React.createClass({
