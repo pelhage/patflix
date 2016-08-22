@@ -69,9 +69,14 @@
 }
 .remove-video {
   display: block;
-  // max-width: 100%;
   height: 100%;
   width: 40px;
+  opacity: 0.3;
+}
+.btn:hover {
+  .remove-video {
+    opacity: 0.5;
+  }
 }
 //
 .category-tag {

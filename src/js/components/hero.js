@@ -49,7 +49,7 @@ module.exports = React.createClass({
         </div>);
       });
     } else {
-      return <div><img src={heroImage} className="hero-placeholder"/></div>
+      return <div><img src={heroImage} className="placeholder"/></div>
     }
 
     return (<div className="hero-wrapper">

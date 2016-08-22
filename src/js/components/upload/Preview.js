@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
 import Library from '../library';
+import rowPreviewImg from '../slide-row.png'
 
 class Preview extends Component {
   constructor(props) {
@@ -16,14 +17,17 @@ class Preview extends Component {
   }
 
   render() {
-    if (!this.props.currentLib) {
-      return <div>Preview of Your Library!</div>
+    let videoRowImg = <img className="placeholder" src={rowPreviewImg} />;
+    let placeHolder = '';
+    if (!this.props.currentLib.size) {
+      placeHolder = videoRowImg
     }
     const { libName, videos, allCategories, featuredVideos } = this.props.currentLib
     console.log('PREVIEW currentLib.allCategories', this.props.currentLib.allCategories)
     return (<div>
       <h1>{libName}</h1>
       <Library videos={videos} categories={allCategories} featured={featuredVideos} onVideoClick={this.handleVideoClick} />
+      {placeHolder}
     </div>
     )
   }

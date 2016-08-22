@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
+import addIcon from './add.svg'
+
 class Header extends Component {
   authButton() {
     if (this.props.authenticated) {
@@ -15,11 +17,15 @@ class Header extends Component {
     ];
   }
   render() {
+    let imgtyle = {
+      width: '27px',
+      marginBottom: '-5px'
+    };
     return (
       <nav className="nav">
         <Link to="/" className="nav__item nav__item--brand">PATFLIX!</Link>
         <span className="nav__item--pull-right">
-          <Link to="/dashboard" className="nav__item">Create Library</Link>
+          <Link to="/dashboard" className="nav__item"><img style={imgtyle} src={addIcon} /> Add Library</Link>
           <Link to="/d" className="nav__item">Dashboard</Link>
           { this.authButton() }
         </span>

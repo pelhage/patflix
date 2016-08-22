@@ -3,13 +3,11 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Preview from './upload/Preview';
 import UploadForm from './upload-form/UploadForm';
-import { FormButton } from './form'
+import { Input, FormButton } from './form'
 
-import removeVideoImg from './remove.svg'
-import heroImage from './hero.png'
+// Button Icons
+import removeIcon from './remove.svg'
 
-console.log('removeVideoImg', removeVideoImg);
-console.log('heroImage', heroImage);
 class Dashboard extends Component {
   // Initialize data if we don't already have any
   componentWillMount() {
@@ -39,21 +37,24 @@ class Dashboard extends Component {
               }}>Save Video</FormButton>
               <FormButton className="btn btn-tertiary" onClick={() => {
                     this.props.removeVideoFromLibrary(this.props.currentVideo.videoId)
-                  }}><img className="remove-video" src={removeVideoImg} /></FormButton>
+                  }}><img className="remove-video" src={removeIcon} /></FormButton>
           </div>
           <div className="container--main">
-              <FormButton className="btn btn-secondary btn-main" onClick={() => {
+              <FormButton className="btn btn-primary btn-main" onClick={() => {
                   console.log('Trying to submit library', this.props.currentLib)
                   if (this.props.currentLib.libraryId) {
                     console.log('This lib has a libraryId already. So I will update it.')
                     this.props.updateLibrary(this.props.currentLib.libraryId, this.props.currentLib)
                   } else {
-                  console.log('This lib does not have a libraryId already. So I will create it.')
-                  this.props.createLibrary(this.props.currentLib)
+                    console.log('This lib does not have a libraryId already. So I will create it.')
+                    this.props.createLibrary(this.props.currentLib)
                   }
                 }}>
                 Save Library
               </FormButton>
+              <FormButton className="btn btn-tertiary" onClick={() => {
+                  console.log('Update Library Name');
+                }}><Input placeholder="[Library Name]"/></FormButton>
           </div>
         </footer>
       </div>
