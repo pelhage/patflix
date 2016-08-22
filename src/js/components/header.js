@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
-import { connect } from 'react-redux';
-import * as actions from '../actions';
+import React, { Component } from 'react'
+import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import * as actions from '../actions'
 
 import addIcon from './add.svg'
+import librariesIcon from './collection2.svg'
 
 class Header extends Component {
   authButton() {
@@ -25,8 +26,10 @@ class Header extends Component {
       <nav className="nav">
         <Link to="/" className="nav__item nav__item--brand">PATFLIX!</Link>
         <span className="nav__item--pull-right">
-          <Link to="/dashboard" className="nav__item"><img style={imgtyle} src={addIcon} /> Add Library</Link>
-          <Link to="/d" className="nav__item">Dashboard</Link>
+          <Link to="/dashboard" activeClassName="nav__item--active" className="nav__item">
+            <img style={imgtyle} src={addIcon} />  Add Library</Link>
+          <Link to="/d" activeClassName="nav__item--active" className="nav__item">
+            <img style={imgtyle} src={librariesIcon} />  My Libraries</Link>
           { this.authButton() }
         </span>
       </nav>
@@ -38,4 +41,6 @@ function mapStateToProps(state) {
   return { authenticated: state.auth.authenticated }
 }
 
-export default connect(mapStateToProps, actions)(Header);
+export default connect(mapStateToProps, actions, null, {
+  pure: false
+})(Header);
