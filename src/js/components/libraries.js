@@ -48,13 +48,11 @@ class Libraries extends Component {
           </div>
 
           <div className="bg--light padding--med margin-btm--med">
-            <p>Library Size: <strong>6</strong> videos</p>
-            <p>Paste YouTube video URLs, add categories</p>
-            <p>Library _id:    </p>
-            <p>Library libraryId:    </p>
-            <Link className="btn btn-secondary" to={"/d/"}>Edit Library</Link>
-            <Link className="btn btn-secondary" to={"/r/"}>DELETE Library</Link>
-            <Link className="btn btn-secondary" to={"/l/"}>VIEW Library</Link>
+            <h3>patflix.co/l/a8skxKsdfkl4os</h3>
+            <p><strong>6</strong> videos in this library</p>
+            <Link className="btn btn-secondary" to={"/d/"}>Edit</Link>
+            <Link className="btn btn-secondary" to={"/r/"}>DELETE</Link>
+            <Link className="btn btn-secondary" to={"/l/"}>VIEW</Link>
           </div>
 
         </div>
