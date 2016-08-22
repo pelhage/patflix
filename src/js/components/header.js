@@ -3,12 +3,15 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 
+import DropdownMenu from './dropdown'
+
 import addIcon from './add.svg'
 import librariesIcon from './collection2.svg'
 
 class Header extends Component {
   authButton() {
     if (this.props.authenticated) {
+      return <DropdownMenu />
       return <Link to="/signout" className="nav__item">Sign Out</Link>
     }
     return [
