@@ -40,7 +40,7 @@ export default class About extends Component {
             <li>Babel</li>
             <li>Git</li>
           </ul>
-          <Link className="btn btn-primary full-width" to={"/dashboard"}>Create A Library</Link>
+          <Link className="btn btn-primary text-center full-width" to={"/dashboard"}>Create A Library</Link>
         </div>
       </div>
     </div>

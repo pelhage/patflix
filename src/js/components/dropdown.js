@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
-
+import { Link } from 'react-router'
 
 import signOut from './signout.svg'
 
@@ -15,9 +15,8 @@ class DropdownMenu extends Component {
       <DropdownTrigger><img style={imgtyle} src={signOut} /> Profile</DropdownTrigger>
       <DropdownContent>
         <ul className="dropdown-menu">
-          <li><a href="/about">FAQ</a></li>
-          <li><a href="/favorites">Favorites</a></li>
-          <li><a href="/signout">Sign Out</a></li>
+          <li><Link to="/about">FAQ</Link></li>
+          <li><Link to="/signout">Sign Out</Link></li>
         </ul>
       </DropdownContent>
     </Dropdown>)
