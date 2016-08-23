@@ -19,7 +19,7 @@ class ViewLib extends Component {
 
   // Update Current Video
   handleVideoClick(videoId) {
-    this.props.replaceCurrentVideo(videoId)
+    console.log(videoId)
   }
 
   render() {
@@ -28,7 +28,6 @@ class ViewLib extends Component {
     }
     const { libName, videos, allCategories, featuredVideos } = this.props.currentLib
     return (<div>
-      <h1>{libName}</h1>
       <Library videos={videos} categories={allCategories} featured={featuredVideos} onVideoClick={this.handleVideoClick} />
     </div>
     )
