@@ -8,10 +8,37 @@ class VideoAdd extends Component {
     this.addVideo = this.addVideo.bind(this)
   }
 
+  // Helper methods
+  hasValidUrl(url) {
+    if (url) {
+      let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      let match = url.match(regExp);
+      return match && match[2].length === 11
+    }
+  }
+
+  extractId(url) {
+    if (this.hasValidUrl(url)) {
+      let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      let match = url.match(regExp);
+      return match[2]
+    }
+    return ''
+  }
+
+  isValidVideo(video) {
+    console.log('isValidVideo')
+    let { url } = video
+    return this.hasValidUrl(url)
+  }
+
   addVideo(videoId) {
     let { currentVideo } = this.props
-    this.props.addCategoryToLibrary(currentVideo.categories)
-    this.props.addVideoToLibrary(currentVideo)
+    if (this.isValidVideo(currentVideo)) {
+      console.log('checking if video is valide')
+      this.props.addCategoryToLibrary(currentVideo.categories)
+      this.props.addVideoToLibrary(currentVideo)
+    }
   }
 
   render() {
