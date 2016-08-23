@@ -38,7 +38,7 @@ class Libraries extends Component {
   render() {
 
     const { libraries } = this.props
-    console.log('Libraries when rendering', libraries)
+    // console.log('Libraries when rendering', libraries)
 
     if (!libraries || !Object.keys(libraries).length) {
       return (<LibraryPlaceholder />);

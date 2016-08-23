@@ -18,7 +18,7 @@ module.exports = React.createClass({
       .then(function(res) {
         return res.json();
       }).then(function(text) {
-        console.log('fetch response: ', text);
+        // console.log('fetch response: ', text);
         this.setState({ data: text });
       }.bind(this));
   },

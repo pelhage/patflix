@@ -30,13 +30,13 @@ import API_URL from './api'
  * @param  {object} library - object representing the library to be saved
  */
 export function createLibrary(library) {
-  console.log('Calling createLibrary in action creator', library)
+  // console.log('Calling createLibrary in action creator', library)
   return function(dispatch) {
     axios.post(`${API_URL}/library`, library, {
       headers: { authorization: localStorage.getItem('token') }
     })
     .then(response => {
-      console.log('response from creating library',response.data);
+      // console.log('response from creating library',response.data);
       dispatch({
         type: ADD_LIB,
         payload: response.data
@@ -53,7 +53,7 @@ export function createLibrary(library) {
  * @param  {string} libraryId - the library's ID to fetch
  */
 export function fetchLibById(libraryId) {
-  // console.log('fetchLibById invoked')
+  // // console.log('fetchLibById invoked')
   return function(dispatch) {
     axios.get(`${API_URL}/library/${libraryId}`)
       .then(response => {
@@ -75,7 +75,7 @@ export function fetchLibById(libraryId) {
  * @param  {type} library   - Object representing the modified library
  */
 export function updateLibrary(libraryId, library) {
-  console.log('updateLibrary invoked for libId:', libraryId)
+  // console.log('updateLibrary invoked for libId:', libraryId)
   return function(dispatch) {
     axios.put(`${API_URL}/library/${libraryId}`, library, {
       headers: { authorization: localStorage.getItem('token') }
@@ -95,7 +95,7 @@ export function updateLibrary(libraryId, library) {
  * @return {type}         description
  */
 export function updateCurrentLib(library) {
-  console.log('updateCurrentLib invoked')
+  // console.log('updateCurrentLib invoked')
   if (library['allCategories'] && library['allCategories'].length) {
     // Update Category Tags... NOT EFFICIENT...
     library['allCategories'] = library.videos.reduce((allCategories, currentVideo) => {
@@ -107,7 +107,7 @@ export function updateCurrentLib(library) {
       return allCategories
     }, [])
   }
-  console.log('ok...')
+  // console.log('ok...')
   if (library['allCategories'] && library['allCategories'].length) {
     library['featuredCategories'] = library['allCategories']
     // library['featuredCategories'] = library.featuredCategories.filter((category) => {
@@ -127,20 +127,20 @@ export function updateCurrentLib(library) {
  * Uses tokens for authorization and validation
  */
 export function fetchLibraries() {
-  // console.log('fetchLibraries invoked')
+  // // console.log('fetchLibraries invoked')
   return function(dispatch) {
     axios.get(`${API_URL}/libraries`, {
       headers: { authorization: localStorage.getItem('token') }
     })
     .then(response => {
-      // console.log('fetchlibraries response: ', response.data);
+      // // console.log('fetchlibraries response: ', response.data);
       dispatch({
         type: FETCH_LIBS,
         payload: response.data
       })
     })
     .catch(function(err) {
-      console.log('fetchLibraries err: ', err)
+      // console.log('fetchLibraries err: ', err)
     });
   }
 }
@@ -379,7 +379,7 @@ export function removeCategoryFromLibrary(categories) {
       }
       // Iterate through each category to ensure it exists in allCategories
       categories.forEach((category) => {
-        // console.log('Going through each category for this video: ', category, ' :', currentVideo);
+        // // console.log('Going through each category for this video: ', category, ' :', currentVideo);
         if (!allCategories[category] || !allCategories[category].length) {
           allCategories[category] = [currentVideo.videoId]
         } // Just double check to make sure that we don't duplicate..

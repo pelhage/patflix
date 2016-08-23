@@ -4,7 +4,7 @@ import * as actions from '../../actions';
 
 class SignUp extends Component {
   handleFormSubmit(formProps) {
-    console.log(email, password);
+    // console.log(email, password);
     this.props.signUpUser(formProps);
   }
   renderAlert() {
@@ -69,13 +69,13 @@ function validate(formProps) {
   }
   if (formProps.password !== formProps.passwordConfirm) {
     errors.passwordConfirm = 'Passwords must match';
-    console.log('They dont match: ', formProps.password, ' vs ', formProps.passwordConfirm);
+    // console.log('They dont match: ', formProps.password, ' vs ', formProps.passwordConfirm);
   }
   return errors;
 }
 
 function mapStateToProps(state) {
-  console.log('state', state);
+  // console.log('state', state);
   return { errorMessage: state.auth.error };
 }
 

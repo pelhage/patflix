@@ -88,8 +88,8 @@ class UploadForm extends Component {
   }
 
   render() {
-    // console.log('UploadForm currentVideo',this.props.currentVideo)
-    // console.log('UploadForm currentLib',this.props.currentLib)
+    // // console.log('UploadForm currentVideo',this.props.currentVideo)
+    // // console.log('UploadForm currentLib',this.props.currentLib)
     const {
       // currentLib: { libName },
       currentVideo: {
