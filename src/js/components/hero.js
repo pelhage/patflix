@@ -6,20 +6,22 @@ var Link = Router.Link;
 //
 import heroImage from './hero.png'
 
+var settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  draggable: false,
+  slickGoTo: 1,
+  slidesToScroll: 1,
+  autoplay: false
+};
+
 module.exports = React.createClass({
 
   render: function() {
-    var settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      draggable: false,
-      slickGoTo: 1,
-      slidesToScroll: 1,
-      autoplay: false
-    };
     const { videos, featured } = this.props
+
     if (featured && featured.length) {
       var list = featured.map(function(videoId, index) {
 
@@ -49,7 +51,7 @@ module.exports = React.createClass({
         </div>);
       });
     } else {
-      return <div><img src={heroImage} className="placeholder"/></div>
+      return <div></div>
     }
 
     return (<div className="hero-wrapper">

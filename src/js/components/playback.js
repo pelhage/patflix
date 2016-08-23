@@ -18,10 +18,6 @@ module.exports = React.createClass({
     window.addEventListener('resize', this.handleResize);
   },
 
-	componentDidUnmount: function() {
-		console.log('COMPONENET UNMOUNTED!!!')
-	},
-
   handleResize: function() {
     this.setState({style: {
   		width: window.innerWidth + 'px',

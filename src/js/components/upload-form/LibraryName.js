@@ -1,19 +1,31 @@
 import React, { Component, PropTypes } from 'react'
+import * as actions from '../../actions'
+import { connect } from 'react-redux'
 import { Input } from '../form'
 
 class LibraryName extends Component {
+  constructor(props) {
+    super(props)
+    this.handleNameChange = this.handleNameChange.bind(this)
+  }
+
+  handleNameChange(e) {
+    this.props.updateLibraryName(e.target.value)
+  }
 
   render() {
-    const { onUserInput, value } = this.props
-    return (<Input
-      value={value}
-      placeholder="Name Your Library"
-      onChange={onUserInput}/>)
+    const { libName } = this.props.currentLib
+    return (<span className="btn btn-tertiary">
+      <Input
+        value={libName}
+        placeholder="Name Your Library"
+        onChange={this.handleNameChange}/>
+    </span>)
   }
 }
 
-LibraryName.propTypes = {
-  onUserInput: PropTypes.func.isRequired
+function mapStateToProps(state) {
+  return { currentLib: state.libraries.currentLib };
 }
 
-export default LibraryName
+export default connect(mapStateToProps, actions)(LibraryName);

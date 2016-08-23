@@ -167,6 +167,11 @@ export function removeLibrary(libraryId) {
   }
 }
 
+export function resetState() {
+  return {
+    type: REMOVE_LIB
+  }
+}
 
 /**
  * setCurrentLib - set's the state's currentLib value
