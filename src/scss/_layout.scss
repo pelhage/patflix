@@ -1,0 +1,149 @@
+@import "mixins/_media-queries.scss";
+
+.contain {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.main-view {
+  margin-top: 65px;
+}
+
+.main-content {
+  display: flex;
+  order: 1;
+  flex-direction: row;
+  flex-grow: 1;
+  overflow-y: scroll;
+  margin-bottom: 75px;
+}
+
+.flex-container {
+  display: flex;
+  padding: 15px 20px;
+  flex-direction: column;
+}
+
+.flex-align--center {
+  align-items: center;
+}
+
+footer {
+  display: flex;
+  position: fixed;
+  align-items: center;
+  bottom: 0;
+  width: 100%;
+  height: 75px;
+  // background: rgba(0,0,0,0.5);
+
+  .container--sidebar {
+    display: flex;
+    height: 100%;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .btn-secondary, .btn-primary {
+    height: 75%;
+    flex-grow: 2;
+    font-size: 1.3rem;
+    color: #fff;
+  }
+  .btn-tertiary {
+    height: 75%;
+    padding: 10px 20px;
+    flex-grow: 0;
+  }
+
+  .container--main {
+    display: flex;
+    height: 100%;
+    justify-content: space-around;
+    align-items: center;
+
+    // .btn-secondary {
+    //   height: 75%;
+    //   flex-grow: 2;
+    // }
+    // .btn {
+    //   height: 75%;
+    //   flex-grow: 0.5;
+    //   font-size: 1.3rem;
+    // }
+  }
+}
+
+.flex {
+  display: flex;
+}
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+.justify-center {
+  justify-content: center;
+}
+.flex--lg {
+  display: flex;
+  flex-basis: 800px;
+}
+.text-center {
+  text-align: center;
+}
+.full-width {
+  width: 100%;
+}
+.padding--med {
+  padding: 15px 20px;
+}
+
+.margin-btm--med {
+  margin-bottom: 20px;
+}
+
+.container--main, .container--sidebar {
+  overflow: auto;
+}
+.container--sidebar {
+  width: 400px;
+  background: #212121;
+}
+.container--main {
+  flex: 1;
+}
+.container {
+  width: 100%;
+  margin: 0 auto;
+}
+.container--lg {
+  display: flex;
+  flex-basis: 800px;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.flex-between {
+  justify-content: space-between;
+}
+.flex-col {
+  display: flex;
+  flex-direction: col;
+}
+.container--med {
+  padding: 10px;
+	width: 450px;
+}
+.container--small {
+  width: 300px
+}
+
+.flex-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

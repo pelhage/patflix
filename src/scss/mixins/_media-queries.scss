@@ -1,0 +1,58 @@
+/**
+ * DEVICE VARIABLES
+ */
+$iPhone5: "only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2)";
+
+$iPhone5Portrait: "only screen and (min-device-width: 320px) 
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait)";
+
+$iPhone5Landscape: "only screen and (min-device-width: 320px) 
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape)";
+
+
+$Tablet: "";
+$Small: "(min-width: 320px)";
+$Medium: "(min-width: 680px)";
+
+$DesktopSm: "(max-width: 680px)";
+$DesktopMed: "(min-width: 680px) and (max-width: 1023px)";
+$DesktopLg: "(min-width: 1023px)";
+
+/** 
+ * MIXINS 
+ */
+@mixin iPhone {
+  @media #{$iPhone5Portrait} {
+    @content;
+  }
+}
+@mixin small {
+	@media #{$Small} {
+		@content;
+	}
+}
+@mixin Tablet {
+	@media #{$Tablet} {
+		@content;
+	}
+}
+
+
+@mixin medium {
+	@media #{$Medium} {
+		@content;
+	}
+}
+
+@mixin large {
+	@media #{$DesktopLg} {
+		@content
+	}
+}

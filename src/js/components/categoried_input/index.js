@@ -1,0 +1,1 @@
+export CategoriedInput from './CategoriedInput'

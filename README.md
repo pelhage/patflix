@@ -1,12 +1,21 @@
 # patflix
-Netflix-style layout of some of my favorite videos on the internet. Work in progress, not close to finished yet. V1 ETA: Jan 27, 2016. Built with React, Sass, Browserify, Gulp, among other libraries such as react-slick, reactify, etc.
+Dynamically generated and shareable Netflix-style library of user inputted Youtube videos.
 
-#View Project
+User uploads URLs of their videos with categories, and Patflix will generate a shareable library for others to view.
 
-Go into the directory, run npm install and then run gulp
+# Project Build & Stack
+The following project uses Node.js, Express, MongoDB, React, Sass, & Webpack, with npm scripts running the processes.
+
+# Server Dependencies
+You will need to have Node.js, npm and MongoDB installed already.
+
+# View/Edit Project
+
+First `cd` into the project and install the dependencies:
 
 `npm install`
 
-Make sure you have Gulp installed, and then simply run:
+To get working on the project, run the dev processes (webpack bundling, scss compiling, nodemon):
+`npm run dev`
 
-`gulp`
+The process will run on `localhost:3000`

@@ -1,0 +1,104 @@
+/* Video Uploading Component */
+.bg--med {
+  background: #191919;
+}
+.bg--light {
+  background: #212121;
+}
+
+.form-container {
+  padding: 20px 25px;
+
+  h2 {
+    margin-top: 0;
+    font-weight: 400;
+    color: #fff;
+  }
+  p {
+    margin: 0 0 10px 0;
+    text-align: left;
+  }
+  // img {
+  //   width: 100%;
+  //   height: 170px;
+  //   -o-object-fit: cover;
+  //      object-fit: cover;
+  // }
+}
+.video-is-valid {
+  margin-left: 10px;
+  color: #64BF25;
+}
+.video-is-not-valid {
+  margin-left: 10px;
+  color: #E50914;
+}
+.form__input-container {
+  margin-bottom: 10px;
+}
+  .form__label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #fff;
+  }
+.form__checkbox {
+  margin-right: 15px;
+}
+.form__input, .form_textarea {
+  display: block;
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+  padding: 15px;
+  font-size: 1rem;
+  background: #303030;
+  color: #ddddd1;
+  margin-bottom: 10px;
+}
+
+
+.form__button {
+  @extend .btn;
+  margin-right: 15px;
+}
+
+.form__button--primary {
+  @extend .btn-primary;
+}
+
+.no-class {
+  color: #fff;
+}
+.remove-video {
+  display: block;
+  height: 100%;
+  width: 40px;
+  opacity: 0.3;
+}
+.btn:hover {
+  .remove-video {
+    opacity: 0.5;
+  }
+}
+//
+.category-tag {
+  margin-right: 10px;
+  padding: 5px 0 5px 10px;
+  border-radius: 5px;
+  border-color: #000;
+  background: #1d1d1d;
+  color: #fff;
+  span {
+    display: inline-block;
+  }
+}
+.category-close {
+  width: 25px;
+  color: #555;
+  padding: 10px 5px;
+  &:hover {
+    cursor: pointer;
+  }
+}
