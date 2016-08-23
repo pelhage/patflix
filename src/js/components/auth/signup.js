@@ -16,10 +16,10 @@ class SignUp extends Component {
     const { handleSubmit, fields: { email, password, passwordConfirm }} = this.props;
     return (
       <div className="flex-center">
-        <h1>Sign Up to Upload Your Own Shareable Library</h1>
+        <h2>Make Your Own Shareable Library</h2>
 
         <div className="container--small form-container bg--med">
-          <h2>Sign Into Patflix</h2>
+          <h3>Sign Up For Patflix</h3>
           <form className="form" onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
             <div className="form__input-container">
               <label className="form__label" htmlFor="email">Email</label>
@@ -42,11 +42,11 @@ class SignUp extends Component {
               {passwordConfirm.dirty && passwordConfirm.error && <div>{passwordConfirm.error}</div>}
               <input {...passwordConfirm} id="passwordConfirm"
                 className="form__input"
-                type="passwordConfirm"
+                type="password"
                 />
             </div>
             {this.renderAlert()}
-            <button action="submit" className="btn btn-primary">Sign In</button>
+            <button action="submit" className="btn btn-primary btn-full">Sign Up</button>
           </form>
         </div>
 

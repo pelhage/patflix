@@ -3,47 +3,46 @@ import Slider from 'react-slick';
 
 // import Thumbnail from './upload/Thumbnail';
 
+var settings = {
+  arrows: true,
+  dots: false,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 5,
+  slidesToScroll: 5,
+  responsive: [
+  {
+    breakpoint: 320,
+    settings: {
+      slidesToShow: 3
+    }
+  },
+  {
+    breakpoint: 768,
+    settings: {
+      slidesToShow: 3
+    }
+  },
+  {
+    breakpoint: 1000,
+    settings: {
+      slidesToShow: 4
+    }
+  }]
+}
+
 class VideoRow extends Component {
-  callVideoClickFunction(val) {
-    this.props.onVideoClick(val)
+
+  callVideoClickFunction(videoId, youtubeId) {
+    this.props.onVideoClick(videoId, youtubeId)
   }
 
   render() {
-    var settings = {
-      arrows: true,
-      dots: false,
-      infinite: false,
-      speed: 500,
-      slidesToShow: 5,
-      slidesToScroll: 5,
-      responsive: [
-      {
-        breakpoint: 320,
-        settings: {
-          slidesToShow: 3
-        }
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 3
-        }
-      },
-      {
-        breakpoint: 1000,
-        settings: {
-          slidesToShow: 4
-        }
-      }]
-    }
-
     const { videos, category } = this.props
-    // console.log('Videos passed: ', videos)
-    //, onVideoClick
+
     if (videos) {
       var list = videos.map(function(video, index) {
-        // console.log('video', video);
-        return (<div key={index} onClick={this.callVideoClickFunction.bind(this, video.videoId)}>
+        return (<div key={index} onClick={this.callVideoClickFunction.bind(this, video.videoId, video.youtubeId)}>
           <div className="tile">
             <div className="tile__media">
               <div>

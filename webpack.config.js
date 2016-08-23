@@ -10,7 +10,7 @@ var config = {
   },
   output: {
     path: BUILD_DIR,
-    filename: '[name].js'
+    filename: '/js/main.js'
   },
   module: {
     loaders: [
@@ -18,6 +18,14 @@ var config = {
         test: /\.jsx?/,
         include: APP_DIR,
         loader: 'babel'
+      },
+      {
+        test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)(\?.*)?$/,
+        include: [APP_DIR],
+        loader: 'file',
+        query: {
+          name: '/media/[name].[ext]'
+        }
       },
       {
         test: /style.scss/,

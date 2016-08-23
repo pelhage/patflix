@@ -2,6 +2,10 @@
 .bg--med {
   background: #191919;
 }
+.bg--light {
+  background: #212121;
+}
+
 .form-container {
   padding: 20px 25px;
 
@@ -49,7 +53,7 @@
   width: 100%;
   padding: 15px;
   font-size: 1rem;
-  background: #2B2B2B;
+  background: #303030;
   color: #ddddd1;
   margin-bottom: 10px;
 }
@@ -67,7 +71,17 @@
 .no-class {
   color: #fff;
 }
-
+.remove-video {
+  display: block;
+  height: 100%;
+  width: 40px;
+  opacity: 0.3;
+}
+.btn:hover {
+  .remove-video {
+    opacity: 0.5;
+  }
+}
 //
 .category-tag {
   margin-right: 10px;

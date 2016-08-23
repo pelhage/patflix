@@ -7,11 +7,11 @@ class VideoUrl extends Component {
     const { url, onUserInput } = this.props
 
     return (<FormFieldset>
-      <FormLabel>YouTube URL </FormLabel>
+      <FormLabel>YouTube Video URL</FormLabel>
       <Input
         name="url"
         value={url}
-        placeholder="Enter a Valid YoutUbe Video URL"
+        placeholder="Paste a Valid YouTube Video URL"
         onChange={onUserInput} />
     </FormFieldset>)
   }

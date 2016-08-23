@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
+import { browserHistory } from 'react-router'
 
 import Library from '../library';
 import Hero from '../hero'
@@ -16,22 +17,23 @@ class ViewLib extends Component {
       this.props.fetchLibById(this.props.params.libId)
     }
   }
-
   // Update Current Video
-  handleVideoClick(videoId) {
-    this.props.replaceCurrentVideo(videoId)
+  handleVideoClick(videoId, youtubeId) {
+    browserHistory.push(`/playback/${youtubeId}`)
   }
 
   render() {
     if (!this.props.currentLib) {
-      return <div>Preview of Your Library!</div>
+      return <div></div>
     }
     const { libName, videos, allCategories, featuredVideos } = this.props.currentLib
     return (<div>
-      <h1>{libName}</h1>
-      <Library videos={videos} categories={allCategories} featured={featuredVideos} onVideoClick={this.handleVideoClick} />
-    </div>
-    )
+      <Library
+        videos={videos}
+        categories={allCategories}
+        featured={featuredVideos}
+        onVideoClick={this.handleVideoClick} />
+    </div>)
   }
 }
 

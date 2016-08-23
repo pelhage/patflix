@@ -1,23 +1,44 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import * as actions from '../actions'
 import { Link } from 'react-router';
 
-export default class LibraryRow extends Component {
+import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
+import { FormButton } from './form'
+
+// Icons
+import removeIcon from './remove.svg'
+
+class LibraryRow extends Component {
 
   render() {
-    return (
-      <div key={index} className="bg--med">
-        // <h2>{library.libName}</h2>
-        <p>Library Size: <strong>{library.size}</strong> videos</p>
-        <p>Library _id:    {library._id}</p>
-        <p>Library libraryId:    {library.libraryId}</p>
-        <Link className="btn btn-secondary" to={"/d/"+library.libraryId}>Edit Library</Link>
-        <Link className="btn btn-secondary" to={"/r/"+library.libraryId}>DELETE Library</Link>
-        <Link className="btn btn-secondary" to={"/l/"+library.libraryId}>VIEW Library</Link>
+    const { libName, libraryId, size } = this.props
+    let libNameText = libName || 'Untitled'
+    let videosText = 'videos'
+
+    if (size === 1) {
+      videosText = 'video'
+    }
+
+    return (<div className="flex flex-between bg--light padding--med margin-btm--med">
+      <div>
+        <h3>{libNameText}</h3>
+        <h4>patflix.co/l/{libraryId}</h4>
+        <p><strong>{size}</strong> {videosText} in this library</p>
       </div>
-    )
+
+      <div className="btn-group">
+        <Link className="btn btn-secondary" to={"/d/"+libraryId}>Edit</Link>
+        <Link className="btn btn-secondary" to={"/l/"+libraryId}>VIEW</Link>
+        <Dropdown className="nav__item">
+          <DropdownTrigger><FormButton className="btn btn-tertiary no-padding"><img style={{'width': '30px'}} src={removeIcon}/></FormButton></DropdownTrigger>
+          <DropdownContent>
+            <ul className="dropdown-menu">
+              <li><Link className="btn btn-secondary" to={"/r/"+libraryId}>Confirm Deletion</Link></li>
+            </ul>
+          </DropdownContent>
+        </Dropdown>
+      </div>
+    </div>)
   }
-
-
 }
+
+export default LibraryRow

@@ -9,7 +9,7 @@ class Signin extends Component {
   }
   renderAlert() {
     if (this.props.errorMessage) {
-      return <div>Error</div>
+      return <div>Error: {this.props.errorMessage}</div>
     } else {
       return <div></div>
     }
@@ -18,10 +18,10 @@ class Signin extends Component {
     const { handleSubmit, fields: { email, password }} = this.props;
     return (
       <div className="flex-center">
-        <h1>Log In to Upload Your Own Shareable Library</h1>
+        <h2>Make Your Own Shareable Library</h2>
 
         <div className="container--small form-container bg--med">
-          <h2>Sign Into Patflix</h2>
+          <h3>Sign Into Patflix</h3>
           <form className="form" onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
             <div className="form__input-container">
               <label className="form__label" htmlFor="email">Email</label>
@@ -37,7 +37,7 @@ class Signin extends Component {
                 />
             </div>
             {this.renderAlert()}
-            <button action="submit" className="btn btn-primary">Sign In</button>
+            <button action="submit" className="btn btn-primary btn-full">Sign In</button>
           </form>
         </div>
 

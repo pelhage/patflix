@@ -2,15 +2,22 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { Link } from 'react-router';
+// Components
+import { FormButton } from './form'
+import LibraryPlaceholder from './library-placeholder'
+import LibraryRow from './library-row'
+
 
 class Libraries extends Component {
   constructor(props) {
     super(props)
     this.fetchLibraries = this.fetchLibraries.bind(this)
   }
+
   componentWillMount() {
     this.props.fetchLibraries()
   }
+
   fetchLibraries() {
     this.props.fetchLibraries()
   }
@@ -29,24 +36,29 @@ class Libraries extends Component {
   }
 
   render() {
+
     const { libraries } = this.props
+    console.log('Libraries when rendering', libraries)
     if (!libraries) {
-      return (<div>You don't have any libraries</div>);
+      return <div></div>
     }
+    if (!libraries || !Object.keys(libraries).length) {
+      return (<LibraryPlaceholder />);
+    }
+
     let libs = this.renderLibraries().map((library, index) => {
-      return (<div key={index} className="bg--med">
-        // <h2>{library.libName}</h2>
-        <p>Library Size: <strong>{library.size}</strong> videos</p>
-        <p>Library _id:    {library._id}</p>
-        <p>Library libraryId:    {library.libraryId}</p>
-        <Link className="btn btn-secondary" to={"/d/"+library.libraryId}>Edit Library</Link>
-        <Link className="btn btn-secondary" to={"/r/"+library.libraryId}>DELETE Library</Link>
-        <Link className="btn btn-secondary" to={"/l/"+library.libraryId}>VIEW Library</Link>
-      </div>)
+      return (<LibraryRow
+        libName={library.libName}
+        libraryId={library.libraryId}
+        size={library.size}
+         />)
     })
 
-    return (<div>
-      {libs}
+    return (<div className="flex justify-center">
+      <div className="flex--lg flex-col">
+        <h1>My Libraries</h1>
+        {libs}
+      </div>
     </div>)
   }
 }

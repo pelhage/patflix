@@ -5,7 +5,7 @@
   "scripts": {
     "webpack:dev": "webpack -d --watch",
     "webpack:build": "webpack -p",
-    "scss": "node-sass --output-style compressed -o dist/css src/scss",
+    "scss": "node-sass -w --output-style compressed -o dist/css src/scss",
     "dev": "run-p scss webpack:dev server",
     "server": "node server.js",
     "start": "node ./scripts/start.js",
@@ -33,6 +33,7 @@
     "react-dom": "^0.14.3",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.1",
+    "react-simple-dropdown": "^1.1.4",
     "react-slick": "^0.12.2",
     "redux": "^3.5.2",
     "redux-form": "^5.2.5",

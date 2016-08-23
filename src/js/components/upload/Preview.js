@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
 import Library from '../library';
+import rowPreviewImg from '../slide-row.png'
+import heroPreviewImg from '../hero.png'
 
 class Preview extends Component {
   constructor(props) {
@@ -16,14 +18,26 @@ class Preview extends Component {
   }
 
   render() {
-    if (!this.props.currentLib) {
-      return <div>Preview of Your Library!</div>
+    const { libName, videos, allCategories, featuredVideos, size } = this.props.currentLib
+    // Placeholders for if the library is not complete
+    let videoRowImg = <img className="placeholder" src={rowPreviewImg} />;
+    let videoHeroImg = <img  className="placeholder" src={heroPreviewImg}/>
+    let rowPlaceholder = ''
+    let heroPlaceholder = ''
+    // Set the placeholders if sections are empty
+    if (!size) {
+      rowPlaceholder = videoRowImg
+      heroPlaceholder = videoHeroImg
+    } else if (!Object.keys(featuredVideos).length) {
+      console.log('No featured vids')
+      heroPlaceholder = videoHeroImg
     }
-    const { libName, videos, allCategories, featuredVideos } = this.props.currentLib
-    console.log('PREVIEW currentLib.allCategories', this.props.currentLib.allCategories)
+
     return (<div>
-      <h1>{libName}</h1>
+      <h3>{libName}</h3>
+      {heroPlaceholder}
       <Library videos={videos} categories={allCategories} featured={featuredVideos} onVideoClick={this.handleVideoClick} />
+      {rowPlaceholder}
     </div>
     )
   }

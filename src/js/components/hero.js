@@ -3,29 +3,31 @@ import Slider from 'react-slick'
 
 var Router = require('react-router');
 var Link = Router.Link;
-
+//
 import heroImage from './hero.png'
+
+var settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  draggable: false,
+  slickGoTo: 1,
+  slidesToScroll: 1,
+  autoplay: false
+};
 
 module.exports = React.createClass({
 
   render: function() {
-    var settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      draggable: false,
-      slickGoTo: 1,
-      slidesToScroll: 1,
-      autoplay: false
-    };
     const { videos, featured } = this.props
+
     if (featured && featured.length) {
       var list = featured.map(function(videoId, index) {
 
         var imageStyle = {
           'backgroundImage': 'url(https://img.youtube.com/vi/'+ videos[videoId].youtubeId +'/0.jpg)',
-          'backgroundSize': 'cover'
+          'backgroundSize': 'cover',
         };
 
         return (<div><div className="hero-row">
@@ -49,7 +51,7 @@ module.exports = React.createClass({
         </div>);
       });
     } else {
-      return <div><img src={heroImage} /></div>
+      return <div></div>
     }
 
     return (<div className="hero-wrapper">

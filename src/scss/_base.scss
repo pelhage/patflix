@@ -2,9 +2,8 @@ body,
 html {
   padding: 0;
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
   background: #141414;
-  font-family: 'Helvetica Nueue', Helvetica, sans-serif;
+  font-family: 'Lato', 'Helvetica Nueue', Helvetica, sans-serif;
   color: #999999;
   font-size: 15px;
   min-height: 100vh;
@@ -28,7 +27,38 @@ html {
 }
 h1 {
   color: #fff;
-  margin: 0 0 15px 0;
+  margin: 0 0 20px 0;
+  font-size: 3.998rem;
+  font-weight: 400;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 2.827rem;
+}
+
+h3 {
+  margin-top: 0;
+  font-size: 1.999rem;
+  margin-bottom: 10px;
+}
+ul {
+  list-style: none;
+}
+
+button:focus {
+  outline:0;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 5px;
+  line-height: 1.5;
+}
+
+p:last-child {
+  margin-bottom: 20px;
 }
 
 a {
