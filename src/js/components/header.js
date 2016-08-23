@@ -33,7 +33,7 @@ class Header extends Component {
   render() {
     return (
       <nav className="nav">
-        <Link to="/" className="nav__item nav__item--brand">PATFLIX!</Link>
+        <Link to="/" className="nav__item nav__item--brand">PATFLIX</Link>
         <span className="nav__item--pull-right">
           <Link to="/dashboard" activeClassName="nav__item--active" className="nav__item">
             <img style={imgtyle} src={addIcon} />  Add Library</Link>
