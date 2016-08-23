@@ -15,7 +15,7 @@ class DropdownMenu extends Component {
       <DropdownTrigger><img style={imgtyle} src={signOut} /> Profile</DropdownTrigger>
       <DropdownContent>
         <ul className="dropdown-menu">
-          <li><Link to="/about">FAQ</Link></li>
+          <li><Link to="/about">About Patflix</Link></li>
           <li><Link to="/signout">Sign Out</Link></li>
         </ul>
       </DropdownContent>
