@@ -3,33 +3,7 @@ import Slider from 'react-slick';
 
 // import Thumbnail from './upload/Thumbnail';
 
-var settings = {
-  arrows: true,
-  dots: false,
-  infinite: false,
-  speed: 500,
-  slidesToShow: 5,
-  slidesToScroll: 5,
-  responsive: [
-  {
-    breakpoint: 320,
-    settings: {
-      slidesToShow: 3
-    }
-  },
-  {
-    breakpoint: 768,
-    settings: {
-      slidesToShow: 3
-    }
-  },
-  {
-    breakpoint: 1000,
-    settings: {
-      slidesToShow: 4
-    }
-  }]
-}
+
 
 class VideoRow extends Component {
 
@@ -38,8 +12,37 @@ class VideoRow extends Component {
   }
 
   render() {
-    const { videos, category } = this.props
-
+    var settings = {
+      arrows: true,
+      dots: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 5,
+      slidesToScroll: 5,
+      responsive: [
+      {
+        breakpoint: 320,
+        settings: {
+          slidesToShow: 3
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 3
+        }
+      },
+      {
+        breakpoint: 1000,
+        settings: {
+          slidesToShow: 4
+        }
+      }]
+    }
+    const { videos, category, isPublic } = this.props
+    if (isPublic) {
+      settings.infinite = true
+    }
     if (videos) {
       var list = videos.map(function(video, index) {
         return (<div key={index} onClick={this.callVideoClickFunction.bind(this, video.videoId, video.youtubeId)}>

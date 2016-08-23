@@ -98,10 +98,6 @@ class UploadForm extends Component {
     } = this.props
     return (<div className="form-container">
       <Form onFormSubmit={this.handleFormSubmit}>
-        {/* Library Name
-            <LibraryName value={libName} onUserInput={this.handleNameChange} />
-        */}
-
         {/* Current Video's Details */}
         <VideoUrl
           url={url}

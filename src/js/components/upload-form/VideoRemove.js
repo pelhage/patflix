@@ -11,7 +11,11 @@ class VideoRemove extends Component {
   }
 
   removeVideo(videoId) {
-    this.props.removeVideoFromLibrary(this.props.currentVideo.videoId)
+    if (this.props.currentVideo.videoId) {
+      this.props.removeVideoFromLibrary(this.props.currentVideo.videoId)
+    } else if (!this.props.currentVideo.videoId) {
+
+    }
   }
 
   render() {

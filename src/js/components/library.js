@@ -6,7 +6,7 @@ import VideoRow from './video-row'
 class Library extends Component {
   render() {
 
-    const { videos, categories, onVideoClick, featured } = this.props;
+    const { videos, categories, onVideoClick, featured, isPublic } = this.props;
     // For each category, create a categorizedVideoRow by
     // checking entire library for the category per video
     // @TODO: clearly need to reduce this sorting method.....
@@ -22,7 +22,8 @@ class Library extends Component {
         VideoRows.push(<div key={category}><VideoRow
           videos={categorizedVideos}
           category={category}
-          onVideoClick={onVideoClick} /></div>)
+          onVideoClick={onVideoClick}
+          isPublic={isPublic} /></div>)
       }
     }
 
