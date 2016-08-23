@@ -36,7 +36,7 @@ class Signin extends Component {
                 type="password"
                 />
             </div>
-            {this.renderAlert()}
+            <div className="auth-error">{this.renderAlert()}</div>
             <button action="submit" className="btn btn-primary btn-full">Sign In</button>
           </form>
         </div>

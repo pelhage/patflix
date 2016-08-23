@@ -21,31 +21,30 @@ class SignUp extends Component {
         <div className="container--small form-container bg--med">
           <h3>Sign Up For Patflix</h3>
           <form className="form" onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-            <div className="form__input-container">
+            <div className="form__input-container no-margin">
               <label className="form__label" htmlFor="email">Email</label>
-              {email.touched && email.error && <div>{email.error}</div>}
               <input {...email} id="email"
-                className="form__input"
+                className="form__input no-margin"
                 type="email"/>
+              <div className="auth-error">{email.touched && email.error && <div>{email.error}</div>}</div>
             </div>
-            <div className="form__input-container">
+            <div className="form__input-container no-margin">
               <label className="form__label" htmlFor="password">Password</label>
-              {password.touched && password.error && <div>{password.error}</div>}
-
               <input {...password} id="password"
-                className="form__input"
+                className="form__input no-margin"
                 type="password"
                 />
+              <div className="auth-error">{password.touched && password.error && <div>{password.error}</div>}</div>
             </div>
-            <div className="form__input-container">
+            <div className="form__input-container no-margin">
               <label className="form__label" htmlFor="passwordConfirm">Confirm Password</label>
-              {passwordConfirm.dirty && passwordConfirm.error && <div>{passwordConfirm.error}</div>}
               <input {...passwordConfirm} id="passwordConfirm"
-                className="form__input"
+                className="form__input no-margin"
                 type="password"
                 />
+              <div className="auth-error">{passwordConfirm.dirty && passwordConfirm.error && <div>{passwordConfirm.error}</div>}</div>
             </div>
-            {this.renderAlert()}
+            <div className="auth-error">{this.renderAlert()}</div>
             <button action="submit" className="btn btn-primary btn-full">Sign Up</button>
           </form>
         </div>
