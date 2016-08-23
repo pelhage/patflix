@@ -126,6 +126,9 @@ footer {
   display: flex;
   flex-direction: row;
 }
+.flex-between {
+  justify-content: space-between;
+}
 .flex-col {
   display: flex;
   flex-direction: col;

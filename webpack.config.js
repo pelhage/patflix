@@ -24,7 +24,7 @@ var config = {
         include: [APP_DIR],
         loader: 'file',
         query: {
-          name: 'media/[name].[ext]'
+          name: '/media/[name].[ext]'
         }
       },
       {

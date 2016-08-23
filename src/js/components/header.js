@@ -8,13 +8,19 @@ import DropdownMenu from './dropdown'
 import addIcon from './add.svg'
 import librariesIcon from './collection2.svg'
 
+let imgtyle = {
+  width: '27px',
+  marginBottom: '-5px'
+};
+
+
 class Header extends Component {
   authButton() {
     if (this.props.authenticated) {
       return (<span>
-        <DropdownMenu />
         <Link to="/d" activeClassName="nav__item--active" className="nav__item">
             <img style={imgtyle} src={librariesIcon} />  My Libraries</Link>
+        <DropdownMenu />
       </span>
       )
     }
@@ -25,10 +31,6 @@ class Header extends Component {
     ];
   }
   render() {
-    let imgtyle = {
-      width: '27px',
-      marginBottom: '-5px'
-    };
     return (
       <nav className="nav">
         <Link to="/" className="nav__item nav__item--brand">PATFLIX!</Link>

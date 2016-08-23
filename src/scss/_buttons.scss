@@ -18,6 +18,17 @@
   width: 100%;
 }
 
+.btn-group {
+  display: flex;
+  height: 50px;
+  justify-content: space-between;
+  .btn {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+}
+
 .btn-primary {
   @include button-variant($btn-primary-color, $btn-primary-bg);
 }
