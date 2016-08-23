@@ -72,7 +72,7 @@ class Libraries extends Component {
             <DropdownTrigger><FormButton className="btn btn-tertiary no-padding"><img style={{'width': '30px'}} src={removeIcon}/></FormButton></DropdownTrigger>
             <DropdownContent>
               <ul className="dropdown-menu">
-                <li><Link className="btn btn-secondary" to={"/r/"}>Confirm Deletion</Link></li>
+                <li><Link className="btn btn-secondary" to={"/r/"+library.libraryId}>Confirm Deletion</Link></li>
               </ul>
             </DropdownContent>
           </Dropdown>

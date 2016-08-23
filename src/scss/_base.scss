@@ -43,6 +43,14 @@ h3 {
   font-size: 1.999rem;
   margin-bottom: 10px;
 }
+ul {
+  list-style: none;
+}
+
+button:focus {
+  outline:0;
+}
+
 p {
   margin-top: 0;
   margin-bottom: 5px;

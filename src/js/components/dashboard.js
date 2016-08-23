@@ -4,17 +4,25 @@ import * as actions from '../actions';
 import Preview from './upload/Preview';
 import UploadForm from './upload-form/UploadForm';
 import { Input, FormButton } from './form'
-
+import LibraryName from './upload-form/LibraryName'
 // Button Icons
 import removeIcon from './remove.svg'
 
 class Dashboard extends Component {
+  constructor(props) {
+    super(props)
+    this.handleNameChange = this.handleNameChange.bind(this)
+  }
   // Initialize data if we don't already have any
   componentWillMount() {
     if (this.props.params.libId) {
       this.props.fetchLibById(this.props.params.libId)
     }
   }
+  handleNameChange(e) {
+    this.props.updateLibraryName(e.target.value)
+  }
+
   render() {
     const { currentLib, currentVideo } = this.props
 
@@ -54,7 +62,7 @@ class Dashboard extends Component {
               </FormButton>
               <FormButton className="btn btn-tertiary" onClick={() => {
                   console.log('Update Library Name');
-                }}><Input placeholder="[Library Name]"/></FormButton>
+                }}><LibraryName onUserInput={this.handleNameChange} value={currentLib.libName} /></FormButton>
           </div>
         </footer>
       </div>

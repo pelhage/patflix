@@ -1,17 +1,14 @@
 import React, { Component, PropTypes } from 'react'
-import { Input, FormFieldset, FormLabel } from '../form'
+import { Input } from '../form'
 
 class LibraryName extends Component {
 
   render() {
     const { onUserInput, value } = this.props
-    return (<FormFieldset>
-      <FormLabel>Library Names</FormLabel>
-      <Input
-        value={value}
-        placeholder="Name Your Library"
-        onChange={onUserInput}/>
-    </FormFieldset>)
+    return (<Input
+      value={value}
+      placeholder="Name Your Library"
+      onChange={onUserInput}/>)
   }
 }
 
