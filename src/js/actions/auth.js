@@ -28,7 +28,7 @@ export function signinUser({email, password}) {
       dispatch({ type: AUTH_USER });
       // save jwt token & redirect route to '/dashboard'
       localStorage.setItem('token', response.data.token);
-      browserHistory.push('/dashboard')
+      browserHistory.push('/d')
     })
     .catch(function(err) {
       // If bad request, show error
