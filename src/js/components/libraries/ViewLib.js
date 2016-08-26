@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import * as actions from '../../actions'
 import { browserHistory } from 'react-router'
 
-import Library from '../library';
-import Hero from '../hero'
+import Library from '../patflix/library';
+import Hero from '../patflix/hero'
 
 class ViewLib extends Component {
   constructor(props) {

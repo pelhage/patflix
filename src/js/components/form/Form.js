@@ -5,9 +5,11 @@ class Form extends Component {
   render() {
     const { onFormSubmit } = this.props
 
-    return (<form className="form" onSubmit={onFormSubmit}>
-      {this.props.children}
-    </form>)
+    return (
+      <form className="form" onSubmit={onFormSubmit}>
+        {this.props.children}
+      </form>
+    )
   }
 }
 

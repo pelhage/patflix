@@ -6,14 +6,16 @@ class VideoDescription extends Component {
   render() {
     const { description, onUserInput } = this.props
 
-    return (<FormFieldset>
-      <FormLabel>Description</FormLabel>
-      <p>Write a short summary of what this video is about.</p>
-      <TextArea
-        name="description"
-        value={description}
-        onChange={onUserInput} />
-    </FormFieldset>)
+    return (
+      <FormFieldset>
+        <FormLabel>Description</FormLabel>
+        <p>Write a short summary of what this video is about.</p>
+        <TextArea
+          name="description"
+          value={description}
+          onChange={onUserInput} />
+      </FormFieldset>
+    )
   }
 }
 

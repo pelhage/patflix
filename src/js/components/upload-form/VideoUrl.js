@@ -24,8 +24,3 @@ VideoUrl.propTypes = {
 }
 
 export default VideoUrl
-
-/*
-{url && {validate(url)} && <span>not a valid youtube url</span>}
-
-*/

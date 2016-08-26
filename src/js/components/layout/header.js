@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import * as actions from '../actions'
+import * as actions from '../../actions'
 
 import DropdownMenu from './dropdown'
 
-import addIcon from './add.svg'
-import librariesIcon from './collection2.svg'
+import addIcon from '../images/add.svg'
+import librariesIcon from '../images/collection2.svg'
 
 let imgtyle = {
   width: '27px',

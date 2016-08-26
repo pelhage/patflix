@@ -1,7 +1,7 @@
 var React = require('react');
 
-var Header = require('./header.js');
-var Library = require('./library.js');
+var Header = require('./layout/header.js');
+var Library = require('./patflix/library.js');
 var localData = require('../library-data.js');
 
 module.exports = React.createClass({

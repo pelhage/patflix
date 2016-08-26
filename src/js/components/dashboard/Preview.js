@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
-import Library from '../library';
-import rowPreviewImg from '../slide-row.png'
-import heroPreviewImg from '../hero.png'
+import Library from '../patflix/library';
+import rowPreviewImg from '../images/slide-row.png'
+import heroPreviewImg from '../patflix/hero.png'
 
 class Preview extends Component {
   constructor(props) {
@@ -36,10 +36,12 @@ class Preview extends Component {
     return (<div>
       <h3>{libName}</h3>
       {heroPlaceholder}
-      <Library videos={videos}
+      <Library
+        videos={videos}
         categories={allCategories}
         featured={featuredVideos}
-        onVideoClick={this.handleVideoClick} />
+        onVideoClick={this.handleVideoClick}
+        isPublic={false} />
       {rowPlaceholder}
     </div>
     )

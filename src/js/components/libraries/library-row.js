@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { Link } from 'react-router';
 
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
-import { FormButton } from './form'
+import { FormButton } from '../form'
 
 // Icons
-import removeIcon from './remove.svg'
+import removeIcon from '../images/remove.svg'
 
 class LibraryRow extends Component {
 

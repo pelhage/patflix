@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
 import { Link } from 'react-router'
 
-import signOut from './signout.svg'
+import signOut from '../images/signout.svg'
 
 class DropdownMenu extends Component {
   render() {

@@ -27,7 +27,6 @@ class VideoAdd extends Component {
   }
 
   isValidVideo(video) {
-    console.log('isValidVideo')
     let { url } = video
     return this.hasValidUrl(url)
   }
@@ -35,17 +34,19 @@ class VideoAdd extends Component {
   addVideo(videoId) {
     let { currentVideo } = this.props
     if (this.isValidVideo(currentVideo)) {
-      console.log('checking if video is valide')
       this.props.addCategoryToLibrary(currentVideo.categories)
       this.props.addVideoToLibrary(currentVideo)
     }
   }
 
   render() {
-    return (<button
-      className="btn btn-secondary btn-main"
-      onClick={this.addVideo}>Save Video
-    </button>)
+    return (
+      <button
+        className="btn btn-secondary btn-main"
+        onClick={this.addVideo}>
+        Save Video
+      </button>
+    )
   }
 }
 

@@ -10,24 +10,24 @@ import reduxThunk from 'redux-thunk'
 import { AUTH_USER } from './actions/types'
 import reducers from './reducers'
 // HOC for authentication
-import requireAuth from './components/require_auth'
+import requireAuth from './components/auth/require_auth'
 // All Components for Patflix
 import App from './components/app'
-import Libraries from './components/libraries'
-import Dashboard from './components/dashboard'
-import About from './components/about'
+import Libraries from './components/libraries/libraries'
+import Dashboard from './components/dashboard/dashboard'
+import About from './components/pages/about'
 
 import Signin from './components/auth/signin'
 import SignUp from './components/auth/signup'
 import SignOut from './components/auth/signout'
 
-import Welcome from './components/welcome'
+import Welcome from './components/pages/welcome'
 import DeleteLib from './components/libraries/deleteLib'
 import ViewLib from './components/libraries/ViewLib'
-import PlayBack from './components/playback'
+import PlayBack from './components/patflix/playback'
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
-const store = createStoreWithMiddleware(reducers)
+const store = createStoreWithMiddleware(reducers, window.devToolsExtension && window.devToolsExtension())
 // Ensure user with local token is auth'd
 const token = localStorage.getItem('token')
 if (token) {

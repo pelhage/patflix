@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
-import Preview from './upload/Preview';
-import UploadForm from './upload-form/UploadForm';
-import { Input, FormButton } from './form'
-import LibraryName from './upload-form/LibraryName'
-import LibrarySave from './upload-form/LibrarySave'
-import VideoAdd from './upload-form/VideoAdd'
-import VideoRemove from './upload-form/VideoRemove'
+import * as actions from '../../actions';
+import Preview from '../dashboard/Preview';
+import UploadForm from '../upload-form/UploadForm';
+import LibraryName from '../upload-form/LibraryName'
+import LibrarySave from '../upload-form/LibrarySave'
+import VideoAdd from '../upload-form/VideoAdd'
+import VideoRemove from '../upload-form/VideoRemove'
 // Button Icons
-import removeIcon from './remove.svg'
+import removeIcon from '../images/remove.svg'
 
 class Dashboard extends Component {
 
@@ -17,8 +16,7 @@ class Dashboard extends Component {
   componentWillMount() {
     if (this.props.params.libId) {
       this.props.fetchLibById(this.props.params.libId)
-    }
-    else {
+    } else {
       this.props.resetState()
     }
   }
