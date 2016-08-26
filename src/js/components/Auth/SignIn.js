@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import * as actions from '../../actions';
 
-class Signin extends Component {
+import { Form, FormLabel, FormFieldset, Input } from '../Form'
+
+class SignIn extends Component {
   handleFormSubmit({ email, password }) {
     // console.log(email, password);
     this.props.signinUser({ email, password });
@@ -22,23 +24,21 @@ class Signin extends Component {
 
         <div className="container--small form-container bg--med">
           <h3>Sign Into Patflix</h3>
-          <form className="form" onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-            <div className="form__input-container">
-              <label className="form__label" htmlFor="email">Email</label>
-              <input {...email} id="email"
-                className="form__input"
-                type="email"/>
-            </div>
-            <div className="form__input-container">
-              <label className="form__label" htmlFor="password">Password</label>
-              <input {...password} id="password"
-                className="form__input"
-                type="password"
-                />
-            </div>
+          <Form onFormSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+            <FormFieldset>
+              <FormLabel htmlFor="email">Email</FormLabel>
+              <Input {...email} id="email" type="email" />
+              <div className="auth-error">{email.touched && email.error && <div>{email.error}</div>}</div>
+            </FormFieldset>
+            <FormFieldset>
+              <FormLabel htmlFor="password">Password</FormLabel>
+              <Input {...password} id="password" type="password" />
+              <div className="auth-error">{password.touched && password.error && <div>{password.error}</div>}</div>
+            </FormFieldset>
             <div className="auth-error">{this.renderAlert()}</div>
             <button action="submit" className="btn btn-primary btn-full">Sign In</button>
-          </form>
+          </Form>
+
         </div>
 
       </div>
@@ -46,12 +46,24 @@ class Signin extends Component {
   }
 }
 
+function validate(formProps) {
+  const errors = {};
+
+  if (!formProps.email) {
+    errors.email = 'Please enter an email'
+  }
+  if (!formProps.password) {
+    errors.password = 'Please enter a password'
+  }
+  return errors;
+}
+
 function mapStateToProps(state) {
-  // console.log('state', state);
   return { errorMessage: state.auth.error };
 }
 
 export default reduxForm({
   form: 'signin',
-  fields: ['email', 'password']
-}, mapStateToProps, actions)(Signin);
+  fields: ['email', 'password'],
+  validate
+}, mapStateToProps, actions)(SignIn);

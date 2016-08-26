@@ -67,7 +67,8 @@ class CategoriedInput extends Component {
 
 CategoriedInput.propTypes = {
   onCategoryChange: PropTypes.func.isRequired,
-  categories: PropTypes.array.isRequired
+  categories: PropTypes.array.isRequired,
+  placeholder: PropTypes.string
 }
 
 export default CategoriedInput;

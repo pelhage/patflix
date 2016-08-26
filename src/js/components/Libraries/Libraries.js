@@ -29,11 +29,13 @@ class Libraries extends Component {
   renderLibraries() {
     const { libraries } = this.props
 
-    if (!libraries || !Object.keys(libraries).length) {
-      console.log('first if statement');
-      return (<LibrariesPlaceholder />);
-    }
-    else if (libraries) {
+    if (libraries === '') {
+      return (<LibrariesPlaceholder />)
+    } else if (!libraries) {
+      return null
+    } else if (libraries && !Object.keys(libraries).length) {
+      return (<LibrariesPlaceholder />)
+    }else if (libraries) {
       let arrOfVids = []
       let libs = this.props.libraries
 
@@ -44,11 +46,13 @@ class Libraries extends Component {
         <div>
           <h1>My Libraries</h1>
           {arrOfVids.map((library, index) => {
+            console.log(index);
             return (
               <LibraryRow
                 libName={library.libName}
                 libraryId={library.libraryId}
                 size={library.size}
+                key={index}
                />
             )
           })}
@@ -60,13 +64,13 @@ class Libraries extends Component {
   }
 
   render() {
-    const { libraries } = this.props
-
-    return (<div className="flex justify-center">
-      <div className="flex--lg flex-col">
-        {this.renderLibraries()}
+    return (
+      <div className="flex justify-center">
+        <div className="flex--lg flex-col">
+          {this.renderLibraries()}
+        </div>
       </div>
-    </div>)
+    )
   }
 }
 
@@ -76,4 +80,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, actions)(Libraries);
-//

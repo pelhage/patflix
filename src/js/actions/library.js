@@ -58,7 +58,8 @@ export function createLibrary(library) {
         type: ADD_LIB,
         payload: response.data
       })
-      dispatch(fetchLibraries())
+      // dispatch(fetchLibraries())
+      browserHistory.push('/d')
     })
   }
 }
@@ -74,7 +75,7 @@ export function fetchLibById(libraryId) {
   return function(dispatch) {
     axios.get(`${API_URL}/library/${libraryId}`)
       .then(response => {
-
+        console.log('fetchlibrary response: ', response.data);
         dispatch({
           type: FETCH_LIB_BY_ID,
           payload: response.data
@@ -150,7 +151,7 @@ export function fetchLibraries() {
       headers: { authorization: localStorage.getItem('token') }
     })
     .then(response => {
-      // // console.log('fetchlibraries response: ', response.data);
+      console.log('fetchlibraries response: ', response.data);
       dispatch({
         type: FETCH_LIBS,
         payload: response.data
@@ -314,7 +315,7 @@ export function removeVideoFromLibrary(videoId) {
     // Delete the video from the library
     delete currentLib.videos[videoId]
     currentLib.size -= 1
-
+    console.log('deleting current video. currentLib.video is now:', currentLib.videos);
     dispatch({
       type: REMOVE_VIDEO,
       payload: currentLib

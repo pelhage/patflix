@@ -6,9 +6,7 @@ import Slider from 'react-slick'
 class HeroSlide extends Component {
 
   render() {
-    // console.log('[HeroSlide]- render() invoked. this.props', this.props)
     const { description, youtubeId } = this.props
-    // console.log('Trying to ')
     const imageStyle = {
       'backgroundImage': 'url(https://img.youtube.com/vi/'+ youtubeId +'/0.jpg)',
       'backgroundSize': 'cover',
@@ -41,7 +39,7 @@ class HeroSlide extends Component {
 
 HeroSlide.propTypes = {
   description: PropTypes.string,
-  youtubeId: PropTypes.string
+  youtubeId: PropTypes.string.isRequired
 }
 
 export default HeroSlide

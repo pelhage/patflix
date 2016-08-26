@@ -33,7 +33,7 @@ class ViewLib extends Component {
           categories={allCategories}
           featured={featuredVideos}
           onVideoClick={this.handleVideoClick}
-          isPublic="true"
+          isPublic={true}
           />
       </div>
     )

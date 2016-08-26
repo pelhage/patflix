@@ -12,13 +12,13 @@ class LibraryRow extends Component {
   render() {
     const { libName, libraryId, size } = this.props
     let libNameText = libName || 'Untitled'
-    let videosText = (size === 1) ? 'video' : 'video'
+    let videosText = (size === 1) ? 'video' : 'videos'
 
     return (
       <div className="flex flex-between bg--light padding--med margin-btm--med">
         <div>
           <h3>{libNameText}</h3>
-          <h4>patflix.co/l/{libraryId}</h4>
+          <h4><Link to={"/l/"+libraryId}>patflix.co/l/{libraryId}</Link></h4>
           <p><strong>{size}</strong> {videosText} in this library</p>
         </div>
 

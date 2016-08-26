@@ -66,7 +66,7 @@ module.exports = {
     var libMongoId = hashids.decodeHex(libraryId)
     var updatedLib = req.body
     var updatedLibraries = Object.assign({}, req.user.libraries)
-
+    console.log('updatedLib', updatedLib)
     updatedLibraries[libraryId] = updatedLib
     Library
       .update({'_id': new ObjectID(libMongoId)}, updatedLib, function(err) {
@@ -87,6 +87,7 @@ module.exports = {
     Library
       .findOne({'_id': new ObjectID(libID)})
       .exec(function(err, doc) {
+        console.log('doc in Lib:', doc)
         res.send(doc)
       })
   },

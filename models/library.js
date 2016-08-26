@@ -12,7 +12,7 @@ var librarySchema = Schema({
   featuredVideos: [],
   numOfVideos: Number,
   ownerId: {type: Schema.Types.ObjectId, ref: 'User'}
-});
+}, { minimize: false });
 
 module.exports = mongoose.model('Library', librarySchema);
 

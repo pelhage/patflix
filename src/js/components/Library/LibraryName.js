@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import * as actions from '../../actions'
+import * as actions from '../../actions/'
 import { connect } from 'react-redux'
 import { Input } from '../Form'
 
@@ -15,12 +15,14 @@ class LibraryName extends Component {
 
   render() {
     const { libName } = this.props.currentLib
-    return (<span className="btn btn-tertiary">
-      <Input
-        value={libName}
-        placeholder="Name Your Library"
-        onChange={this.handleNameChange}/>
-    </span>)
+    return (
+      <span className="btn btn-tertiary">
+        <Input
+          value={libName}
+          placeholder="Name Your Library"
+          onChange={this.handleNameChange}/>
+      </span>
+    )
   }
 }
 

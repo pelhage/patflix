@@ -18,7 +18,7 @@ import App from './components/App'
 import { Libraries } from './components/Libraries'
 import { Dashboard } from './components/Dashboard'
 import { About, Welcome } from './components/Pages'
-import { Signin, SignUp, SignOut } from './components/Auth'
+import { SignIn, SignUp, SignOut } from './components/Auth'
 import { PlayBack, ViewLib } from './components/Library'
 import { DeleteLib } from './components/Libraries/'
 
@@ -42,7 +42,7 @@ ReactDOM.render(
         <Route path="/playback/:videoid" component={PlayBack} />
         <Route path="dashboard" component={requireAuth(Dashboard)} />
         <Route path="about" component={About} />
-        <Route path="signin" component={Signin} />
+        <Route path="signin" component={SignIn} />
         <Route path="signup" component={SignUp} />
         <Route path="signout" component={SignOut} />
       </Route>
