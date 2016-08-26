@@ -28,10 +28,8 @@ class Libraries extends Component {
     const { libraries } = this.props
 
     if (!libraries || !Object.keys(libraries).length) {
+      console.log('first if statement');
       return (<LibraryPlaceholder />);
-    }
-    else if (!libraries) {
-      return <div></div>
     }
     else if (libraries) {
       let arrOfVids = []
@@ -40,16 +38,20 @@ class Libraries extends Component {
       for (var key in libs) {
         arrOfVids.push(libs[key])
       }
-
-      return arrOfVids.map((library, index) => {
-        return (
-          <LibraryRow
-            libName={library.libName}
-            libraryId={library.libraryId}
-            size={library.size}
-           />
-        )
-      })
+      return (
+        <div>
+          <h1>My Libraries</h1>
+          {arrOfVids.map((library, index) => {
+            return (
+              <LibraryRow
+                libName={library.libName}
+                libraryId={library.libraryId}
+                size={library.size}
+               />
+            )
+          })}
+        </div>
+      )
     }
     // Return Library Placeholder if there are no libraries
     return (<LibraryPlaceholder />)
@@ -60,7 +62,6 @@ class Libraries extends Component {
 
     return (<div className="flex justify-center">
       <div className="flex--lg flex-col">
-        <h1>My Libraries</h1>
         {this.renderLibraries()}
       </div>
     </div>)
