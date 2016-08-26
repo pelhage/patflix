@@ -105,23 +105,23 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
-      favicon: paths.appFavicon,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true
-      }
+      // favicon: paths.appFavicon,
+      // minify: {
+      //   removeComments: true,
+      //   collapseWhitespace: true,
+      //   removeRedundantAttributes: true,
+      //   useShortDoctype: true,
+      //   removeEmptyAttributes: true,
+      //   removeStyleLinkTypeAttributes: true,
+      //   keepClosingSlash: true,
+      //   minifyJS: false,
+      //   minifyCSS: true,
+      //   minifyURLs: true
+      // }
     }),
-    new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' }),
+    // new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.DedupePlugin()
     // new webpack.optimize.UglifyJsPlugin({
     //   compress: {
     //     screw_ie8: true,
