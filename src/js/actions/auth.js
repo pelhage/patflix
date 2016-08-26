@@ -56,7 +56,7 @@ export function signUpUser({email, password}) {
       // save the jwt token & redirect route
       localStorage.setItem('token', response.data.token);
       browserHistory.push('/d')
-      // // console.log(response.data);
+      // console.log(response.data);
     })
     .catch(function(err) {
       // If bad request, show error
