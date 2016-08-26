@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
-import Hero from './hero'
-import VideoRows from './video-rows'
+import Hero from './Hero'
+import VideoRows from './VideoRows'
 
 class Library extends Component {
   constructor(props) {
@@ -13,7 +13,6 @@ class Library extends Component {
   renderHero() {
     let { videos, featured} = this.props
     if (featured && featured.length) {
-      // console.log('Library.renderHero()')
       return <div><Hero videos={videos} featured={featured} /></div>
     }
   }
@@ -33,10 +32,9 @@ class Library extends Component {
   }
 
   render() {
-    console.log('[Library]-render() invoked this.props', this.props)
     return (
       <div>
-        {/* */}<div>{this.renderHero()}</div>
+        <div>{this.renderHero()}</div>
         <div>{this.renderVideoRows()}</div>
       </div>
     )
@@ -52,18 +50,3 @@ Library.propTypes = {
 }
 
 export default Library
-
-
-/*
-https://www.youtube.com/watch?v=bBx2Y5HhplI
-
-render() {
-  return (
-    <div>
-      <div>{this.renderHero()}</div>
-      <div>{this.renderVideoRows()}</div>
-    </div>
-  )
-}
-
-*/

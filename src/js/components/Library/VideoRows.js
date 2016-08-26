@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import VideoRow from './video-row'
+import VideoRow from './VideoRow'
 
 
 class VideoRows extends Component {

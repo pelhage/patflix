@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Input } from '../form'
+import { Input } from '../Form'
 import RenderedCategories from './RenderedCategories'
 
 class CategoriedInput extends Component {

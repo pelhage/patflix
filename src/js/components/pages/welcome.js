@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import About from './about'
 import { Link } from 'react-router'
+
+import About from './About'
 
 class Welcome extends Component {
 
   render() {
-    return (<div className="container container--medium">
+    return (
+      <div className="container container--medium">
         <About />
-        <Link to="/dashboard" className="btn btn-primary">Button</Link>
       </div>
     )
   }

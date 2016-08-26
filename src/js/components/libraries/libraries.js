@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
-import { Link } from 'react-router';
 // Components
-import { FormButton } from '../form'
-import LibraryPlaceholder from './library-placeholder'
-import LibraryRow from './library-row'
+import LibrariesPlaceholder from './LibrariesPlaceholder'
+import LibraryRow from './LibraryRow'
 
 
 class Libraries extends Component {
@@ -22,6 +20,10 @@ class Libraries extends Component {
   fetchLibraries() {
     this.props.fetchLibraries()
   }
+
+  removeLibrary() {
+    this.props.removeLibrary(this.props.params.libId)
+  }
   // Render the libraries once they've been
   // dispatched -> down to props
   renderLibraries() {
@@ -29,7 +31,7 @@ class Libraries extends Component {
 
     if (!libraries || !Object.keys(libraries).length) {
       console.log('first if statement');
-      return (<LibraryPlaceholder />);
+      return (<LibrariesPlaceholder />);
     }
     else if (libraries) {
       let arrOfVids = []
@@ -54,7 +56,7 @@ class Libraries extends Component {
       )
     }
     // Return Library Placeholder if there are no libraries
-    return (<LibraryPlaceholder />)
+    return (<LibrariesPlaceholder />)
   }
 
   render() {
@@ -70,9 +72,7 @@ class Libraries extends Component {
 
 
 function mapStateToProps(state) {
-  return {
-    libraries: state.libraries.all,
-  }
+  return { libraries: state.libraries.all }
 }
 
 export default connect(mapStateToProps, actions)(Libraries);

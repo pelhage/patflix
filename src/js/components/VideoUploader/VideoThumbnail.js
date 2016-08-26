@@ -6,14 +6,13 @@ class VideoThumbnail extends Component {
 
   render() {
     const { videoId } = this.props
-    let imgUrl = 'http://img.youtube.com/vi/'+videoId+'/0.jpg'
-    if (!videoId) {
-      imgUrl = nyan
-    }
+    let imgUrl = (videoId) ? 'http://img.youtube.com/vi/'+videoId+'/0.jpg' : nyan
 
-    return (<div>
-      <img className="tile__img" src={imgUrl} role="presentation" />
-    </div>)
+    return (
+      <div>
+        <img className="tile__img" src={imgUrl} role="presentation" />
+      </div>
+    )
   }
 }
 

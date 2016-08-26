@@ -1,23 +1,22 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
-import Preview from '../dashboard/Preview';
-import UploadForm from '../upload-form/UploadForm';
-import LibraryName from '../upload-form/LibraryName'
-import LibrarySave from '../upload-form/LibrarySave'
-import VideoAdd from '../upload-form/VideoAdd'
-import VideoRemove from '../upload-form/VideoRemove'
-// Button Icons
-import removeIcon from '../images/remove.svg'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import * as actions from '../../actions'
+
+import VideoUpload from '../VideoUploader/VideoUpload'
+import VideoAdd from '../VideoUploader/VideoAdd'
+import VideoRemove from '../VideoUploader/VideoRemove'
+
+import LibraryName from '../Library/LibraryName'
+import LibrarySave from '../Library/LibrarySave'
+import Preview from '../Library/Preview'
 
 class Dashboard extends Component {
 
   // Initialize data if we don't already have any
   componentWillMount() {
+    this.props.resetState()
     if (this.props.params.libId) {
       this.props.fetchLibById(this.props.params.libId)
-    } else {
-      this.props.resetState()
     }
   }
 
@@ -26,7 +25,7 @@ class Dashboard extends Component {
       <div className="contain">
         <div className="main-content">
           <div className="container--sidebar">
-            <UploadForm />
+            <VideoUpload />
           </div>
           <div className="container--main">
             <Preview />

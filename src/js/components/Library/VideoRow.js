@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import Slider from 'react-slick';
-import Video from './video'
+import Video from './Video'
 
 class VideoRow extends Component {
   constructor(props) {
@@ -14,8 +14,6 @@ class VideoRow extends Component {
 
   renderVideos() {
     const { videos } = this.props
-    // console.log('[VideoRow]-renderVideos() invoked. this.props', this.props)
-    console.log('YOU SHOULD SEE length > 0', videos.length)
     return videos.map((video, index) => {
       const { youtubeId, videoId, description } = video
       return (
@@ -31,7 +29,6 @@ class VideoRow extends Component {
 
   render() {
     const { settings, videos, category, isPublic } = this.props
-    // console.log('[VideoRow]-render() invoked. this.props', this.props)
     return (
       <div className="row">
         <span className="video-category">{category}</span>

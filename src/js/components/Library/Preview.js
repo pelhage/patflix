@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
-import Library from '../patflix/library';
-import rowPreviewImg from '../images/slide-row.png'
-import heroPreviewImg from '../patflix/hero.png'
+import Library from '../Library/Library';
+
+import rowPreviewImg from '../../images/slide-row.png'
+import heroPreviewImg from '../../images/hero.png'
 
 class Preview extends Component {
   constructor(props) {

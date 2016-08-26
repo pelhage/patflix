@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import * as actions from '../../actions'
 import { browserHistory } from 'react-router'
 
-import Library from '../patflix/library';
-import Hero from '../patflix/hero'
+import Library from './Library'
 
 class ViewLib extends Component {
   constructor(props) {
@@ -27,14 +26,17 @@ class ViewLib extends Component {
       return <div></div>
     }
     const { libName, videos, allCategories, featuredVideos } = this.props.currentLib
-    return (<div>
-      <Library
-        videos={videos}
-        categories={allCategories}
-        featured={featuredVideos}
-        onVideoClick={this.handleVideoClick}
-        isPublic="true" />
-    </div>)
+    return (
+      <div>
+        <Library
+          videos={videos}
+          categories={allCategories}
+          featured={featuredVideos}
+          onVideoClick={this.handleVideoClick}
+          isPublic="true"
+          />
+      </div>
+    )
   }
 }
 

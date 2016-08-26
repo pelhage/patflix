@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
-import { FormFieldset, FormLabel } from '../form'
-import { CategoriedInput } from '../categoried_input'
+import { FormFieldset, FormLabel } from '../Form'
+import { CategoriedInput } from '../CategoriedInput'
 
 class VideoCategories extends Component {
 

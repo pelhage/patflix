@@ -10,21 +10,17 @@ import reduxThunk from 'redux-thunk'
 import { AUTH_USER } from './actions/types'
 import reducers from './reducers'
 // HOC for authentication
-import requireAuth from './components/auth/require_auth'
+import requireAuth from './components/Auth/RequireAuth'
+
 // All Components for Patflix
-import App from './components/app'
-import Libraries from './components/libraries/libraries'
-import Dashboard from './components/dashboard/dashboard'
-import About from './components/pages/about'
+import App from './components/App'
 
-import Signin from './components/auth/signin'
-import SignUp from './components/auth/signup'
-import SignOut from './components/auth/signout'
-
-import Welcome from './components/pages/welcome'
-import DeleteLib from './components/libraries/deleteLib'
-import ViewLib from './components/libraries/ViewLib'
-import PlayBack from './components/patflix/playback'
+import { Libraries } from './components/Libraries'
+import { Dashboard } from './components/Dashboard'
+import { About, Welcome } from './components/Pages'
+import { Signin, SignUp, SignOut } from './components/Auth'
+import { PlayBack, ViewLib } from './components/Library'
+import { DeleteLib } from './components/Libraries/'
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
 const store = createStoreWithMiddleware(reducers, window.devToolsExtension && window.devToolsExtension())

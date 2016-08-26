@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import * as actions from '../../actions'
 import { connect } from 'react-redux'
 
-import removeIcon from '../images/remove.svg'
+import removeIcon from '../../images/remove.svg'
 
 class VideoRemove extends Component {
   constructor(props) {

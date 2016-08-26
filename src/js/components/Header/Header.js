@@ -3,25 +3,28 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
-import DropdownMenu from './dropdown'
+import HeaderDropdown from './HeaderDropdown'
 
-import addIcon from '../images/add.svg'
-import librariesIcon from '../images/collection2.svg'
+import addIcon from '../../images/add.svg'
+import librariesIcon from '../../images/collection2.svg'
 
-let imgtyle = {
-  width: '27px',
-  marginBottom: '-5px'
-};
+let imgStyle = { width: '27px', marginBottom: '-5px' }
 
 
 class Header extends Component {
+
   authButton() {
     if (this.props.authenticated) {
-      return (<span>
-        <Link to="/d" activeClassName="nav__item--active" className="nav__item">
-            <img style={imgtyle} src={librariesIcon} />  My Libraries</Link>
-        <DropdownMenu />
-      </span>
+      return (
+        <span>
+          <Link
+            to="/d"
+            activeClassName="nav__item--active"
+            className="nav__item">
+            <img style={imgStyle} src={librariesIcon} />  My Libraries
+          </Link>
+          <HeaderDropdown />
+        </span>
       )
     }
     return [
@@ -30,14 +33,16 @@ class Header extends Component {
       <Link to="/signup" className="nav__item" activeClassName="nav__item--active">Sign Up</Link>
     ];
   }
+
   render() {
+
     return (
       <nav className="nav">
         <Link to="/" className="nav__item nav__item--brand">PATFLIX</Link>
         <span className="nav__item--pull-right">
           <Link to="/dashboard" activeClassName="nav__item--active" className="nav__item">
-            <img style={imgtyle} src={addIcon} />  Add Library</Link>
-          { this.authButton() }
+            <img style={imgStyle} src={addIcon} />  Add Library</Link>
+          {this.authButton()}
         </span>
       </nav>
     );

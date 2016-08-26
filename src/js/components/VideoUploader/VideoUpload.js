@@ -3,16 +3,12 @@ import * as actions from '../../actions'
 import { connect } from 'react-redux'
 
 /* Component Dependencies */
-import { Form } from '../form'
+import { Form } from '../Form'
 
-// import LibraryName from './LibraryName'
-import VideoUrl from './VideoUrl'
-import VideoFeatured from './VideoFeatured'
-import VideoDescription from './VideoDescription'
-import VideoCategories from './VideoCategories'
-import VideoThumbnail from './VideoThumbnail'
+import { VideoUrl, VideoDescription, VideoFeatured,
+  VideoCategories, VideoThumbnail } from './'
 
-class UploadForm extends Component {
+class VideoUpload extends Component {
 
   constructor(props) {
     super(props)
@@ -84,27 +80,29 @@ class UploadForm extends Component {
         url, youtubeId, isFeatured, description, categories
       }
     } = this.props
-    return (<div className="form-container">
-      <Form onFormSubmit={this.handleFormSubmit}>
-        {/* Current Video's Details */}
-        <VideoUrl
-          url={url}
-          onUserInput={this.handleInputChange} />
-        <VideoThumbnail videoId={youtubeId} />
-        {/* Whether Current Video is Featured in Hero */}
-        <VideoFeatured
-          onUserCheck={this.handleFeaturedCheck}
-          checked={isFeatured} />
-        {/* Description of Current Video */}
-        <VideoDescription
-          description={description}
-          onUserInput={this.handleInputChange} />
-        {/* Dynamic Category Enter & Delete */}
-        <VideoCategories
-          categories={categories}
-          onUserInput={this.handleCategoryInput} />
-      </Form>
-    </div>)
+    return (
+      <div className="form-container">
+        <Form onFormSubmit={this.handleFormSubmit}>
+          <VideoUrl
+            url={url}
+            onUserInput={this.handleInputChange}
+          />
+          <VideoThumbnail videoId={youtubeId} />
+          <VideoFeatured
+            onUserCheck={this.handleFeaturedCheck}
+            checked={isFeatured}
+          />
+          <VideoDescription
+            description={description}
+            onUserInput={this.handleInputChange}
+          />
+          <VideoCategories
+            categories={categories}
+            onUserInput={this.handleCategoryInput}
+          />
+        </Form>
+      </div>
+    )
   }
 }
 
@@ -115,4 +113,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, actions)(UploadForm)
+export default connect(mapStateToProps, actions)(VideoUpload)

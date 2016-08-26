@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { FormFieldset } from '../form'
+import { FormFieldset } from '../Form'
 
 class VideoFeatured extends Component {
   render() {

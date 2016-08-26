@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { TextArea, FormFieldset, FormLabel } from '../form'
+import { TextArea, FormFieldset, FormLabel } from '../Form'
 
 class VideoDescription extends Component {
 

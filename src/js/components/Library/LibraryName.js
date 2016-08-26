@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import * as actions from '../../actions'
 import { connect } from 'react-redux'
-import { Input } from '../form'
+import { Input } from '../Form'
 
 class LibraryName extends Component {
   constructor(props) {

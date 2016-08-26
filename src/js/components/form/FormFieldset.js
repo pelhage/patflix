@@ -5,4 +5,5 @@ class FormFieldset extends Component {
     return (<fieldset className="form__input-container">{this.props.children}</fieldset>)
   }
 }
+
 export default FormFieldset
