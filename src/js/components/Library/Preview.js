@@ -33,16 +33,17 @@ class Preview extends Component {
       heroPlaceholder = videoHeroImg
     }
 
-    return (<div>
-      <h3>{libName}</h3>
-      {heroPlaceholder}
-      <Library
-        videos={videos}
-        categories={allCategories}
-        featured={featuredVideos}
-        onVideoClick={this.handleVideoClick}
-        isPublic={false} />
-      {rowPlaceholder}
+    return (
+      <div>
+        <h3>{libName}</h3>
+        {heroPlaceholder}
+        <Library
+          videos={videos}
+          categories={allCategories}
+          featured={featuredVideos}
+          onVideoClick={this.handleVideoClick}
+          isPublic={false} />
+        {rowPlaceholder}
     </div>
     )
   }
