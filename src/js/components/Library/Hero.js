@@ -25,7 +25,7 @@ class Hero extends Component {
     return featured.map((videoId, index) => {
       let { youtubeId, description } = videos[videoId]
       return (
-        <div>
+        <div key={index+videoId}>
           <HeroSlide
             youtubeId={youtubeId}
             description={description}
