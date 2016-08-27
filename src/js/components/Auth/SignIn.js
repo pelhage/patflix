@@ -6,9 +6,9 @@ import { Form, FormLabel, FormFieldset, Input } from '../Form'
 
 class SignIn extends Component {
   handleFormSubmit({ email, password }) {
-    // console.log(email, password);
     this.props.signinUser({ email, password });
   }
+
   renderAlert() {
     if (this.props.errorMessage) {
       return <div>Error: {this.props.errorMessage}</div>
@@ -16,6 +16,7 @@ class SignIn extends Component {
       return <div></div>
     }
   }
+
   render() {
     const { handleSubmit, fields: { email, password }} = this.props;
     return (
@@ -30,6 +31,7 @@ class SignIn extends Component {
               <Input {...email} id="email" type="email" />
               <div className="auth-error">{email.touched && email.error && <div>{email.error}</div>}</div>
             </FormFieldset>
+
             <FormFieldset>
               <FormLabel htmlFor="password">Password</FormLabel>
               <Input {...password} id="password" type="password" />

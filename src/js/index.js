@@ -19,7 +19,7 @@ import { Libraries } from './components/Libraries'
 import { Dashboard } from './components/Dashboard'
 import { About, Welcome } from './components/Pages'
 import { SignIn, SignUp, SignOut } from './components/Auth'
-import { PlayBack, ViewLib } from './components/Library'
+import { Playback, ViewLib } from './components/Library'
 import { DeleteLib } from './components/Libraries/'
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
@@ -39,14 +39,13 @@ ReactDOM.render(
         <Route path="d/:libId"  component={requireAuth(Dashboard)} />
         <Route path="l/:libId"  component={ViewLib} />
         <Route path="r/:libId"  component={requireAuth(DeleteLib)} />
-        <Route path="/playback/:videoid" component={PlayBack} />
+        <Route path="/playback/:videoid" component={Playback} />
         <Route path="dashboard" component={requireAuth(Dashboard)} />
         <Route path="about" component={About} />
         <Route path="signin" component={SignIn} />
         <Route path="signup" component={SignUp} />
         <Route path="signout" component={SignOut} />
       </Route>
-
     </Router>
   </Provider>
   , document.querySelector('.container')

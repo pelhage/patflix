@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 
-class PlayBack extends Component {
+class Playback extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			style: {
 				width: window.innerWidth + 'px',
-				height: window.innerHeight + 'px'
+				height: window.innerHeight - 100 + 'px',
+				backgroundColor: 'green'
 			}
 		}
 
@@ -26,6 +27,7 @@ class PlayBack extends Component {
   }
 
 	render() {
+		console.log('Render Playback');
 		const { videoid } = this.props.params
 		return (
 			<iframe style={this.state.style}
@@ -37,8 +39,8 @@ class PlayBack extends Component {
 
 }
 
-PlayBack.propTypes = {
+Playback.propTypes = {
 	params: PropTypes.string.isRequired
 }
 
-export default PlayBack
+export default Playback
