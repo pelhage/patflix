@@ -43,9 +43,7 @@ class VideoRows extends Component {
     // for each category object in categories
     for (var category in categories) {
       // If the category has videos in it
-      // console.log('for ', category, ' in ', categories);
       if (categories[category].length && videos) {
-        // console.log('if (categories[category].length && videos)')
 
         let categorizedVideos = categories[category].map((videoId) => {
           return videos[videoId]
@@ -63,8 +61,7 @@ class VideoRows extends Component {
         )
       }
     }
-    // console.log('This is what categories is before returning nothing: ', categories);
-    // console.log('returning VideoRowsArr: ', VideoRowsArr);
+
     return VideoRowsArr
   }
 
