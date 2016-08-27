@@ -6,8 +6,7 @@ class Playback extends Component {
 		this.state = {
 			style: {
 				width: window.innerWidth + 'px',
-				height: window.innerHeight - 100 + 'px',
-				backgroundColor: 'green'
+				height: window.innerHeight - 65 + 'px'
 			}
 		}
 
@@ -15,19 +14,22 @@ class Playback extends Component {
 	}
 	// TODO: removeEventListener on component Unmount
   componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener('resize', this.handleResize)
+  }
+
+	componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize)
   }
 
   handleResize() {
     this.setState({style: {
   		width: window.innerWidth + 'px',
-			height: window.innerHeight + 'px'
+			height: window.innerHeight - 65 + 'px'
 			}
 		})
   }
 
 	render() {
-		console.log('Render Playback');
 		const { videoid } = this.props.params
 		return (
 			<iframe style={this.state.style}
@@ -37,10 +39,6 @@ class Playback extends Component {
 		)
 	}
 
-}
-
-Playback.propTypes = {
-	params: PropTypes.string.isRequired
 }
 
 export default Playback
