@@ -8,7 +8,7 @@ class DeleteLib extends Component {
   }
 
   render() {
-    return <div>Deleting Library...</div>
+    return null
   }
 }
 
