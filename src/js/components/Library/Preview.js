@@ -30,7 +30,6 @@ class Preview extends Component {
       rowPlaceholder = videoRowImg
       heroPlaceholder = videoHeroImg
     } else if (!Object.keys(featuredVideos).length) {
-      // console.log('No featured vids')
       heroPlaceholder = videoHeroImg
     }
 

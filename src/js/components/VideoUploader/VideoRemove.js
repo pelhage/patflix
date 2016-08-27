@@ -12,7 +12,6 @@ class VideoRemove extends Component {
 
   removeVideo(videoId) {
     if (this.props.currentVideo.videoId) {
-      console.log('VideoRemove removeVideo invoked for video with id:', videoId)
       this.props.removeVideoFromLibrary(this.props.currentVideo.videoId)
     } else if (!this.props.currentVideo.videoId) {
       // TODO

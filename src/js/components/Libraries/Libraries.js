@@ -46,7 +46,6 @@ class Libraries extends Component {
         <div>
           <h1>My Libraries</h1>
           {arrOfVids.map((library, index) => {
-            console.log(index);
             return (
               <LibraryRow
                 libName={library.libName}

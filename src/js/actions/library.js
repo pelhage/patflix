@@ -47,13 +47,11 @@ removeCategoryFromLibrary(categories)
  * @param  {object} library - object representing the library to be saved
  */
 export function createLibrary(library) {
-  // console.log('Calling createLibrary in action creator', library)
   return function(dispatch) {
     axios.post(`${API_URL}/library`, library, {
       headers: { authorization: localStorage.getItem('token') }
     })
     .then(response => {
-      // console.log('response from creating library',response.data);
       dispatch({
         type: ADD_LIB,
         payload: response.data
@@ -71,11 +69,9 @@ export function createLibrary(library) {
  * @param  {string} libraryId - the library's ID to fetch
  */
 export function fetchLibById(libraryId) {
-  // // console.log('fetchLibById invoked')
   return function(dispatch) {
     axios.get(`${API_URL}/library/${libraryId}`)
       .then(response => {
-        console.log('fetchlibrary response: ', response.data);
         dispatch({
           type: FETCH_LIB_BY_ID,
           payload: response.data
@@ -93,7 +89,6 @@ export function fetchLibById(libraryId) {
  * @param  {type} library   - Object representing the modified library
  */
 export function updateLibrary(libraryId, library) {
-  // console.log('updateLibrary invoked for libId:', libraryId)
   return function(dispatch) {
     axios.put(`${API_URL}/library/${libraryId}`, library, {
       headers: { authorization: localStorage.getItem('token') }
@@ -113,7 +108,6 @@ export function updateLibrary(libraryId, library) {
  * @return {type}         description
  */
 export function updateCurrentLib(library) {
-  // console.log('updateCurrentLib invoked')
   if (library['allCategories'] && library['allCategories'].length) {
     // Update Category Tags... NOT EFFICIENT...
     library['allCategories'] = library.videos.reduce((allCategories, currentVideo) => {
@@ -125,7 +119,6 @@ export function updateCurrentLib(library) {
       return allCategories
     }, [])
   }
-  // console.log('ok...')
   if (library['allCategories'] && library['allCategories'].length) {
     library['featuredCategories'] = library['allCategories']
     // library['featuredCategories'] = library.featuredCategories.filter((category) => {
@@ -145,20 +138,17 @@ export function updateCurrentLib(library) {
  * Uses tokens for authorization and validation
  */
 export function fetchLibraries() {
-  // // console.log('fetchLibraries invoked')
   return function(dispatch) {
     axios.get(`${API_URL}/libraries`, {
       headers: { authorization: localStorage.getItem('token') }
     })
     .then(response => {
-      console.log('fetchlibraries response: ', response.data);
       dispatch({
         type: FETCH_LIBS,
         payload: response.data
       })
     })
     .catch(function(err) {
-      // console.log('fetchLibraries err: ', err)
     });
   }
 }
@@ -198,7 +188,6 @@ export function resetState() {
  * @param  {string} libId - the library's ID
  */
 export function setCurrentLib(libId) {
-  console.log('actions.setCurrentLib(libId): ', libId)
   return function(dispatch, getState) {
     let allLibs = _.cloneDeep(getState().libraries.all)
     let newLib = allLibs[libId]
@@ -235,11 +224,9 @@ export function updateLibraryName(libraryName) {
  * @param  {Object} video - object representing a video
  */
 export function addVideoToLibrary(video) {
-  // console.log('action.addVideoToLibrary video-', video)
   return function(dispatch, getState) {
     let library = _.cloneDeep(getState().libraries.currentLib)
     let hashId = ''
-    // console.log('action.addVideoToLibrary state.currentLib: ', library)
     // If there's no videoId, then its a new video.
     if (!video.videoId) {
        hashId = hashids.encode(library.vidsAdded)
@@ -281,14 +268,12 @@ export function addVideoToLibrary(video) {
  * @param  {String} videoId the Id of the selectedVideo
  */
 export function removeVideoFromLibrary(videoId) {
-  console.log('removeVideoFromLibrary(videoId) - videoId: ', videoId)
   return function(dispatch, getState) {
     let currentLib = _.cloneDeep(getState().libraries.currentLib)
     let allCategories = currentLib.allCategories
     let featuredVideos = currentLib.featuredVideos
     let video = currentLib.videos[videoId]
     // If video is featured, remove it from currentLib.featuredVideos
-    console.log('Remove the video from the list of featured Videos');
     if (video.isFeatured && featuredVideos.indexOf(videoId) > -1) {
       featuredVideos.splice(featuredVideos.indexOf(videoId), 1)
     }
@@ -302,7 +287,6 @@ export function removeVideoFromLibrary(videoId) {
     } else if (video.categories.length){
       video.categories.forEach((category) => {
         var currCategory = allCategories[category]
-        console.log('we gotta remove video from category: ', category)
         currCategory.splice(currCategory.indexOf(videoId), 1)
         // If there are no more videos for this category, delete it
         // TODO: use more pure functions. This is a side effect
@@ -315,7 +299,6 @@ export function removeVideoFromLibrary(videoId) {
     // Delete the video from the library
     delete currentLib.videos[videoId]
     currentLib.size -= 1
-    console.log('deleting current video. currentLib.video is now:', currentLib.videos);
     dispatch({
       type: REMOVE_VIDEO,
       payload: currentLib
@@ -332,14 +315,11 @@ export function removeVideoFromLibrary(videoId) {
  * @param  {Array} categories categories of currentVideo
  */
 export function addCategoryToLibrary(categories) {
-  console.log('addCategoryToLibrary being called from Component(categories): ', categories);
   return function(dispatch, getState) {
     let currentLib = _.cloneDeep(getState().libraries.currentLib)
     let allCategories = currentLib.allCategories
     let currentVideo = _.cloneDeep(getState().libraries.currentVideo)
     let hashId = ''
-    console.log('addCategoryToLibrary currentLib ', currentLib)
-    console.log('addCategoryToLibrary currentVideo ', currentVideo);
     if (!currentVideo.videoId) {
        currentVideo.videoId = hashids.encode(currentLib.vidsAdded)
     }
@@ -373,7 +353,6 @@ export function addCategoryToLibrary(categories) {
         allCategories[category].splice(categoryIndex, 1)
         // Now if that category is now empty, delete it!
         if (!allCategories[category].length && category != 'Uncategorized') {
-          console.log('delete allCategories[',category,']')
           delete allCategories[category]
         }
       }
@@ -397,7 +376,6 @@ export function addCategoryToLibrary(categories) {
  * @param  {Array} categories categories of currentVideo
  */
 export function removeCategoryFromLibrary(categories) {
-  console.log('calling removeCategoryFromLibrary(categories): ', categories)
   return function(dispatch, getState) {
     let currentLib = _.cloneDeep(getState().libraries.currentLib)
     let allCategories = currentLib.allCategories
@@ -416,7 +394,6 @@ export function removeCategoryFromLibrary(categories) {
       }
       // Iterate through each category to ensure it exists in allCategories
       categories.forEach((category) => {
-        // // console.log('Going through each category for this video: ', category, ' :', currentVideo);
         if (!allCategories[category] || !allCategories[category].length) {
           allCategories[category] = [currentVideo.videoId]
         } // Just double check to make sure that we don't duplicate..
