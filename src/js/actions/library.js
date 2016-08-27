@@ -23,6 +23,23 @@ const hashids = new Hashids()
 import axios from 'axios';
 import API_URL from './api'
 
+/*
+
+createLibrary(library)
+fetchLibById(libraryId)
+updateLibrary(libraryId, library)
+updateCurrentLib(library)
+fetchLibraries()
+removeLibrary(libraryId)
+resetState()
+setCurrentLib(libId)
+updateLibraryName(libraryName)
+addVideoToLibrary(video)
+removeVideoFromLibrary(videoId)
+addCategoryToLibrary(categories)
+removeCategoryFromLibrary(categories)
+ *
+ */
 
 /**
  * createLibrary - add a Library to user's libraries
@@ -30,18 +47,17 @@ import API_URL from './api'
  * @param  {object} library - object representing the library to be saved
  */
 export function createLibrary(library) {
-  console.log('Calling createLibrary in action creator', library)
   return function(dispatch) {
     axios.post(`${API_URL}/library`, library, {
       headers: { authorization: localStorage.getItem('token') }
     })
     .then(response => {
-      console.log('response from creating library',response.data);
       dispatch({
         type: ADD_LIB,
         payload: response.data
       })
-      dispatch(fetchLibraries())
+      // dispatch(fetchLibraries())
+      browserHistory.push('/d')
     })
   }
 }
@@ -53,11 +69,9 @@ export function createLibrary(library) {
  * @param  {string} libraryId - the library's ID to fetch
  */
 export function fetchLibById(libraryId) {
-  // console.log('fetchLibById invoked')
   return function(dispatch) {
     axios.get(`${API_URL}/library/${libraryId}`)
       .then(response => {
-
         dispatch({
           type: FETCH_LIB_BY_ID,
           payload: response.data
@@ -75,7 +89,6 @@ export function fetchLibById(libraryId) {
  * @param  {type} library   - Object representing the modified library
  */
 export function updateLibrary(libraryId, library) {
-  console.log('updateLibrary invoked for libId:', libraryId)
   return function(dispatch) {
     axios.put(`${API_URL}/library/${libraryId}`, library, {
       headers: { authorization: localStorage.getItem('token') }
@@ -95,7 +108,6 @@ export function updateLibrary(libraryId, library) {
  * @return {type}         description
  */
 export function updateCurrentLib(library) {
-  console.log('updateCurrentLib invoked')
   if (library['allCategories'] && library['allCategories'].length) {
     // Update Category Tags... NOT EFFICIENT...
     library['allCategories'] = library.videos.reduce((allCategories, currentVideo) => {
@@ -107,7 +119,6 @@ export function updateCurrentLib(library) {
       return allCategories
     }, [])
   }
-  console.log('ok...')
   if (library['allCategories'] && library['allCategories'].length) {
     library['featuredCategories'] = library['allCategories']
     // library['featuredCategories'] = library.featuredCategories.filter((category) => {
@@ -127,20 +138,17 @@ export function updateCurrentLib(library) {
  * Uses tokens for authorization and validation
  */
 export function fetchLibraries() {
-  // console.log('fetchLibraries invoked')
   return function(dispatch) {
     axios.get(`${API_URL}/libraries`, {
       headers: { authorization: localStorage.getItem('token') }
     })
     .then(response => {
-      // console.log('fetchlibraries response: ', response.data);
       dispatch({
         type: FETCH_LIBS,
         payload: response.data
       })
     })
     .catch(function(err) {
-      console.log('fetchLibraries err: ', err)
     });
   }
 }
@@ -219,7 +227,6 @@ export function addVideoToLibrary(video) {
   return function(dispatch, getState) {
     let library = _.cloneDeep(getState().libraries.currentLib)
     let hashId = ''
-
     // If there's no videoId, then its a new video.
     if (!video.videoId) {
        hashId = hashids.encode(library.vidsAdded)
@@ -266,23 +273,32 @@ export function removeVideoFromLibrary(videoId) {
     let allCategories = currentLib.allCategories
     let featuredVideos = currentLib.featuredVideos
     let video = currentLib.videos[videoId]
-    // Remove the video from the list of featured Videos
+    // If video is featured, remove it from currentLib.featuredVideos
     if (video.isFeatured && featuredVideos.indexOf(videoId) > -1) {
       featuredVideos.splice(featuredVideos.indexOf(videoId), 1)
     }
-    // Now remove the video from allCategories
-    video.categories.forEach((category) => {
-      var currCategory = allCategories[category]
-      currCategory.splice(currCategory.indexOf(videoId), 1)
-      // If there are no more videos for this category, delete it
-      if (!currCategory.length) {
-        delete allCategories[category]
+    // If the video has categories, then remove them from currentLib.allCategories
+    // We also check to ensure it is in 'Uncategorized'
+    if (!video.categories.length) {
+      let indexOfVideo = allCategories['Uncategorized'].indexOf(videoId)
+      if (indexOfVideo > -1) {
+        allCategories['Uncategorized'].splice(indexOfVideo, 1)
       }
-    })
+    } else if (video.categories.length){
+      video.categories.forEach((category) => {
+        var currCategory = allCategories[category]
+        currCategory.splice(currCategory.indexOf(videoId), 1)
+        // If there are no more videos for this category, delete it
+        // TODO: use more pure functions. This is a side effect
+        if (!currCategory.length) {
+          delete allCategories[category]
+        }
+      })
+    }
+
     // Delete the video from the library
     delete currentLib.videos[videoId]
     currentLib.size -= 1
-
     dispatch({
       type: REMOVE_VIDEO,
       payload: currentLib
@@ -304,7 +320,6 @@ export function addCategoryToLibrary(categories) {
     let allCategories = currentLib.allCategories
     let currentVideo = _.cloneDeep(getState().libraries.currentVideo)
     let hashId = ''
-
     if (!currentVideo.videoId) {
        currentVideo.videoId = hashids.encode(currentLib.vidsAdded)
     }
@@ -337,7 +352,7 @@ export function addCategoryToLibrary(categories) {
         let categoryIndex = allCategories[category].indexOf(currentVideo.videoId)
         allCategories[category].splice(categoryIndex, 1)
         // Now if that category is now empty, delete it!
-        if (!allCategories[category].length) {
+        if (!allCategories[category].length && category != 'Uncategorized') {
           delete allCategories[category]
         }
       }
@@ -379,7 +394,6 @@ export function removeCategoryFromLibrary(categories) {
       }
       // Iterate through each category to ensure it exists in allCategories
       categories.forEach((category) => {
-        // console.log('Going through each category for this video: ', category, ' :', currentVideo);
         if (!allCategories[category] || !allCategories[category].length) {
           allCategories[category] = [currentVideo.videoId]
         } // Just double check to make sure that we don't duplicate..

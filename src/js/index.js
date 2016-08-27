@@ -10,30 +10,26 @@ import reduxThunk from 'redux-thunk'
 import { AUTH_USER } from './actions/types'
 import reducers from './reducers'
 // HOC for authentication
-import requireAuth from './components/require_auth'
+import requireAuth from './components/Auth/RequireAuth'
+
 // All Components for Patflix
-import App from './components/app'
-import Libraries from './components/libraries'
-import Dashboard from './components/dashboard'
-import About from './components/about'
+import App from './components/App'
 
-import Signin from './components/auth/signin'
-import SignUp from './components/auth/signup'
-import SignOut from './components/auth/signout'
-
-import Welcome from './components/welcome'
-import DeleteLib from './components/libraries/deleteLib'
-import ViewLib from './components/libraries/ViewLib'
-import PlayBack from './components/playback'
+import { Libraries } from './components/Libraries'
+import { Dashboard } from './components/Dashboard'
+import { About, Welcome } from './components/Pages'
+import { SignIn, SignUp, SignOut } from './components/Auth'
+import { PlayBack, ViewLib } from './components/Library'
+import { DeleteLib } from './components/Libraries/'
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
-const store = createStoreWithMiddleware(reducers)
+const store = createStoreWithMiddleware(reducers, window.devToolsExtension && window.devToolsExtension())
 // Ensure user with local token is auth'd
 const token = localStorage.getItem('token')
 if (token) {
   store.dispatch({ type: AUTH_USER });
 }
-
+//
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
@@ -46,7 +42,7 @@ ReactDOM.render(
         <Route path="/playback/:videoid" component={PlayBack} />
         <Route path="dashboard" component={requireAuth(Dashboard)} />
         <Route path="about" component={About} />
-        <Route path="signin" component={Signin} />
+        <Route path="signin" component={SignIn} />
         <Route path="signup" component={SignUp} />
         <Route path="signout" component={SignOut} />
       </Route>

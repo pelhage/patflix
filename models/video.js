@@ -6,6 +6,6 @@ var videoSchema = mongoose.Schema({
   description: String,
   categories: [String],
   isFeatured: Boolean
-});
+}, { minimize: false });
 
 module.exports = mongoose.model('Video', videoSchema);

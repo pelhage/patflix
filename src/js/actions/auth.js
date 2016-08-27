@@ -28,7 +28,7 @@ export function signinUser({email, password}) {
       dispatch({ type: AUTH_USER });
       // save jwt token & redirect route to '/dashboard'
       localStorage.setItem('token', response.data.token);
-      browserHistory.push('/dashboard')
+      browserHistory.push('/d')
     })
     .catch(function(err) {
       // If bad request, show error
@@ -56,11 +56,9 @@ export function signUpUser({email, password}) {
       // save the jwt token & redirect route
       localStorage.setItem('token', response.data.token);
       browserHistory.push('/d')
-      // console.log(response.data);
     })
     .catch(function(err) {
       // If bad request, show error
-      // console.log('ERROR 2', err)
       dispatch(authError('Bad login info'))
     });
   }
