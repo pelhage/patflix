@@ -1,22 +1,20 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import { Input, FormFieldset, FormLabel } from '../Form'
 
-class VideoUrl extends Component {
+const VideoUrl = (props) => {
 
-  render() {
-    const { url, onUserInput } = this.props
+  const { url, onUserInput } = props
 
-    return (
-      <FormFieldset>
-        <FormLabel>YouTube Video URL</FormLabel>
-        <Input
-          name="url"
-          value={url}
-          placeholder="Paste a Valid YouTube Video URL"
-          onChange={onUserInput} />
-      </FormFieldset>
-    )
-  }
+  return (
+    <FormFieldset>
+      <FormLabel>YouTube Video URL</FormLabel>
+      <Input
+        name="url"
+        value={url}
+        placeholder="Paste a Valid YouTube Video URL"
+        onChange={onUserInput} />
+    </FormFieldset>
+  )
 }
 
 VideoUrl.propTypes = {

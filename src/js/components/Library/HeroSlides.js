@@ -8,7 +8,12 @@ const HeroSlides = (props) => {
     <div>
       {featured.map((videoId, index) => {
         let { youtubeId, description } = videos[videoId]
-        return (<HeroSlide youtubeId={youtubeId} description={description} />)
+        return (
+          <HeroSlide
+            key={index+videoId}
+            youtubeId={youtubeId}
+            description={description} />
+        )
       })}
     </div>
   )

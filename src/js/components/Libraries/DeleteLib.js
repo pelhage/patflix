@@ -13,4 +13,3 @@ class DeleteLib extends Component {
 }
 
 export default connect(null, actions)(DeleteLib);
-//
