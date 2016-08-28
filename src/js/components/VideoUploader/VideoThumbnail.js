@@ -1,19 +1,16 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 
 import nyan from './nyan.svg'
 
-class VideoThumbnail extends Component {
+const VideoThumbnail = (props) => {
+  const { videoId } = props
+  let imgUrl = (videoId) ? 'http://img.youtube.com/vi/'+videoId+'/0.jpg' : nyan
 
-  render() {
-    const { videoId } = this.props
-    let imgUrl = (videoId) ? 'http://img.youtube.com/vi/'+videoId+'/0.jpg' : nyan
-
-    return (
-      <div>
-        <img className="tile__img" src={imgUrl} role="presentation" />
-      </div>
-    )
-  }
+  return (
+    <div>
+      <img className="tile__img" src={imgUrl} role="presentation" />
+    </div>
+  )
 }
 
 VideoThumbnail.propTypes = {

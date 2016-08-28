@@ -1,25 +1,24 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import { FormFieldset, FormLabel } from '../Form'
 import { CategoriedInput } from '../CategoriedInput'
 
-class VideoCategories extends Component {
+const VideoCategories = (props) => {
 
-  render() {
-    const { categories, onUserInput } = this.props
+  const { categories, onUserInput } = props
 
-    return (
-      <FormFieldset>
-        <FormLabel>Categories</FormLabel>
-        <CategoriedInput
-          categories={categories}
-          onCategoryChange={onUserInput}
-          placeholder="enter categories, separated, by, commas" />
-      </FormFieldset>
-    )
-  }
+  return (
+    <FormFieldset>
+      <FormLabel>Categories</FormLabel>
+      <CategoriedInput
+        categories={categories}
+        onCategoryChange={onUserInput}
+        placeholder="enter categories, separated, by, commas" />
+    </FormFieldset>
+  )
 }
 
 VideoCategories.propTypes = {
+  categories: PropTypes.array,
   onUserInput: PropTypes.func.isRequired
 }
 

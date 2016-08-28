@@ -8,9 +8,8 @@ class DeleteLib extends Component {
   }
 
   render() {
-    return <div>Deleting Library...</div>
+    return null
   }
 }
 
 export default connect(null, actions)(DeleteLib);
-//
