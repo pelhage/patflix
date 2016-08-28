@@ -8,7 +8,7 @@ const HeroSlide = (props) => {
   let { description, youtubeId } = props;
   let imageStyle = {
     'backgroundImage': 'url(https://img.youtube.com/vi/'+ youtubeId +'/0.jpg)',
-    'backgroundSize': 'cover',
+    'backgroundSize': 'cover'
   };
 
   return (
