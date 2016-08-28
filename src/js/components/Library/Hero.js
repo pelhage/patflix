@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 
 import Slider from 'react-slick'
-import HeroSlides from './HeroSlides'
+import HeroSlide from './HeroSlide'
 
 var settings = {
   dots: true,
-  infinite: true,
+  infinite: false,
   speed: 500,
   slidesToShow: 1,
   draggable: false,
@@ -14,14 +14,22 @@ var settings = {
   autoplay: false
 };
 
-
 const Hero = (props) => {
+  let { videos, featured } = props
   return (
     <div className="hero-wrapper">
       <Slider {...settings}>
-        <div>
-          <HeroSlides {...props} />
-        </div>
+        {featured.map((videoId, index) => {
+          let { youtubeId, description } = videos[videoId]
+          return (
+            <div key={index+videoId}>
+              <HeroSlide
+                key={index+videoId}
+                youtubeId={youtubeId}
+                description={description} />
+            </div>
+          )
+        })}
       </Slider>
     </div>
   )
@@ -33,3 +41,8 @@ Hero.propTypes = {
 }
 
 export default Hero
+/*
+<Slider {...settings}>
+
+</Slider>
+*/
