@@ -30,6 +30,7 @@ class Libraries extends Component {
     const { libraries } = this.props
 
     if (libraries === '') {
+      console.log('libraries === ""', libraries);
       return (<LibrariesPlaceholder />)
     } else if (!libraries) {
       return null

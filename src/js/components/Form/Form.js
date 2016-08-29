@@ -1,16 +1,14 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 
-class Form extends Component {
+const Form = (props) => {
 
-  render() {
-    const { onFormSubmit } = this.props
+  const { onFormSubmit } = props
 
-    return (
-      <form className="form" onSubmit={onFormSubmit}>
-        {this.props.children}
-      </form>
-    )
-  }
+  return (
+    <form className="form" onSubmit={onFormSubmit}>
+      {props.children}
+    </form>
+  )
 }
 
 Form.propTypes = {

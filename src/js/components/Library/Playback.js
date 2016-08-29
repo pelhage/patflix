@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 
-class PlayBack extends Component {
+class Playback extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			style: {
 				width: window.innerWidth + 'px',
-				height: window.innerHeight + 'px'
+				height: window.innerHeight - 65 + 'px'
 			}
 		}
 
@@ -14,13 +14,17 @@ class PlayBack extends Component {
 	}
 	// TODO: removeEventListener on component Unmount
   componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener('resize', this.handleResize)
+  }
+
+	componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize)
   }
 
   handleResize() {
     this.setState({style: {
   		width: window.innerWidth + 'px',
-			height: window.innerHeight + 'px'
+			height: window.innerHeight - 65 + 'px'
 			}
 		})
   }
@@ -37,8 +41,4 @@ class PlayBack extends Component {
 
 }
 
-PlayBack.propTypes = {
-	params: PropTypes.string.isRequired
-}
-
-export default PlayBack
+export default Playback

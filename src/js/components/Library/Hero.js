@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react'
-import Router, { Link } from 'react-router'
+
 import Slider from 'react-slick'
 import HeroSlide from './HeroSlide'
 
 var settings = {
   dots: true,
-  infinite: true,
+  infinite: false,
   speed: 500,
   slidesToShow: 1,
   draggable: false,
@@ -14,36 +14,25 @@ var settings = {
   autoplay: false
 };
 
-class Hero extends Component {
-  constructor(props) {
-    super(props)
-    this.renderHeroSlides = this.renderHeroSlides.bind(this)
-  }
-
-  renderHeroSlides() {
-    const { videos, featured } = this.props
-    return featured.map((videoId, index) => {
-      let { youtubeId, description } = videos[videoId]
-      return (
-        <div>
-          <HeroSlide
-            youtubeId={youtubeId}
-            description={description}
-            />
-        </div>
-      )
-    })
-  }
-
-  render() {
-    return (
-      <div className="hero-wrapper">
-        <Slider {...settings}>
-          {this.renderHeroSlides()}
-        </Slider>
-      </div>
-    )
-  }
+const Hero = (props) => {
+  let { videos, featured } = props
+  return (
+    <div className="hero-wrapper">
+      <Slider {...settings}>
+        {featured.map((videoId, index) => {
+          let { youtubeId, description } = videos[videoId]
+          return (
+            <div key={index+videoId}>
+              <HeroSlide
+                key={index+videoId}
+                youtubeId={youtubeId}
+                description={description} />
+            </div>
+          )
+        })}
+      </Slider>
+    </div>
+  )
 }
 
 Hero.propTypes = {
@@ -52,3 +41,8 @@ Hero.propTypes = {
 }
 
 export default Hero
+/*
+<Slider {...settings}>
+
+</Slider>
+*/

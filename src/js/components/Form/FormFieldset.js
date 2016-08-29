@@ -1,9 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class FormFieldset extends Component {
-  render() {
-    return (<fieldset className="form__input-container">{this.props.children}</fieldset>)
-  }
+const FormFieldset = (props) => {
+  return (<fieldset className="form__input-container">{props.children}</fieldset>)
 }
 
 export default FormFieldset
