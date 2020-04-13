@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import * as actions from '../../actions/'
+import * as actions from '../../actions'
 import { connect } from 'react-redux'
 import { Input } from '../Form'
 

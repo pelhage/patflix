@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { Form } from '../Form'
 
 import { VideoUrl, VideoDescription, VideoFeatured,
-  VideoCategories, VideoThumbnail } from './'
+  VideoCategories, VideoThumbnail } from '.'
 
 class VideoUpload extends Component {
 

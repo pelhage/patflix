@@ -20,7 +20,7 @@ import { Dashboard } from './components/Dashboard'
 import { About, Welcome } from './components/Pages'
 import { SignIn, SignUp, SignOut } from './components/Auth'
 import { Playback, ViewLib } from './components/Library'
-import { DeleteLib } from './components/Libraries/'
+import { DeleteLib } from './components/Libraries'
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
 const store = createStoreWithMiddleware(reducers, window.devToolsExtension && window.devToolsExtension())
