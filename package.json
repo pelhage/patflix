@@ -5,8 +5,8 @@
   "scripts": {
     "webpack:dev": "webpack -d --watch",
     "webpack:build": "webpack -p",
-    "scss-w": "node-sass -w --output-style compressed -o dist/css src/scss",
-    "scss": "node-sass --output-style compressed -o dist/css src/scss",
+    "scss-w": "node-sass -w --output-style compressed -o dist/css client/src/scss",
+    "scss": "node-sass --output-style compressed -o dist/css client/src/scss",
     "dev": "run-p scss-w webpack:dev server",
     "server": "node server.js",
     "start": "node ./scripts/start.js",
