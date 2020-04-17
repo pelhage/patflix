@@ -30,7 +30,45 @@ Patflix was a project started in late 2015 and completed in 2016. It's been 4 ye
 ## Documenting the current system
 
 - [ ]  List current user stories
+    * As a guest, I can only view the sign in, signup, and about pages
+        * Trying to create a library at any point redirects me to sign in
+    * As a user, I can view the home page for patflix.co and see the currently used tech stack
+    * As a user, I can signout, and see a signout message
+    * SIGN UP:
+        * Inline validation when entering password saying they must match; can't submit
+        * Validation upon submit of whether email is valid
+        * Upon user creation, I am redirected to libraries page
+    * LIBRARIES PAGE:
+        * When empty, there is text prompting me to create a library
+        * Clicking the button takes me to "Dashboard"
+    * DASHBOARD PAGE:
+        * Pasting a youtube URL shows a thumbnail 
+        * Entering a category puts the video in a new row
+        * Not entering a category places it in an "Uncategorized" category
+        * Clicking feature this library places it in the carousel, as well as in a row
+        * Can delete a library
+        * Can edit a library
+
 - [ ]  List existing bugs
+    * Creating a library and hitting the play button on featured carousels will direct you to the video; Hitting back on browser erases your entire library.
+    * Adding a single video to a category displays 3 videos
+        * Adding another alternates the videos and duplicates them
+    * Confirm deletion button on dashboard page is kinda hacky
+    * Saving Library section in dashboard overflows
+    * Menu Dropdown is also kinda hacky
+    * Sometimes library doesn't save- network request fails, probably invalid payload
+        * Added a video that was featured, with description, three tags
+- [ ]  List improvements
+    * Redirect to sign up instead of sign in
+    * Improve Components Layout
+    * allow individual video entries to be updated
+    * Put add library button within the Dashboard UI too.
+    * Add share link inside dashboard button for library items
+    * Make completely mobile responsive
+    * Have actual empty states, not an image (lol)
+    * i18n support
+    * BE-driven UI
+
 
 ## Initial project re-structure
 
@@ -81,7 +119,32 @@ This fundamentally re-structures the app with minimal code changes. The longer-t
 ### **Front End Client**
 
 - [ ]  Gather exhaustive list of current dependencies + versions
+    * `"axios": "^0.12.0"` (high priority)
+    * `"body-parser": "^1.15.1"` (high priority)
+    * `"express": "^4.13.4"` (high priority)
+    * `"hashids": "1.0.2"` (low priority)
+    * `"jsonwebtoken": "^7.0.1"`
+    * `"lodash": "^4.14.0"` (high)
+    * `"morgan": "^1.7.0"`
+    * `"pug": "^2.0.0-beta5"` (low)
+    * `"react": "^0.14.3"` (HIGH)
+    * `"react-dom": "^0.14.3"` (HIGH)
+    * `"react-redux": "^4.4.5"` (HIGH)
+    * `"react-router": "^2.4.1"` (HIGH)
+    * `"react-simple-dropdown": "^1.1.4"` (HIGH)
+    * `"react-slick": "^0.12.2"` (HIGH)
+    * `"redux": "^3.5.2"`(HIGH)
+    * `"redux-form": "^5.2.5"` (HIGH)
+    * `"redux-thunk": "^2.1.0` (HIGH)
 - [ ]  List out new deps and plan for front end tech
+    * Update the client server, and build tooling as much as possible:
+        * express
+        * pug
+        * babel
+    * Then update react to safest version possible, likely react 15?
+        * Consider making the full leap, but almost everything will break.
+        * And redux might not even be needed anymore for this simple app
+        * ^^ got a strong dep on redux-form though.
 - [ ]  List out longer-term plan for front end tech options
 
 ### API Server
