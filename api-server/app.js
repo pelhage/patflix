@@ -27,7 +27,7 @@ app.set('view engine', 'pug');
 app.use('/dist', express.static('dist'));
 
 // routes
-require('./api-server/routes.js')(app);
+require('./routes.js')(app);
 
 // launch
 app.listen(port);
