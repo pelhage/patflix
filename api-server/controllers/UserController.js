@@ -1,7 +1,6 @@
 var User = require('../models/user');
 const jwt = require('jwt-simple'); // used to create, sign, and verify tokens
 const config = require('../config');
-var app = require('../../app');
 
 // Takes User model
 function tokenForUser(user) {

@@ -1,0 +1,27 @@
+{
+  "name": "videos",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "hashids": "1.0.2",
+    "jsonwebtoken": "^7.0.1",
+    "jwt-simple": "^0.5.0",
+    "mongodb": "^2.1.18",
+    "morgan": "^1.7.0",
+    "passport-jwt": "^2.1.0",
+    "pug": "^2.0.0-beta5"
+  },
+  "devDependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "cross-spawn": "4.0.0",
+    "express-session": "^1.13.0",
+    "mongoose": "^4.4.19",
+    "npm-run-all": "^2.1.1",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
+  }
+}
