@@ -5,7 +5,8 @@
   "scripts": {
     "scss": "node-sass --output-style compressed -o dist/css src/scss",
     "build": "node ./scripts/build.js",
-    "newbuild": "run-s build scss"
+    "newbuild": "run-s build scss",
+    "build:webpack": "webpack -p --config ./config/webpack.config.prod.js"
   },
   "eslintConfig": {
     "extends": "./config/eslint.js"
