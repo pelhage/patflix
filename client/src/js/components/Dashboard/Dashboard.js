@@ -11,12 +11,10 @@ import LibrarySave from '../Library/LibrarySave'
 import Preview from '../Library/Preview'
 
 class Dashboard extends React.Component {
-
   // Initialize data if we don't already have any
   componentWillMount() {
     this.props.resetState()
     if (this.props.match.params.libId) {
-      
       this.props.fetchLibById(this.props.match.params.libId)
     }
   }
@@ -43,8 +41,8 @@ class Dashboard extends React.Component {
           </div>
         </footer>
       </div>
-    );
+    )
   }
 }
 
-export default connect(null, actions)(Dashboard);
+export default connect(null, actions)(Dashboard)

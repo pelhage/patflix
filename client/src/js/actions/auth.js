@@ -1,15 +1,23 @@
-import {
-  AUTH_USER,
-  DEAUTH_USER,
-  AUTH_ERROR,
-} from './types';
+import axios from 'axios'
+import { AUTH_USER, DEAUTH_USER, AUTH_ERROR } from './types'
 
 // Dependency libraries
 import history from '../../routing/history'
-import axios from 'axios';
 // Import the url of our API
 import API_URL from './api'
 
+/**
+ * authError - Dispatch an action that will set
+ * the state's authError property to the passed error
+ *
+ * @param  {string} error - description of error
+ */
+export function authError(error) {
+  return {
+    type: AUTH_ERROR,
+    payload: error,
+  }
+}
 
 /**
  * signinUser - Sign's in the user by taking an object
@@ -19,21 +27,22 @@ import API_URL from './api'
  *
  * @param  {object} {email, password} - email and password values
  */
-export function signinUser({email, password}) {
-  return function(dispatch) {
+export function signinUser({ email, password }) {
+  return function (dispatch) {
     // Submit email/password to server
-    axios.post(`${API_URL}/login`, { email, password })
-    .then(response => {
-      // update state to indicate user is auth'd
-      dispatch({ type: AUTH_USER });
-      // save jwt token & redirect route to '/dashboard'
-      localStorage.setItem('token', response.data.token);
-      history.push('/d')
-    })
-    .catch(function(err) {
-      // If bad request, show error
-      dispatch(authError('Bad login info'))
-    });
+    axios
+      .post(`${API_URL}/login`, { email, password })
+      .then((response) => {
+        // update state to indicate user is auth'd
+        dispatch({ type: AUTH_USER })
+        // save jwt token & redirect route to '/dashboard'
+        localStorage.setItem('token', response.data.token)
+        history.push('/d')
+      })
+      .catch(() => {
+        // If bad request, show error
+        dispatch(authError('Bad login info'))
+      })
   }
 }
 
@@ -46,45 +55,30 @@ export function signinUser({email, password}) {
  * @param  {object} {email, password} - email and password values
  */
 
-export function signUpUser({email, password}) {
-  return function(dispatch) {
+export function signUpUser({ email, password }) {
+  return function (dispatch) {
     // Submit email/password to server
-    axios.post(`${API_URL}/signup`, { email, password })
-    .then(response => {
-      // update state to indicate user is auth'd
-      dispatch({ type: AUTH_USER });
-      // save the jwt token & redirect route
-      localStorage.setItem('token', response.data.token);
-      history.push('/d')
-    })
-    .catch(function(err) {
-      // If bad request, show error
-      dispatch(authError('Bad login info'))
-    });
-  }
-
-}
-
-
-/**
- * authError - Dispatch an action that will set
- * the state's authError property to the passed error
- *
- * @param  {string} error - description of error
- */
-export function authError(error) {
-  return {
-    type: AUTH_ERROR,
-    payload: error
+    axios
+      .post(`${API_URL}/signup`, { email, password })
+      .then((response) => {
+        // update state to indicate user is auth'd
+        dispatch({ type: AUTH_USER })
+        // save the jwt token & redirect route
+        localStorage.setItem('token', response.data.token)
+        history.push('/d')
+      })
+      .catch(() => {
+        // If bad request, show error
+        dispatch(authError('Bad login info'))
+      })
   }
 }
-
 
 /**
  * signoutUser - Sign's out the user by removing their token
  * from localStorage and firing the DEAUTH_USER action
  */
 export function signoutUser() {
-  localStorage.removeItem('token');
+  localStorage.removeItem('token')
   return { type: DEAUTH_USER }
 }

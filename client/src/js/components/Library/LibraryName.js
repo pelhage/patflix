@@ -1,7 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import * as actions from '../../actions'
+
 import { connect } from 'react-redux'
+import * as actions from '../../actions'
 import { Input } from '../Form'
 
 class LibraryName extends React.Component {
@@ -21,14 +21,15 @@ class LibraryName extends React.Component {
         <Input
           value={libName}
           placeholder="Name Your Library"
-          onChange={this.handleNameChange}/>
+          onChange={this.handleNameChange}
+        />
       </span>
     )
   }
 }
 
 function mapStateToProps(state) {
-  return { currentLib: state.libraries.currentLib };
+  return { currentLib: state.libraries.currentLib }
 }
 
-export default connect(mapStateToProps, actions)(LibraryName);
+export default connect(mapStateToProps, actions)(LibraryName)

@@ -12,14 +12,18 @@ class Library extends React.Component {
   }
 
   renderHero() {
-    let { videos, featured} = this.props
+    const { videos, featured } = this.props
     if (featured && featured.length) {
-      return <div><Hero videos={videos} featured={featured} /></div>
+      return (
+        <div>
+          <Hero videos={videos} featured={featured} />
+        </div>
+      )
     }
   }
 
   renderVideoRows() {
-    let { videos, categories, onVideoClick, isPublic } = this.props
+    const { videos, categories, onVideoClick, isPublic } = this.props
     if (videos && Object.keys(videos).length) {
       return (
         <VideoRows

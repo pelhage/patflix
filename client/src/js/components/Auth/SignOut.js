@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import React from 'react'
+import { connect } from 'react-redux'
+import * as actions from '../../actions'
 
 class SignOut extends React.Component {
   componentWillMount() {
@@ -14,9 +14,13 @@ class SignOut extends React.Component {
           <h1 className="text-center">See you later.</h1>
           <div className="bg--light padding--med margin-btm--med text-center">
             <div>
-              <h3>You've been logged out of Patflix on this device.</h3>
-              <p>If you have any feedback or requests, feel free to email me:</p>
-              <p><a href="mailto:patrick@patflix.co">patrick@patflix.co</a></p>
+              <h3>You&apos;ve been logged out of Patflix on this device.</h3>
+              <p>
+                If you have any feedback or requests, feel free to email me:
+              </p>
+              <p>
+                <a href="mailto:patrick@patflix.co">patrick@patflix.co</a>
+              </p>
             </div>
           </div>
         </div>
@@ -25,4 +29,4 @@ class SignOut extends React.Component {
   }
 }
 
-export default connect(null, actions)(SignOut);
+export default connect(null, actions)(SignOut)

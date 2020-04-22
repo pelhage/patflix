@@ -9,7 +9,7 @@ import {
   REPLACE_CURRENT_VIDEO,
   REPLACE_CURRENT_LIBRARY,
   REMOVE_VIDEO,
-  REMOVE_LIB
+  REMOVE_LIB,
 } from '../actions/types'
 
 const initialState = {
@@ -20,9 +20,9 @@ const initialState = {
     libName: '',
     videos: {},
     allCategories: {
-      Uncategorized: []
+      Uncategorized: [],
     },
-    featuredVideos: []
+    featuredVideos: [],
   },
   currentVideo: {
     videoId: '',
@@ -31,11 +31,11 @@ const initialState = {
     isValidVideo: false,
     isFeatured: false,
     description: '',
-    categories: []
-  }
+    categories: [],
+  },
 }
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case FETCH_LIBS:
       return { ...state, all: action.payload }
@@ -48,18 +48,30 @@ export default function(state = initialState, action) {
     case LIB_NAME:
       return { ...state, currentLib: action.payload }
     case ADD_VID:
-      return { ...state, currentVideo: initialState.currentVideo, currentLib: action.payload }
+      return {
+        ...state,
+        currentVideo: initialState.currentVideo,
+        currentLib: action.payload,
+      }
     case ADD_CATEGORY:
       return { ...state, ...action.payload }
     case REPLACE_CURRENT_VIDEO:
-      return {...state, currentVideo: action.payload }
+      return { ...state, currentVideo: action.payload }
     case REPLACE_CURRENT_LIBRARY:
-      return {...state, currentLib: action.payload }
+      return { ...state, currentLib: action.payload }
     case REMOVE_VIDEO:
-      return { ...state, currentLib: action.payload, currentVideo: initialState.currentVideo }
+      return {
+        ...state,
+        currentLib: action.payload,
+        currentVideo: initialState.currentVideo,
+      }
     case REMOVE_LIB:
-      return { ...state, currentLib: initialState.currentLib, currentVideo: initialState.currentVideo }
+      return {
+        ...state,
+        currentLib: initialState.currentLib,
+        currentVideo: initialState.currentVideo,
+      }
+    default:
+      return state
   }
-
-  return state;
 }

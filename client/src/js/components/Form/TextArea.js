@@ -6,7 +6,7 @@ class TextArea extends React.Component {
   }
 
   render() {
-    return <textarea className="form_textarea" {...this.props}></textarea>
+    return <textarea className="form_textarea" {...this.props} />
   }
 }
 

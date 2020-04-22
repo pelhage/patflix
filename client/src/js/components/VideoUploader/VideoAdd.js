@@ -1,6 +1,6 @@
 import React from 'react'
-import * as actions from '../../actions'
 import { connect } from 'react-redux'
+import * as actions from '../../actions'
 
 class VideoAdd extends React.Component {
   constructor(props) {
@@ -11,28 +11,28 @@ class VideoAdd extends React.Component {
   // Helper methods
   hasValidUrl(url) {
     if (url) {
-      let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-      let match = url.match(regExp);
+      const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
+      const match = url.match(regExp)
       return match && match[2].length === 11
     }
   }
 
   extractId(url) {
     if (this.hasValidUrl(url)) {
-      let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-      let match = url.match(regExp);
+      const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
+      const match = url.match(regExp)
       return match[2]
     }
     return ''
   }
 
   isValidVideo(video) {
-    let { url } = video
+    const { url } = video
     return this.hasValidUrl(url)
   }
 
   addVideo(videoId) {
-    let { currentVideo } = this.props
+    const { currentVideo } = this.props
     if (this.isValidVideo(currentVideo)) {
       this.props.addCategoryToLibrary(currentVideo.categories)
       this.props.addVideoToLibrary(currentVideo)
@@ -41,9 +41,7 @@ class VideoAdd extends React.Component {
 
   render() {
     return (
-      <button
-        className="btn btn-secondary btn-main"
-        onClick={this.addVideo}>
+      <button className="btn btn-secondary btn-main" onClick={this.addVideo}>
         Save Video
       </button>
     )
@@ -51,7 +49,7 @@ class VideoAdd extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { currentVideo: state.libraries.currentVideo };
+  return { currentVideo: state.libraries.currentVideo }
 }
 
-export default connect(mapStateToProps, actions)(VideoAdd);
+export default connect(mapStateToProps, actions)(VideoAdd)

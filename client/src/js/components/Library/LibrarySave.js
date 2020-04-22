@@ -1,6 +1,6 @@
 import React from 'react'
-import * as actions from '../../actions'
 import { connect } from 'react-redux'
+import * as actions from '../../actions'
 
 class LibrarySave extends React.Component {
   constructor(props) {
@@ -18,13 +18,16 @@ class LibrarySave extends React.Component {
   }
 
   render() {
-    return (<button className="btn btn-primary btn-main" onClick={this.saveLibrary}>
-      Save Library</button>)
+    return (
+      <button className="btn btn-primary btn-main" onClick={this.saveLibrary}>
+        Save Library
+      </button>
+    )
   }
 }
 
 function mapStateToProps(state) {
-  return { currentLib: state.libraries.currentLib };
+  return { currentLib: state.libraries.currentLib }
 }
 
-export default connect(mapStateToProps, actions)(LibrarySave);
+export default connect(mapStateToProps, actions)(LibrarySave)

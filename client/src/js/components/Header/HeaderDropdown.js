@@ -5,15 +5,21 @@ import { Link } from 'react-router-dom'
 import signOut from '../../images/signout.svg'
 
 const HeaderDropdown = (props) => {
-  let imgStyle = { width: '27px', marginBottom: '-5px' }
+  const imgStyle = { width: '27px', marginBottom: '-5px' }
   return <div>hello</div>
   return (
     <Dropdown className="nav__item">
-      <DropdownTrigger><img style={imgStyle} src={signOut} /> More</DropdownTrigger>
+      <DropdownTrigger>
+        <img style={imgStyle} src={signOut} /> More
+      </DropdownTrigger>
       <DropdownContent>
         <ul className="dropdown-menu">
-          <li><Link to="/about">About Patflix</Link></li>
-          <li><Link to="/signout">Sign Out</Link></li>
+          <li>
+            <Link to="/about">About Patflix</Link>
+          </li>
+          <li>
+            <Link to="/signout">Sign Out</Link>
+          </li>
         </ul>
       </DropdownContent>
     </Dropdown>

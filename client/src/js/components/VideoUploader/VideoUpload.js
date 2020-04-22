@@ -1,15 +1,19 @@
 import React from 'react'
-import * as actions from '../../actions'
 import { connect } from 'react-redux'
+import * as actions from '../../actions'
 
 /* Component Dependencies */
 import { Form } from '../Form'
 
-import { VideoUrl, VideoDescription, VideoFeatured,
-  VideoCategories, VideoThumbnail } from '.'
+import {
+  VideoUrl,
+  VideoDescription,
+  VideoFeatured,
+  VideoCategories,
+  VideoThumbnail,
+} from '.'
 
 class VideoUpload extends React.Component {
-
   constructor(props) {
     super(props)
     // Bind member functions
@@ -23,23 +27,23 @@ class VideoUpload extends React.Component {
   // Helper methods
   hasValidUrl(url) {
     if (url) {
-      let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-      let match = url.match(regExp);
+      const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
+      const match = url.match(regExp)
       return match && match[2].length === 11
     }
   }
 
   extractId(url) {
     if (this.hasValidUrl(url)) {
-      let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-      let match = url.match(regExp);
+      const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
+      const match = url.match(regExp)
       return match[2]
     }
     return ''
   }
 
   isValidVideo(video) {
-    let { url } = video
+    const { url } = video
     return this.hasValidUrl(url)
   }
 
@@ -52,9 +56,9 @@ class VideoUpload extends React.Component {
   }
 
   handleInputChange(e) {
-    let currentVideo = this.props.currentVideo
-    let { name, value } = e.target
-    let updatedVideo = {...currentVideo, [name]: value}
+    const { currentVideo } = this.props
+    const { name, value } = e.target
+    const updatedVideo = { ...currentVideo, [name]: value }
     const isValid = this.isValidVideo(updatedVideo)
 
     if (name === 'url') {
@@ -65,8 +69,8 @@ class VideoUpload extends React.Component {
   }
 
   handleFeaturedCheck() {
-    let isChecked = !this.props.currentVideo.isFeatured
-    let currentVideo = this.props.currentVideo
+    const isChecked = !this.props.currentVideo.isFeatured
+    const { currentVideo } = this.props
     this.props.updateCurrentVideo({ ...currentVideo, isFeatured: isChecked })
   }
 
@@ -76,17 +80,12 @@ class VideoUpload extends React.Component {
 
   render() {
     const {
-      currentVideo: {
-        url, youtubeId, isFeatured, description, categories
-      }
+      currentVideo: { url, youtubeId, isFeatured, description, categories },
     } = this.props
     return (
       <div className="form-container">
         <Form onFormSubmit={this.handleFormSubmit}>
-          <VideoUrl
-            url={url}
-            onUserInput={this.handleInputChange}
-          />
+          <VideoUrl url={url} onUserInput={this.handleInputChange} />
           <VideoThumbnail videoId={youtubeId} />
           <VideoFeatured
             onUserCheck={this.handleFeaturedCheck}
@@ -109,7 +108,7 @@ class VideoUpload extends React.Component {
 function mapStateToProps(state) {
   return {
     currentVideo: state.libraries.currentVideo,
-    currentLib: state.libraries.currentLib
+    currentLib: state.libraries.currentLib,
   }
 }
 

@@ -12,11 +12,15 @@ class RenderedCategories extends React.Component {
 
     return this.props.categories.map((category, index) => {
       return (
-        <span className="category-tag" key={index}>{category}
+        <span className="category-tag" key={index}>
+          {category}
           <span
             className="category-close"
             data-category={category}
-            onClick={handleClick}>x</span>
+            onClick={handleClick}
+          >
+            x
+          </span>
         </span>
       )
     })
@@ -26,16 +30,15 @@ class RenderedCategories extends React.Component {
     const { categories } = this.props
 
     if (categories.length) {
-      return (<div>{this.renderCategories(categories)}</div>)
-    } else {
-      return <span>Add categories separated by tabs or commas</span>
+      return <div>{this.renderCategories(categories)}</div>
     }
+    return <span>Add categories separated by tabs or commas</span>
   }
 }
 
 RenderedCategories.propTypes = {
   categories: PropTypes.array,
-  handleClick: PropTypes.func.isRequired
+  handleClick: PropTypes.func.isRequired,
 }
 
-export default RenderedCategories;
+export default RenderedCategories

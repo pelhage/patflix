@@ -7,14 +7,20 @@ const VideoFeatured = (props) => {
 
   return (
     <FormFieldset>
-      <input id="featured" type="checkbox" checked={checked} value={checked} onChange={onUserCheck} />
+      <input
+        id="featured"
+        type="checkbox"
+        checked={checked}
+        value={checked}
+        onChange={onUserCheck}
+      />
       <label htmlFor="featured">Feature this video in your library</label>
     </FormFieldset>
   )
 }
 
 VideoFeatured.propTypes = {
-  checked: PropTypes.bool
+  checked: PropTypes.bool,
 }
 
 export default VideoFeatured

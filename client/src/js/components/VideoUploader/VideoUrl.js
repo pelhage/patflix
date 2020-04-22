@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Input, FormFieldset, FormLabel } from '../Form'
 
 const VideoUrl = (props) => {
-
   const { url, onUserInput } = props
 
   return (
@@ -13,15 +12,15 @@ const VideoUrl = (props) => {
         name="url"
         value={url}
         placeholder="Paste a Valid YouTube Video URL"
-        onChange={onUserInput} />
+        onChange={onUserInput}
+      />
     </FormFieldset>
   )
 }
 
 VideoUrl.propTypes = {
   url: PropTypes.string.isRequired,
-  validate: PropTypes.func,
-  onUserInput: PropTypes.func.isRequired
+  onUserInput: PropTypes.func.isRequired,
 }
 
 export default VideoUrl

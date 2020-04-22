@@ -5,7 +5,6 @@ import * as actions from '../../actions'
 import LibrariesPlaceholder from './LibrariesPlaceholder'
 import LibraryRow from './LibraryRow'
 
-
 class Libraries extends React.Component {
   constructor(props) {
     super(props)
@@ -24,23 +23,27 @@ class Libraries extends React.Component {
   removeLibrary() {
     this.props.removeLibrary(this.props.match.params.libId)
   }
+
   // Render the libraries once they've been
   // dispatched -> down to props
   renderLibraries() {
     const { libraries } = this.props
 
     if (libraries === '') {
-      console.log('libraries === ""', libraries);
-      return (<LibrariesPlaceholder />)
-    } else if (!libraries) {
+      console.log('libraries === ""', libraries)
+      return <LibrariesPlaceholder />
+    }
+    if (!libraries) {
       return null
-    } else if (libraries && !Object.keys(libraries).length) {
-      return (<LibrariesPlaceholder />)
-    }else if (libraries) {
-      let arrOfVids = []
-      let libs = this.props.libraries
+    }
+    if (libraries && !Object.keys(libraries).length) {
+      return <LibrariesPlaceholder />
+    }
+    if (libraries) {
+      const arrOfVids = []
+      const libs = this.props.libraries
 
-      for (var key in libs) {
+      for (const key in libs) {
         arrOfVids.push(libs[key])
       }
       return (
@@ -53,30 +56,27 @@ class Libraries extends React.Component {
                 libraryId={library.libraryId}
                 size={library.size}
                 key={index}
-               />
+              />
             )
           })}
         </div>
       )
     }
     // Return Library Placeholder if there are no libraries
-    return (<LibrariesPlaceholder />)
+    return <LibrariesPlaceholder />
   }
 
   render() {
     return (
       <div className="flex justify-center">
-        <div className="flex--lg flex-col">
-          {this.renderLibraries()}
-        </div>
+        <div className="flex--lg flex-col">{this.renderLibraries()}</div>
       </div>
     )
   }
 }
 
-
 function mapStateToProps(state) {
   return { libraries: state.libraries.all }
 }
 
-export default connect(mapStateToProps, actions)(Libraries);
+export default connect(mapStateToProps, actions)(Libraries)

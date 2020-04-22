@@ -1,29 +1,33 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
-
-// import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
-import { FormButton } from '../Form'
-
-// Icons
-import removeIcon from '../../images/remove.svg'
+import { Link } from 'react-router-dom'
 
 const LibraryRow = (props) => {
-
   const { libName, libraryId, size } = props
-  let libNameText = libName || 'Untitled'
-  let videosText = (size === 1) ? 'video' : 'videos'
+  const libNameText = libName || 'Untitled'
+  const videosText = size === 1 ? 'video' : 'videos'
 
   return (
     <div className="flex flex-between bg--light padding--med margin-btm--med">
       <div>
         <h3>{libNameText}</h3>
-        <h4><Link to={"/l/"+libraryId}>patflix.co/l/{libraryId}</Link></h4>
-        <p><strong>{size}</strong> {videosText} in this library</p>
+        <h4>
+          <Link to={`/l/${libraryId}`}>
+            patflix.co/l/
+            {libraryId}
+          </Link>
+        </h4>
+        <p>
+          <strong>{size}</strong> {videosText} in this library
+        </p>
       </div>
 
       <div className="btn-group">
-        <Link className="btn btn-secondary" to={"/d/"+libraryId}>Edit</Link>
-        <Link className="btn btn-secondary" to={"/l/"+libraryId}>VIEW</Link>
+        <Link className="btn btn-secondary" to={`/d/${libraryId}`}>
+          Edit
+        </Link>
+        <Link className="btn btn-secondary" to={`/l/${libraryId}`}>
+          VIEW
+        </Link>
         {/* <Dropdown className="nav__item">
           <DropdownTrigger>
             <FormButton className="btn btn-tertiary no-padding">
