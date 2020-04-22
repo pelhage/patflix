@@ -5,7 +5,7 @@ import * as _ from 'lodash'
 import Hashids from 'hashids'
 // API helpers
 import axios from 'axios'
-import history from '../../routing/history'
+import history from '../routing/history'
 import {
   FETCH_LIBS,
   FETCH_LIB_BY_ID,
