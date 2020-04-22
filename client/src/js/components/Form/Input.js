@@ -6,10 +6,10 @@ class Input extends React.Component {
   }
 
   render() {
-    return <input className="form__input" {...this.props}/>
+    return <input className="form__input" {...this.props} />
   }
 }
 
-Input.defaultProps = { type: "text" }
+Input.defaultProps = { type: 'text' }
 
 export default Input

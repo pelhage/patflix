@@ -22,7 +22,8 @@ const About = () => {
             <li>Mongoose (ODM)</li>
             <li>Nginx (Reverse Proxy)</li>
             <li>Pug (Templating Engine)</li>
-            <li>Authentication
+            <li>
+              Authentication
               <ul>
                 <li>JSON Web Tokens (JWT)</li>
                 <li>PassportJS</li>
@@ -38,11 +39,16 @@ const About = () => {
             <li>Babel</li>
             <li>Git</li>
           </ul>
-          <Link className="btn btn-primary text-center full-width" to={"/dashboard"}>Create A Library</Link>
+          <Link
+            className="btn btn-primary text-center full-width"
+            to="/dashboard"
+          >
+            Create A Library
+          </Link>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export default About

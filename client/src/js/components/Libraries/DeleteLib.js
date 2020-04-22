@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import React from 'react'
+import { connect } from 'react-redux'
+import * as actions from '../../actions'
 
 class DeleteLib extends React.Component {
   componentWillMount() {
@@ -12,4 +12,4 @@ class DeleteLib extends React.Component {
   }
 }
 
-export default connect(null, actions)(DeleteLib);
+export default connect(null, actions)(DeleteLib)

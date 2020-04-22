@@ -6,10 +6,8 @@ export default class App extends React.Component {
     return (
       <div>
         <Header />
-        <div className="main-view">
-          {this.props.children}
-        </div>
+        <div className="main-view">{this.props.children}</div>
       </div>
-    );
+    )
   }
 }

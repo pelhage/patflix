@@ -1,6 +1,6 @@
 import React from 'react'
-import * as actions from '../../actions'
 import { connect } from 'react-redux'
+import * as actions from '../../actions'
 
 import removeIcon from '../../images/remove.svg'
 
@@ -15,7 +15,10 @@ class VideoRemove extends React.Component {
       this.props.removeVideoFromLibrary(this.props.currentVideo.videoId)
     } else if (!this.props.currentVideo.videoId) {
       // TODO
-      console.log('VideoRemove removeVideo invoked for video without ID:', videoId)
+      console.log(
+        'VideoRemove removeVideo invoked for video without ID:',
+        videoId
+      )
     }
   }
 
@@ -29,7 +32,7 @@ class VideoRemove extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { currentVideo: state.libraries.currentVideo };
+  return { currentVideo: state.libraries.currentVideo }
 }
 
-export default connect(mapStateToProps, actions)(VideoRemove);
+export default connect(mapStateToProps, actions)(VideoRemove)

@@ -4,7 +4,6 @@ import { FormFieldset, FormLabel } from '../Form'
 import { CategoriedInput } from '../CategoriedInput'
 
 const VideoCategories = (props) => {
-
   const { categories, onUserInput } = props
 
   return (
@@ -13,14 +12,15 @@ const VideoCategories = (props) => {
       <CategoriedInput
         categories={categories}
         onCategoryChange={onUserInput}
-        placeholder="enter categories, separated, by, commas" />
+        placeholder="enter categories, separated, by, commas"
+      />
     </FormFieldset>
   )
 }
 
 VideoCategories.propTypes = {
   categories: PropTypes.array,
-  onUserInput: PropTypes.func.isRequired
+  onUserInput: PropTypes.func.isRequired,
 }
 
 export default VideoCategories

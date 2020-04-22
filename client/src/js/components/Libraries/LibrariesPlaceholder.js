@@ -10,9 +10,14 @@ const LibraryPlaceholder = () => {
           <h3>Creating a library is simple!</h3>
           <div>
             <p>Paste YouTube video URLs, then tag them with categories.</p>
-            <p>Patflix will generate the layout based on your tags, and create a shareable link.</p>
+            <p>
+              Patflix will generate the layout based on your tags, and create a
+              shareable link.
+            </p>
           </div>
-          <Link className="btn btn-primary full-width" to={"/dashboard"}>Create A Library</Link>
+          <Link className="btn btn-primary full-width" to="/dashboard">
+            Create A Library
+          </Link>
         </div>
       </div>
     </div>

@@ -7,7 +7,10 @@ const Video = (props) => {
     <div className="tile">
       <div className="tile__media">
         <div>
-          <img className="tile__img" src={"http://img.youtube.com/vi/"+youtubeId+"/0.jpg"} />
+          <img
+            className="tile__img"
+            src={`http://img.youtube.com/vi/${youtubeId}/0.jpg`}
+          />
         </div>
       </div>
       <div className="tile__details">
@@ -19,7 +22,7 @@ const Video = (props) => {
 
 Video.propTypes = {
   youtubeId: PropTypes.string.isRequired,
-  description: PropTypes.string
+  description: PropTypes.string,
 }
 
 export default Video

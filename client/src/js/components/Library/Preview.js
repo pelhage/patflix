@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
-import Library from './Library';
+import Library from './Library'
 
 import rowPreviewImg from '../../images/slide-row.png'
 import heroPreviewImg from '../../images/hero.png'
@@ -19,10 +19,16 @@ class Preview extends React.Component {
   }
 
   render() {
-    const { libName, videos, allCategories, featuredVideos, size } = this.props.currentLib
+    const {
+      libName,
+      videos,
+      allCategories,
+      featuredVideos,
+      size,
+    } = this.props.currentLib
     // Placeholders for if the library is not complete
-    let videoRowImg = <img className="placeholder" src={rowPreviewImg} />;
-    let videoHeroImg = <img  className="placeholder" src={heroPreviewImg}/>
+    const videoRowImg = <img className="placeholder" src={rowPreviewImg} />
+    const videoHeroImg = <img className="placeholder" src={heroPreviewImg} />
     let rowPlaceholder = ''
     let heroPlaceholder = ''
     // Set the placeholders if sections are empty
@@ -42,15 +48,16 @@ class Preview extends React.Component {
           categories={allCategories}
           featured={featuredVideos}
           onVideoClick={this.handleVideoClick}
-          isPublic={false} />
+          isPublic={false}
+        />
         {rowPlaceholder}
-    </div>
+      </div>
     )
   }
 }
 
 function mapStateToProps(state) {
-  return { currentLib: state.libraries.currentLib };
+  return { currentLib: state.libraries.currentLib }
 }
 
-export default connect(mapStateToProps, actions)(Preview);
+export default connect(mapStateToProps, actions)(Preview)

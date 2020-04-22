@@ -16,6 +16,7 @@ class ViewLib extends React.Component {
       this.props.fetchLibById(this.props.match.params.libId)
     }
   }
+
   // Update Current Video
   handleVideoClick(videoId, youtubeId) {
     history.push(`/playback/${youtubeId}`)
@@ -23,9 +24,9 @@ class ViewLib extends React.Component {
 
   render() {
     if (!this.props.currentLib) {
-      return <div></div>
+      return <div />
     }
-    const { libName, videos, allCategories, featuredVideos } = this.props.currentLib
+    const { videos, allCategories, featuredVideos } = this.props.currentLib
     return (
       <div>
         <Library
@@ -33,15 +34,15 @@ class ViewLib extends React.Component {
           categories={allCategories}
           featured={featuredVideos}
           onVideoClick={this.handleVideoClick}
-          isPublic={true}
-          />
+          isPublic
+        />
       </div>
     )
   }
 }
 
 function mapStateToProps(state) {
-  return { currentLib: state.libraries.currentLib };
+  return { currentLib: state.libraries.currentLib }
 }
 
-export default connect(mapStateToProps, actions)(ViewLib);
+export default connect(mapStateToProps, actions)(ViewLib)

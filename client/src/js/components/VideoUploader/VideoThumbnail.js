@@ -5,7 +5,7 @@ import nyan from './nyan.svg'
 
 const VideoThumbnail = (props) => {
   const { videoId } = props
-  let imgUrl = (videoId) ? 'http://img.youtube.com/vi/'+videoId+'/0.jpg' : nyan
+  const imgUrl = videoId ? `http://img.youtube.com/vi/${videoId}/0.jpg` : nyan
 
   return (
     <div>
@@ -15,7 +15,7 @@ const VideoThumbnail = (props) => {
 }
 
 VideoThumbnail.propTypes = {
-  videoId: PropTypes.string
+  videoId: PropTypes.string,
 }
 
 export default VideoThumbnail
