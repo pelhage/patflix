@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
-class DeleteLib extends Component {
+class DeleteLib extends React.Component {
   componentWillMount() {
-    this.props.removeLibrary(this.props.params.libId)
+    this.props.removeLibrary(this.props.match.params.libId)
   }
 
   render() {

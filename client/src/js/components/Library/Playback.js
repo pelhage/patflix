@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
-class Playback extends Component {
+class Playback extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -30,7 +31,8 @@ class Playback extends Component {
   }
 
 	render() {
-		const { videoid } = this.props.params
+		const { videoid } = this.props.match.params
+
 		return (
 			<iframe style={this.state.style}
 				src={"http://www.youtube.com/embed/"+ videoid + "?autoplay=1"}

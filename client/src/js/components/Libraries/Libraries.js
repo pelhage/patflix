@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
 // Components
@@ -6,7 +6,7 @@ import LibrariesPlaceholder from './LibrariesPlaceholder'
 import LibraryRow from './LibraryRow'
 
 
-class Libraries extends Component {
+class Libraries extends React.Component {
   constructor(props) {
     super(props)
     this.fetchLibraries = this.fetchLibraries.bind(this)
@@ -22,7 +22,7 @@ class Libraries extends Component {
   }
 
   removeLibrary() {
-    this.props.removeLibrary(this.props.params.libId)
+    this.props.removeLibrary(this.props.match.params.libId)
   }
   // Render the libraries once they've been
   // dispatched -> down to props

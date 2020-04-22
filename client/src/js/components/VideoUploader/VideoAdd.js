@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import * as actions from '../../actions'
 import { connect } from 'react-redux'
 
-class VideoAdd extends Component {
+class VideoAdd extends React.Component {
   constructor(props) {
     super(props)
     this.addVideo = this.addVideo.bind(this)

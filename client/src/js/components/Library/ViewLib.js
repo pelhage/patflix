@@ -1,24 +1,24 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
-import { browserHistory } from 'react-router'
+import history from '../../../routing/history'
 
 import Library from './Library'
 
-class ViewLib extends Component {
+class ViewLib extends React.Component {
   constructor(props) {
     super(props)
     this.handleVideoClick = this.handleVideoClick.bind(this)
   }
 
   componentWillMount() {
-    if (this.props.params.libId) {
-      this.props.fetchLibById(this.props.params.libId)
+    if (this.props.match.params.libId) {
+      this.props.fetchLibById(this.props.match.params.libId)
     }
   }
   // Update Current Video
   handleVideoClick(videoId, youtubeId) {
-    browserHistory.push(`/playback/${youtubeId}`)
+    history.push(`/playback/${youtubeId}`)
   }
 
   render() {

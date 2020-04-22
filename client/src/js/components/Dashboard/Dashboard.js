@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
@@ -10,13 +10,14 @@ import LibraryName from '../Library/LibraryName'
 import LibrarySave from '../Library/LibrarySave'
 import Preview from '../Library/Preview'
 
-class Dashboard extends Component {
+class Dashboard extends React.Component {
 
   // Initialize data if we don't already have any
   componentWillMount() {
     this.props.resetState()
-    if (this.props.params.libId) {
-      this.props.fetchLibById(this.props.params.libId)
+    if (this.props.match.params.libId) {
+      
+      this.props.fetchLibById(this.props.match.params.libId)
     }
   }
 

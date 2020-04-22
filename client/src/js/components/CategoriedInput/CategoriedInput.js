@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { Input } from '../Form'
 import RenderedCategories from './RenderedCategories'
 
-class CategoriedInput extends Component {
+class CategoriedInput extends React.Component {
   constructor(props) {
     super(props)
     this.state = { currentCategory: '' }

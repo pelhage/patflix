@@ -5,7 +5,7 @@ import {
 } from './types';
 
 // Dependency libraries
-import { browserHistory } from 'react-router';
+import history from '../../routing/history'
 import axios from 'axios';
 // Import the url of our API
 import API_URL from './api'
@@ -28,7 +28,7 @@ export function signinUser({email, password}) {
       dispatch({ type: AUTH_USER });
       // save jwt token & redirect route to '/dashboard'
       localStorage.setItem('token', response.data.token);
-      browserHistory.push('/d')
+      history.push('/d')
     })
     .catch(function(err) {
       // If bad request, show error
@@ -55,7 +55,7 @@ export function signUpUser({email, password}) {
       dispatch({ type: AUTH_USER });
       // save the jwt token & redirect route
       localStorage.setItem('token', response.data.token);
-      browserHistory.push('/d')
+      history.push('/d')
     })
     .catch(function(err) {
       // If bad request, show error

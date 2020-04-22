@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import * as actions from '../../actions'
 import { connect } from 'react-redux'
 
-class LibrarySave extends Component {
+class LibrarySave extends React.Component {
   constructor(props) {
     super(props)
     this.saveLibrary = this.saveLibrary.bind(this)

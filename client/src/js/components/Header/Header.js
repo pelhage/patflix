@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
@@ -11,7 +11,7 @@ import librariesIcon from '../../images/collection2.svg'
 let imgStyle = { width: '27px', marginBottom: '-5px' }
 
 
-class Header extends Component {
+class Header extends React.Component {
 
   authButton() {
     if (this.props.authenticated) {

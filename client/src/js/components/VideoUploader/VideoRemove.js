@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 import * as actions from '../../actions'
 import { connect } from 'react-redux'
 
 import removeIcon from '../../images/remove.svg'
 
-class VideoRemove extends Component {
+class VideoRemove extends React.Component {
   constructor(props) {
     super(props)
     this.removeVideo = this.removeVideo.bind(this)

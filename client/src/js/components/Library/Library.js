@@ -1,9 +1,10 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import Hero from './Hero'
 import VideoRows from './VideoRows'
 
-class Library extends Component {
+class Library extends React.Component {
   constructor(props) {
     super(props)
     this.renderHero = this.renderHero.bind(this)

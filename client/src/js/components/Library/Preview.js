@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
@@ -7,7 +7,7 @@ import Library from './Library';
 import rowPreviewImg from '../../images/slide-row.png'
 import heroPreviewImg from '../../images/hero.png'
 
-class Preview extends Component {
+class Preview extends React.Component {
   constructor(props) {
     super(props)
     this.handleVideoClick = this.handleVideoClick.bind(this)

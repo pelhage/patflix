@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react'
-
+import React from 'react'
+import PropTypes from 'prop-types'
 import Slider from 'react-slick'
 import HeroSlide from './HeroSlide'
 
@@ -41,8 +41,3 @@ Hero.propTypes = {
 }
 
 export default Hero
-/*
-<Slider {...settings}>
-
-</Slider>
-*/
