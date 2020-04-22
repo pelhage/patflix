@@ -13,7 +13,7 @@ import {
 } from './types';
 
 // Browser history for react
-import { browserHistory } from 'react-router';
+import history from '../../routing/history'
 // Import dependency libraries
 import * as _ from 'lodash'
 // Hashids for ID Hashing
@@ -57,7 +57,7 @@ export function createLibrary(library) {
         payload: response.data
       })
       // dispatch(fetchLibraries())
-      browserHistory.push('/d')
+      history.push('/d')
     })
   }
 }
@@ -94,7 +94,7 @@ export function updateLibrary(libraryId, library) {
       headers: { authorization: localStorage.getItem('token') }
     })
     .then(response => {
-      browserHistory.push('/d')
+      history.push('/d')
     })
   }
 }
@@ -166,7 +166,7 @@ export function removeLibrary(libraryId) {
       headers: { authorization: localStorage.getItem('token') }
     })
     .then(response => {
-      browserHistory.push('/d')
+      history.push('/d')
       dispatch({
         type: REMOVE_LIB,
         payload: response.data

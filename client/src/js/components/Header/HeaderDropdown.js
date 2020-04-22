@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
-import { Link } from 'react-router'
+import React from 'react'
+// import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
+import { Link } from 'react-router-dom'
 
 import signOut from '../../images/signout.svg'
 
 const HeaderDropdown = (props) => {
   let imgStyle = { width: '27px', marginBottom: '-5px' }
-
+  return <div>hello</div>
   return (
     <Dropdown className="nav__item">
       <DropdownTrigger><img style={imgStyle} src={signOut} /> More</DropdownTrigger>

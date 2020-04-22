@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
-class RenderedCategories extends Component {
+class RenderedCategories extends React.Component {
   constructor(props) {
     super(props)
     this.renderCategories = this.renderCategories.bind(this)

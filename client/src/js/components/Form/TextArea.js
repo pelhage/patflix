@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class TextArea extends Component {
+class TextArea extends React.Component {
   shouldComponentUpdate(nextProps) {
     return this.props.value !== nextProps.value
   }

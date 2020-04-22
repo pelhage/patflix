@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import VideoRow from './VideoRow'
 
 
-class VideoRows extends Component {
+class VideoRows extends React.Component {
   constructor(props) {
     super(props)
     this.renderVideoRows = this.renderVideoRows.bind(this)

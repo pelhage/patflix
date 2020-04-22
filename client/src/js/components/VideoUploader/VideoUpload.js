@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import * as actions from '../../actions'
 import { connect } from 'react-redux'
 
@@ -8,7 +8,7 @@ import { Form } from '../Form'
 import { VideoUrl, VideoDescription, VideoFeatured,
   VideoCategories, VideoThumbnail } from '.'
 
-class VideoUpload extends Component {
+class VideoUpload extends React.Component {
 
   constructor(props) {
     super(props)

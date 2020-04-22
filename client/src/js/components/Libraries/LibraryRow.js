@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router';
+import React from 'react'
+import { Link } from 'react-router-dom';
 
-import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
+// import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
 import { FormButton } from '../Form'
 
 // Icons
@@ -24,7 +24,7 @@ const LibraryRow = (props) => {
       <div className="btn-group">
         <Link className="btn btn-secondary" to={"/d/"+libraryId}>Edit</Link>
         <Link className="btn btn-secondary" to={"/l/"+libraryId}>VIEW</Link>
-        <Dropdown className="nav__item">
+        {/* <Dropdown className="nav__item">
           <DropdownTrigger>
             <FormButton className="btn btn-tertiary no-padding">
               <img style={{'width': '30px'}} src={removeIcon} />
@@ -35,7 +35,7 @@ const LibraryRow = (props) => {
               <li><Link className="btn btn-secondary" to={"/r/"+libraryId}>Confirm Deletion</Link></li>
             </ul>
           </DropdownContent>
-        </Dropdown>
+        </Dropdown> */}
       </div>
     </div>
   )

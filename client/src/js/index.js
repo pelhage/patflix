@@ -3,8 +3,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 // Redux + Router Libraries
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Switch, Route } from 'react-router'
+import { BrowserRouter } from 'react-router-dom'
 import reduxThunk from 'redux-thunk'
 // Actions + Reducers
 import { AUTH_USER } from './actions/types'
@@ -22,31 +23,68 @@ import { SignIn, SignUp, SignOut } from './components/Auth'
 import { Playback, ViewLib } from './components/Library'
 import { DeleteLib } from './components/Libraries'
 
+
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
-const store = createStoreWithMiddleware(reducers, window.devToolsExtension && window.devToolsExtension())
+const store = createStoreWithMiddleware(reducers)
 // Ensure user with local token is auth'd
 const token = localStorage.getItem('token')
 if (token) {
   store.dispatch({ type: AUTH_USER });
 }
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // You can also log the error to an error reporting service
+    console.error(error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return <h1>Something went wrong.</h1>;
+    }
+
+    return this.props.children; 
+  }
+}
+
+const Index = () => (
+  <ErrorBoundary>
+
+  <Provider store={store}>
+  
+  <BrowserRouter>
+    <App>
+      <Switch>
+        <Route exact path="/" component={requireAuth(Welcome)} />
+        <Route exact path="/d" component={requireAuth(Libraries)}></Route>
+        <Route exact path="/d/:libId"  component={requireAuth(Dashboard)} />
+        <Route exact path="/l/:libId"  component={ViewLib} />
+        <Route exact path="/r/:libId"  component={requireAuth(DeleteLib)} />
+        <Route exact path="/playback/:videoid" component={Playback} />
+        <Route exact path="/dashboard" component={requireAuth(Dashboard)} />
+        <Route exact path="/about" component={About} />
+        <Route exact path="/signin" component={SignIn} />
+        <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/signout" component={SignOut} />
+      </Switch>
+    </App>
+  </BrowserRouter>
+</Provider>
+</ErrorBoundary>
+)
 //
 ReactDOM.render(
-  <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path="/" component={App}>
-        <IndexRoute component={requireAuth(Welcome)}></IndexRoute>
-        <Route path="d" component={requireAuth(Libraries)}></Route>
-        <Route path="d/:libId"  component={requireAuth(Dashboard)} />
-        <Route path="l/:libId"  component={ViewLib} />
-        <Route path="r/:libId"  component={requireAuth(DeleteLib)} />
-        <Route path="/playback/:videoid" component={Playback} />
-        <Route path="dashboard" component={requireAuth(Dashboard)} />
-        <Route path="about" component={About} />
-        <Route path="signin" component={SignIn} />
-        <Route path="signup" component={SignUp} />
-        <Route path="signout" component={SignOut} />
-      </Route>
-    </Router>
-  </Provider>
+  <Index />
   , document.querySelector('.container')
 );

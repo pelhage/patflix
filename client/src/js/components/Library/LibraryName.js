@@ -1,9 +1,10 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import * as actions from '../../actions'
 import { connect } from 'react-redux'
 import { Input } from '../Form'
 
-class LibraryName extends Component {
+class LibraryName extends React.Component {
   constructor(props) {
     super(props)
     this.handleNameChange = this.handleNameChange.bind(this)

@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import Slider from 'react-slick';
 import Video from './Video'
 
-class VideoRow extends Component {
+class VideoRow extends React.Component {
   constructor(props) {
     super(props)
     this.renderVideos = this.renderVideos.bind(this)
