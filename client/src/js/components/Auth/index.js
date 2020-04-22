@@ -1,4 +1,4 @@
-export RequireAuth from './RequireAuth'
-export SignIn from './SignIn'
-export SignOut from './SignOut'
-export SignUp from './SignUp'
+export { default as RequireAuth } from './RequireAuth'
+export { default as SignIn } from './SignIn'
+export { default as SignOut } from './SignOut'
+export { default as SignUp } from './SignUp'

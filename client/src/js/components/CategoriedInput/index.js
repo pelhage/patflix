@@ -1,1 +1,1 @@
-export CategoriedInput from './CategoriedInput'
+export { default as CategoriedInput } from './CategoriedInput'
