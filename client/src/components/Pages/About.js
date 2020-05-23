@@ -5,9 +5,9 @@ const About = () => {
   return (
     <div className="flex justify-center">
       <div className="flex--lg flex-col">
-        <h1 className="text-center">Tech Used</h1>
+        <h1 className="text-center">Tech Used?</h1>
         <div className="bg--light padding--med margin-btm--med">
-          <h3>Front End</h3>
+          <h3>Front End..</h3>
           <ul>
             <li>JavaScript (ES6)</li>
             <li>React + Redux + React Router</li>
@@ -21,7 +21,7 @@ const About = () => {
             <li>MongoDB (DB)</li>
             <li>Mongoose (ODM)</li>
             <li>Nginx (Reverse Proxy)</li>
-            <li>Pug (Templating Engine)</li>
+            <li>Pug (Templating Engine)..</li>
             <li>
               Authentication
               <ul>

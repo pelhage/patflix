@@ -13,9 +13,15 @@ if (!publicPath.endsWith('/')) {
 module.exports = {
   devtool: 'source-map',
   mode: 'development',
-  entry: [
-    path.join(paths.appSrc, 'index')
-  ],
+  devServer: {
+    contentBase: paths.appBuild,
+    hot: true,
+  },
+  entry: {
+    app: [
+      path.join(paths.appSrc, 'index')
+    ]
+  },
   output: {
     path: paths.appBuild,
     filename: 'js/[name].js',
@@ -59,7 +65,10 @@ module.exports = {
 
     ]
   },
-  // plugins: [
-  //   new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' })
-  // ]
+  watch: true,
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+    // new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' })
+  ]
 };
