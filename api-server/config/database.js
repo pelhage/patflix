@@ -1,3 +1,3 @@
 module.exports = {
-  'url': 'mongodb://localhost:27017/patflix'
+  'url': process.env.MONGO_HOST || 'mongodb://localhost:27017/patflix'
 };
