@@ -6,7 +6,7 @@
     "scss": "node-sass --output-style compressed -o dist/css src/scss",
     "newbuild": "run-s build scss",
     "lint": "eslint --fix './src/**/*.js'",
-    "build": "webpack --mode=development --config ./config/webpack.config.prod.js"
+    "build": "webpack --config ./config/webpack.config.prod.js"
   },
   "eslintConfig": {
     "extends": "./config/eslint.js"
@@ -58,7 +58,7 @@
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^2.22.0",
     "json-loader": "0.5.4",
-    "node-sass": "^3.8.0",
+    "node-sass": "^4.12.0",
     "npm-run-all": "^2.1.1",
     "opn": "4.0.2",
     "postcss-loader": "0.9.1",
