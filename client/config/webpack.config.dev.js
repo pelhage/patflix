@@ -1,9 +1,9 @@
-var path = require('path');
-var autoprefixer = require('autoprefixer');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-var paths = require('./paths');
+var path = require('path')
+var autoprefixer = require('autoprefixer')
+var webpack = require('webpack')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
+var paths = require('./paths')
 
 module.exports = {
   devtool: 'eval',
@@ -11,14 +11,14 @@ module.exports = {
     require.resolve('webpack-dev-server/client') + '?/',
     require.resolve('webpack/hot/dev-server'),
     require.resolve('./polyfills'),
-    path.join(paths.appSrc, 'index')
+    path.join(paths.appSrc, 'index'),
   ],
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
     path: paths.appBuild,
     pathinfo: true,
     filename: 'js/bundle.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   resolve: {
     extensions: ['', '.js', '.json'],
@@ -31,12 +31,12 @@ module.exports = {
       // if we don't have a good solution, we should just make `babel-runtime`
       // a dependency in generated projects.
       // See https://github.com/facebookincubator/create-react-app/issues/255
-      'babel-runtime/regenerator': require.resolve('babel-runtime/regenerator')
-    }
+      'babel-runtime/regenerator': require.resolve('babel-runtime/regenerator'),
+    },
   },
   resolveLoader: {
     root: paths.ownNodeModules,
-    moduleTemplates: ['*-loader']
+    moduleTemplates: ['*-loader'],
   },
   module: {
     preLoaders: [
@@ -44,32 +44,32 @@ module.exports = {
         test: /\.js$/,
         loader: 'eslint',
         include: paths.appSrc,
-      }
+      },
     ],
     loaders: [
       {
         test: /\.js$/,
         include: paths.appSrc,
         loader: 'babel',
-        query: require('./babel.dev')
+        query: require('./babel.dev'),
       },
       {
         test: /\.css$/,
         include: [paths.appSrc, paths.appNodeModules],
-        loader: 'style!css!postcss'
+        loader: 'style!css!postcss',
       },
       {
         test: /\.json$/,
         include: [paths.appSrc, paths.appNodeModules],
-        loader: 'json'
+        loader: 'json',
       },
       {
         test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)(\?.*)?$/,
         include: [paths.appSrc, paths.appNodeModules],
         loader: 'file',
         query: {
-          name: 'media/[name].[ext]'
-        }
+          name: 'media/[name].[ext]',
+        },
       },
       {
         test: /\.(mp4|webm)(\?.*)?$/,
@@ -77,17 +77,17 @@ module.exports = {
         loader: 'url',
         query: {
           limit: 10000,
-          name: 'media/[name].[ext]'
-        }
-      }
-    ]
+          name: 'media/[name].[ext]',
+        },
+      },
+    ],
   },
   eslint: {
     configFile: path.join(__dirname, 'eslint.js'),
-    useEslintrc: false
+    useEslintrc: false,
   },
-  postcss: function() {
-    return [autoprefixer];
+  postcss: function () {
+    return [autoprefixer]
   },
   plugins: [
     // new HtmlWebpackPlugin({
@@ -98,6 +98,6 @@ module.exports = {
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
     // Note: only CSS is currently hot reloaded
     new webpack.HotModuleReplacementPlugin(),
-    new CaseSensitivePathsPlugin()
-  ]
-};
+    new CaseSensitivePathsPlugin(),
+  ],
+}

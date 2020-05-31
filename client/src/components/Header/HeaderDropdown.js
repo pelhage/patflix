@@ -7,8 +7,11 @@ import { Link } from 'react-router-dom'
 
 import signOut from '../../images/signout.svg'
 
-const HeaderDropdown = (props) => {
-  const imgStyle = { width: '27px', marginBottom: '-5px' }
+const HeaderDropdown = () => {
+  const imgStyle = {
+    width: '27px',
+    marginBottom: '-5px',
+  }
   return (
     <Dropdown className="nav__item">
       <DropdownTrigger>

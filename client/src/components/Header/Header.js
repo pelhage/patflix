@@ -8,7 +8,10 @@ import HeaderDropdown from './HeaderDropdown'
 import addIcon from '../../images/add.svg'
 import librariesIcon from '../../images/collection2.svg'
 
-const imgStyle = { width: '27px', marginBottom: '-5px' }
+const imgStyle = {
+  width: '27px',
+  marginBottom: '-5px',
+}
 
 class Header extends React.Component {
   authButton() {
@@ -73,7 +76,9 @@ class Header extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { authenticated: state.auth.authenticated }
+  return {
+    authenticated: state.auth.authenticated,
+  }
 }
 
 export default connect(mapStateToProps, actions, null, {

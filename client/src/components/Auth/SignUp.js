@@ -3,13 +3,18 @@ import { connect } from 'react-redux'
 
 import * as actions from '../../actions'
 
-import { Form, FormLabel, FormFieldset, Input } from '../Form'
+import { FormLabel, FormFieldset, Input } from '../Form'
 
 function SignUpContainer(props) {
   console.log({ props })
   return (
     <SignUp
-      onSubmit={({ email, password }) => props.signUpUser({ email, password })}
+      onSubmit={({ email, password }) =>
+        props.signUpUser({
+          email,
+          password,
+        })
+      }
     />
   )
 }
@@ -25,9 +30,14 @@ function SignUp(props) {
     error: '',
   })
   function renderAlert() {
-    return props.errorMessage ? <div>Error{props.errorMessage}</div> : null
+    return props.errorMessage ? (
+      <div>
+        Error
+        {props.errorMessage}
+      </div>
+    ) : null
   }
-  console.log('signup form')
+
   return (
     <div className="flex-center">
       <h2>Make Your Own Shareable Library</h2>
@@ -110,7 +120,9 @@ function validate(formProps) {
 }
 
 function mapStateToProps(state) {
-  return { errorMessage: state.auth.error }
+  return {
+    errorMessage: state.auth.error,
+  }
 }
 
 export default connect(mapStateToProps, actions)(SignUpContainer)

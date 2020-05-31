@@ -38,15 +38,30 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case FETCH_LIBS:
-      return { ...state, all: action.payload }
+      return {
+        ...state,
+        all: action.payload,
+      }
     case FETCH_LIB_BY_ID:
-      return { ...state, currentLib: action.payload }
+      return {
+        ...state,
+        currentLib: action.payload,
+      }
     case ADD_LIB:
-      return { ...state, currentLib: action.payload }
+      return {
+        ...state,
+        currentLib: action.payload,
+      }
     case CURR_VID:
-      return { ...state, currentVideo: action.payload }
+      return {
+        ...state,
+        currentVideo: action.payload,
+      }
     case LIB_NAME:
-      return { ...state, currentLib: action.payload }
+      return {
+        ...state,
+        currentLib: action.payload,
+      }
     case ADD_VID:
       return {
         ...state,
@@ -54,11 +69,20 @@ export default function (state = initialState, action) {
         currentLib: action.payload,
       }
     case ADD_CATEGORY:
-      return { ...state, ...action.payload }
+      return {
+        ...state,
+        ...action.payload,
+      }
     case REPLACE_CURRENT_VIDEO:
-      return { ...state, currentVideo: action.payload }
+      return {
+        ...state,
+        currentVideo: action.payload,
+      }
     case REPLACE_CURRENT_LIBRARY:
-      return { ...state, currentLib: action.payload }
+      return {
+        ...state,
+        currentLib: action.payload,
+      }
     case REMOVE_VIDEO:
       return {
         ...state,

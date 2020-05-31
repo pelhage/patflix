@@ -14,12 +14,12 @@ html {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   -webkit-box-align: center;
   -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   width: 100%;
 }
 * {
@@ -48,7 +48,7 @@ ul {
 }
 
 button:focus {
-  outline:0;
+  outline: 0;
 }
 
 p {
@@ -71,7 +71,8 @@ a:hover {
   color: #7f8c8d;
   text-decoration: underline;
 }
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   outline: none;
 }
 fieldset {

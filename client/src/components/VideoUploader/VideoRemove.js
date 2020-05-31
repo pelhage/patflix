@@ -32,7 +32,9 @@ class VideoRemove extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { currentVideo: state.libraries.currentVideo }
+  return {
+    currentVideo: state.libraries.currentVideo,
+  }
 }
 
 export default connect(mapStateToProps, actions)(VideoRemove)
