@@ -14,3 +14,4 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   ownNodeModules: resolveApp('node_modules')
 }
+console.log('path', resolveApp('src/'))

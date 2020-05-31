@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import { Switch, Route } from 'react-router'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import reduxThunk from 'redux-thunk'
 // Actions + Reducers
 import { AUTH_USER } from './actions/types'
@@ -21,7 +21,7 @@ import { Dashboard } from './components/Dashboard'
 import { About, Welcome } from './components/Pages'
 import { SignIn, SignUp, SignOut } from './components/Auth'
 import { Playback, ViewLib } from './components/Library'
-
+import history from './routing/history'
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
 const store = createStoreWithMiddleware(reducers)
 // Ensure user with local token is auth'd
@@ -59,7 +59,7 @@ class ErrorBoundary extends React.Component {
 const Index = () => (
   <ErrorBoundary>
     <Provider store={store}>
-      <BrowserRouter>
+      <Router>
         <App>
           <Switch>
             <Route exact path="/" component={requireAuth(Welcome)} />
@@ -75,7 +75,7 @@ const Index = () => (
             <Route exact path="/signout" component={SignOut} />
           </Switch>
         </App>
-      </BrowserRouter>
+      </Router>
     </Provider>
   </ErrorBoundary>
 )

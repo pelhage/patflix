@@ -5,6 +5,7 @@ var paths = require('./paths')
 
 var homepagePath = require(paths.appPackageJson).homepage
 var publicPath = homepagePath ? url.parse(homepagePath).pathname : '/'
+
 if (!publicPath.endsWith('/')) {
   // Prevents incorrect paths in file-loader
   publicPath += '/'
@@ -15,10 +16,11 @@ module.exports = {
   mode: 'development',
   devServer: {
     contentBase: paths.appBuild,
-    hot: true,
+    port: 3000,
+    host: `localhost`,
   },
   entry: {
-    app: [
+    main: [
       path.join(paths.appSrc, 'index')
     ]
   },
@@ -65,10 +67,7 @@ module.exports = {
 
     ]
   },
-  watch: true,
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     // new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' })
   ]
 };
