@@ -27,7 +27,9 @@ class LibrarySave extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { currentLib: state.libraries.currentLib }
+  return {
+    currentLib: state.libraries.currentLib,
+  }
 }
 
 export default connect(mapStateToProps, actions)(LibrarySave)

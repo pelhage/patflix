@@ -5,8 +5,9 @@
   "scripts": {
     "scss": "node-sass --output-style compressed -o dist/css src/scss",
     "newbuild": "run-s build scss",
+    "format": "prettier --write ./src",
     "dev": "node server.js",
-    "lint": "eslint --fix './src/**/*.js'",
+    "lint": "eslint --fix './src'",
     "build": "webpack --config ./config/webpack.config.prod.js"
   },
   "eslintConfig": {
@@ -64,7 +65,7 @@
     "npm-run-all": "^2.1.1",
     "opn": "4.0.2",
     "postcss-loader": "0.9.1",
-    "prettier": "^2.0.5",
+    "prettier": "2.0.5",
     "promise": "7.1.1",
     "react-hot-loader": "^3.0.0-beta.2",
     "rimraf": "2.5.4",

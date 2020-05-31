@@ -6,13 +6,15 @@
     margin-bottom: -70.3125px;
   }
 
-  .slick-track, .slick-list {
+  .slick-track,
+  .slick-list {
     height: 170px;
     // @include iPhone {
     //   height: 470px;
     // }
   }
-  .slick-prev, .slick-next {
+  .slick-prev,
+  .slick-next {
     position: absolute;
     margin-top: 0;
     top: 0;
@@ -38,7 +40,8 @@
     right: 0;
   }
   &:hover {
-    .slick-prev, .slick-next {
+    .slick-prev,
+    .slick-next {
       opacity: 0.5;
     }
   }
@@ -61,13 +64,13 @@
   -webkit-transition: 450ms all;
   transition: 450ms all;
   -webkit-transform-origin: center left;
-          transform-origin: center left;
+  transform-origin: center left;
 }
 .tile__img {
   width: 100%;
   height: 170px;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   @include iPhone {
     position: relative;
     height: 220px;
@@ -82,8 +85,16 @@
   top: 0;
   font-size: 10px;
   opacity: 0;
-  background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+  background: -webkit-linear-gradient(
+    bottom,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
   -webkit-transition: 450ms opacity;
   transition: 450ms opacity;
 }
@@ -104,10 +115,10 @@
   line-height: 50px;
   text-align: center;
   border-radius: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
-.tile_details:after:hover{
+.tile_details:after:hover {
   background: green;
 }
 .tile__details:before {

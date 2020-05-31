@@ -20,15 +20,13 @@ module.exports = {
     host: `localhost`,
   },
   entry: {
-    main: [
-      path.join(paths.appSrc, 'index')
-    ]
+    main: [path.join(paths.appSrc, 'index')],
   },
   output: {
     path: paths.appBuild,
     filename: 'js/[name].js',
     chunkFilename: 'js/[name].chunk.js',
-    publicPath: publicPath
+    publicPath: publicPath,
   },
   resolve: {
     extensions: ['.js'],
@@ -42,16 +40,11 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-react',
-            ],
-            plugins: [
-              '@babel/plugin-proposal-class-properties'
-            ]
-          }
-        }
-      },  
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+            plugins: ['@babel/plugin-proposal-class-properties'],
+          },
+        },
+      },
       {
         test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)(\?.*)?$/,
         include: [paths.appSrc, paths.appNodeModules],
@@ -59,15 +52,14 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: 'media/[name].[hash:8].[ext]'
-            }
+              name: 'media/[name].[hash:8].[ext]',
+            },
           },
         ],
       },
-
-    ]
+    ],
   },
   plugins: [
     // new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' })
-  ]
-};
+  ],
+}

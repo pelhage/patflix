@@ -58,24 +58,36 @@ class VideoUpload extends React.Component {
   handleInputChange(e) {
     const { currentVideo } = this.props
     const { name, value } = e.target
-    const updatedVideo = { ...currentVideo, [name]: value }
+    const updatedVideo = {
+      ...currentVideo,
+      [name]: value,
+    }
     const isValid = this.isValidVideo(updatedVideo)
 
     if (name === 'url') {
       updatedVideo.youtubeId = this.extractId(value)
     }
 
-    this.props.updateCurrentVideo({ ...updatedVideo, isValidVideo: isValid })
+    this.props.updateCurrentVideo({
+      ...updatedVideo,
+      isValidVideo: isValid,
+    })
   }
 
   handleFeaturedCheck() {
     const isChecked = !this.props.currentVideo.isFeatured
     const { currentVideo } = this.props
-    this.props.updateCurrentVideo({ ...currentVideo, isFeatured: isChecked })
+    this.props.updateCurrentVideo({
+      ...currentVideo,
+      isFeatured: isChecked,
+    })
   }
 
   handleCategoryInput(categories) {
-    this.props.updateCurrentVideo({ ...this.props.currentVideo, categories })
+    this.props.updateCurrentVideo({
+      ...this.props.currentVideo,
+      categories,
+    })
   }
 
   render() {

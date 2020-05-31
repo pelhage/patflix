@@ -48,7 +48,9 @@ export function createLibrary(library) {
   return function (dispatch) {
     axios
       .post(`${API_URL}/library`, library, {
-        headers: { authorization: localStorage.getItem('token') },
+        headers: {
+          authorization: localStorage.getItem('token'),
+        },
       })
       .then((response) => {
         dispatch({
@@ -88,7 +90,9 @@ export function updateLibrary(libraryId, library) {
   return () => {
     axios
       .put(`${API_URL}/library/${libraryId}`, library, {
-        headers: { authorization: localStorage.getItem('token') },
+        headers: {
+          authorization: localStorage.getItem('token'),
+        },
       })
       .then((response) => {
         history.push('/d')
@@ -141,7 +145,9 @@ export function fetchLibraries() {
   return (dispatch) => {
     axios
       .get(`${API_URL}/libraries`, {
-        headers: { authorization: localStorage.getItem('token') },
+        headers: {
+          authorization: localStorage.getItem('token'),
+        },
       })
       .then((response) => {
         dispatch({
@@ -163,7 +169,9 @@ export function removeLibrary(libraryId) {
   return function (dispatch) {
     axios
       .delete(`${API_URL}/library/${libraryId}`, {
-        headers: { authorization: localStorage.getItem('token') },
+        headers: {
+          authorization: localStorage.getItem('token'),
+        },
       })
       .then((response) => {
         history.push('/d')
@@ -235,7 +243,10 @@ export function addVideoToLibrary(video) {
       hashId = video.videoId
     }
 
-    library.videos[hashId] = { ...video, videoId: hashId }
+    library.videos[hashId] = {
+      ...video,
+      videoId: hashId,
+    }
     // Now we have to reflect these changes in featured....
     // If the video is featured...
     if (video.isFeatured) {
@@ -364,7 +375,10 @@ export function addCategoryToLibrary(categories) {
 
     dispatch({
       type: ADD_CATEGORY,
-      payload: { currentLib, currentVideo },
+      payload: {
+        currentLib,
+        currentVideo,
+      },
     })
   }
 }
@@ -423,7 +437,10 @@ export function removeCategoryFromLibrary(categories) {
 
     dispatch({
       type: ADD_CATEGORY,
-      payload: { currentLib, currentVideo },
+      payload: {
+        currentLib,
+        currentVideo,
+      },
     })
   }
 }

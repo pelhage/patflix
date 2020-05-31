@@ -10,19 +10,21 @@
   @include iPhone {
     margin-top: 75px;
   }
-  .slick-prev, .slick-next {
+  .slick-prev,
+  .slick-next {
     position: absolute;
     margin-top: 0;
     top: 0;
     height: 100%;
     bottom: 0;
-    opacity: 1.0;
+    opacity: 1;
     width: 50px;
     &:hover {
-      opacity: 1.0;
+      opacity: 1;
     }
   }
-  .slick-next, .slick-prev {
+  .slick-next,
+  .slick-prev {
     &:before {
       font-size: 38px;
     }
@@ -36,7 +38,7 @@
   .slick-next {
     right: 0;
     &:before {
-      content: '>'
+      content: '>';
     }
   }
 
@@ -57,10 +59,9 @@
       background: #fff;
       border-radius: 50%;
       opacity: 0.5;
-
     }
     .slick-active button:before {
-      opacity: 1.0;
+      opacity: 1;
     }
   }
 }
@@ -75,108 +76,112 @@
   margin-bottom: 20px;
 }
 
-  .hero {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: #000;
+.hero {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+}
+.hero-image {
+  position: absolute;
+  height: 100%;
+  width: 54%;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+.vignette {
+  background-image: linear-gradient(
+    to right,
+    #000 0,
+    transparent 33%,
+    transparent 100%
+  );
+  width: 54%;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+}
+.hero-info {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+}
+.hero-details {
+  position: absolute;
+  left: 4%;
+  top: 26%;
+  width: 35%;
+  @include iPhone {
+    width: 50%;
   }
-    .hero-image {
-      position: absolute;
-      height: 100%;
-      width: 54%;
-      right: 0;
-      top: 0;
-      z-index: 1;
-    }
-    .vignette {
-      background-image: linear-gradient(to right,#000 0,transparent 33%,transparent 100%);
-      width: 54%;
-      height: 100%;
-      position: absolute;
-      right: 0;
-      top: 0;
-      z-index: 2;
-    }
-    .hero-info {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 3;
-    }
-      .hero-details {
-        position: absolute;
-        left: 4%;
-        top: 26%;
-        width: 35%;
-        @include iPhone {
-          width: 50%;
-        }
-        @include medium {
-          width: 45%;
-          // background: red;
-        }
-        z-index: 3;
-      }
-        .hero-details__title {
+  @include medium {
+    width: 45%;
+    // background: red;
+  }
+  z-index: 3;
+}
+.hero-details__title {
+  font-weight: 300;
+  line-height: 1.5;
+  vertical-align: bottom;
+  text-transform: uppercase;
 
-          font-weight: 300;
-          line-height: 1.5;
-          vertical-align: bottom;
-          text-transform: uppercase;
+  @include small {
+    font-size: 1.3rem;
+  }
+  @include medium {
+    font-size: 1.6rem;
+    // background: orange;
+  }
+  @include large {
+    font-size: 2.4rem;
+  }
+  @include iPhone {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    border: 1px solid blue;
+  }
+}
+.hero-details__description {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  font-weight: 300;
+  margin-bottom: 5px;
 
-          @include small {
-            font-size: 1.3rem;
-          }
-          @include medium {
-            font-size: 1.6rem;
-            // background: orange;
-          }
-          @include large {
-            font-size: 2.4rem;
-          }
-          @include iPhone {
-            font-size: 1rem;
-            margin-bottom: 20px;
-            border: 1px solid blue;
-          }
-        }
-        .hero-details__description {
-          font-size: 0.8rem;
-          line-height: 1.5;
-          font-weight: 300;
-          margin-bottom: 5px;
-
-          @include iPhone {
-            display: none;
-          }
-          @include medium {
-            display: block;
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-          }
-          @include large {
-            font-size: 1.4rem;
-            max-width: 500px;
-          }
-        }
-    .play-hero {
-      position: absolute;
-      top: 50%;
-      right: 300px;
-      display: block;
-      width: 100px;
-      height: 100px;
-      z-index: 3;
-      // background: orange;
-    }
-      .play-button {
-        display: block;
-        border-radius: 50%;
-        border: 4px solid #fff;
-        height: 100%
-      }
+  @include iPhone {
+    display: none;
+  }
+  @include medium {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+  }
+  @include large {
+    font-size: 1.4rem;
+    max-width: 500px;
+  }
+}
+.play-hero {
+  position: absolute;
+  top: 50%;
+  right: 300px;
+  display: block;
+  width: 100px;
+  height: 100px;
+  z-index: 3;
+  // background: orange;
+}
+.play-button {
+  display: block;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  height: 100%;
+}

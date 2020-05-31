@@ -19,7 +19,6 @@ export function authError(error) {
   }
 }
 
-
 /**
  * signinUser - Sign's in the user by taking an object
  * with their email & password. Then makes a POST request
@@ -34,9 +33,10 @@ export function signinUser({ email, password }) {
     axios
       .post(`${API_URL}/login`, { email, password })
       .then((response) => {
-
         // update state to indicate user is auth'd
-        dispatch({ type: AUTH_USER })
+        dispatch({
+          type: AUTH_USER,
+        })
         // save jwt token & redirect route to '/dashboard'
         localStorage.setItem('token', response.data.token)
         history.push('/d')
@@ -63,11 +63,12 @@ export function signUpUser({ email, password }) {
       .post(`${API_URL}/signup`, { email, password })
       .then((response) => {
         // update state to indicate user is auth'd
-        dispatch({ type: AUTH_USER })
+        dispatch({
+          type: AUTH_USER,
+        })
         // save the jwt token & redirect route
         localStorage.setItem('token', response.data.token)
         history.push('/d')
-        debugger;
       })
       .catch(() => {
         // If bad request, show error

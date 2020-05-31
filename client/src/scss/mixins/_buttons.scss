@@ -1,7 +1,7 @@
 @mixin button-variant($color, $bg) {
-	background: $bg;
-	color: $color;
-	&:hover {
+  background: $bg;
+  color: $color;
+  &:hover {
     background: lighten($bg, 3);
     color: $color;
   }

@@ -76,7 +76,9 @@ class Libraries extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { libraries: state.libraries.all }
+  return {
+    libraries: state.libraries.all,
+  }
 }
 
 export default connect(mapStateToProps, actions)(Libraries)

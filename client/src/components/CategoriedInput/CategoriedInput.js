@@ -6,7 +6,9 @@ import RenderedCategories from './RenderedCategories'
 class CategoriedInput extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { currentCategory: '' }
+    this.state = {
+      currentCategory: '',
+    }
     // Bind helper methods
     this.addToCategories = this.addToCategories.bind(this)
     this.handleCategories = this.handleCategories.bind(this)
@@ -14,7 +16,9 @@ class CategoriedInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ categories: nextProps.categories })
+    this.setState({
+      categories: nextProps.categories,
+    })
   }
 
   // Push a category to the component's state when user hits
@@ -31,7 +35,10 @@ class CategoriedInput extends React.Component {
         if (categories.indexOf(inputValue) === -1) {
           categories.push(inputValue)
         }
-        this.setState({ currentCategory: '', categories })
+        this.setState({
+          currentCategory: '',
+          categories,
+        })
         this.props.onCategoryChange(categories)
       }
     }
@@ -39,7 +46,9 @@ class CategoriedInput extends React.Component {
 
   // Update the current category being worked on
   handleCategories(e) {
-    this.setState({ currentCategory: e.target.value })
+    this.setState({
+      currentCategory: e.target.value,
+    })
   }
 
   // Remove the category from component state, and call
@@ -48,7 +57,9 @@ class CategoriedInput extends React.Component {
     const categories = this.state.categories.slice()
 
     categories.splice(categories.indexOf(category), 1)
-    this.setState({ categories })
+    this.setState({
+      categories,
+    })
     this.props.onCategoryChange(categories)
   }
 

@@ -24,7 +24,9 @@ export default function (ComposedComponent) {
     router: PropTypes.object,
   }
   function mapStateToProps(state) {
-    return { authenticated: state.auth.authenticated }
+    return {
+      authenticated: state.auth.authenticated,
+    }
   }
 
   return connect(mapStateToProps)(Authentication)

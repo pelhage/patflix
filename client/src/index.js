@@ -21,19 +21,23 @@ import { Dashboard } from './components/Dashboard'
 import { About, Welcome } from './components/Pages'
 import { SignIn, SignUp, SignOut } from './components/Auth'
 import { Playback, ViewLib } from './components/Library'
-import history from './routing/history'
+
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
 const store = createStoreWithMiddleware(reducers)
 // Ensure user with local token is auth'd
 const token = localStorage.getItem('token')
 if (token) {
-  store.dispatch({ type: AUTH_USER })
+  store.dispatch({
+    type: AUTH_USER,
+  })
 }
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { hasError: false }
+    this.state = {
+      hasError: false,
+    }
   }
 
   static getDerivedStateFromError(error) {
