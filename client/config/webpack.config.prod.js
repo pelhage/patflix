@@ -5,6 +5,7 @@ var paths = require('./paths')
 
 var homepagePath = require(paths.appPackageJson).homepage
 var publicPath = homepagePath ? url.parse(homepagePath).pathname : '/'
+
 if (!publicPath.endsWith('/')) {
   // Prevents incorrect paths in file-loader
   publicPath += '/'
@@ -13,9 +14,16 @@ if (!publicPath.endsWith('/')) {
 module.exports = {
   devtool: 'source-map',
   mode: 'development',
-  entry: [
-    path.join(paths.appSrc, 'index')
-  ],
+  devServer: {
+    contentBase: paths.appBuild,
+    port: 3000,
+    host: `localhost`,
+  },
+  entry: {
+    main: [
+      path.join(paths.appSrc, 'index')
+    ]
+  },
   output: {
     path: paths.appBuild,
     filename: 'js/[name].js',
@@ -59,7 +67,7 @@ module.exports = {
 
     ]
   },
-  // plugins: [
-  //   new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' })
-  // ]
+  plugins: [
+    // new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' })
+  ]
 };
