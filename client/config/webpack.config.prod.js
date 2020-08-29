@@ -2,7 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 var url = require('url')
 var paths = require('./paths')
-
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 var homepagePath = require(paths.appPackageJson).homepage
 var publicPath = homepagePath ? url.parse(homepagePath).pathname : '/'
 
@@ -24,9 +24,9 @@ module.exports = {
   },
   output: {
     path: paths.appBuild,
-    filename: 'js/[name].js',
-    chunkFilename: 'js/[name].chunk.js',
-    publicPath: publicPath,
+    filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
+    // publicPath: publicPath,
   },
   resolve: {
     extensions: ['.js'],
@@ -60,6 +60,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: 'src/index.html'
+    })
     // new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' })
   ],
 }
