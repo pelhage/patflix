@@ -2,9 +2,9 @@ FROM node:12.16.1-alpine
 
 WORKDIR /app
 
-ENV MONGO_HOST="host.docker.internal"
 COPY ./package.json ./
 RUN npm install
 COPY ./ ./
+RUN npm run build
 
-CMD ["npm", "start"]
+CMD ["node", "./server.js"]

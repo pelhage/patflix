@@ -1,3 +1,20 @@
+<details>
+<summary>
+Environment Set up:
+* Have docker installed
+</summary>
+
+Client Server:
+```
+cd client && docker-compose up
+```
+
+API/Backend Server:
+```
+cd api-server && docker-compose up
+```
+</details>
+
 # Patflix 2020 Re-Write
 Patflix was a project started in late 2015 and completed in 2016. It's been 4 years since its last commit, and I've been wanting to revisit this project, clean it up, and add new features based on my learnings since then.
 
@@ -118,7 +135,7 @@ This fundamentally re-structures the app with minimal code changes. The longer-t
 
 ### **Front End Client**
 
-- [ ]  Gather exhaustive list of current dependencies + versions
+- [x]  Gather exhaustive list of current dependencies + versions
     * `"axios": "^0.12.0"` (high priority)
     * `"body-parser": "^1.15.1"` (high priority)
     * `"express": "^4.13.4"` (high priority)
@@ -136,7 +153,7 @@ This fundamentally re-structures the app with minimal code changes. The longer-t
     * `"redux": "^3.5.2"`(HIGH)
     * `"redux-form": "^5.2.5"` (HIGH)
     * `"redux-thunk": "^2.1.0` (HIGH)
-- [ ]  List out new deps and plan for front end tech
+- [x]  List out new deps and plan for front end tech
     * Update the client server, and build tooling as much as possible:
         * express
         * pug
@@ -146,16 +163,20 @@ This fundamentally re-structures the app with minimal code changes. The longer-t
         * And redux might not even be needed anymore for this simple app
         * ^^ got a strong dep on redux-form though.
 - [ ]  List out longer-term plan for front end tech options
+    *  Kill redux
+    *  Introduce apollo for api fetching layer
 
 ### API Server
 
-- [ ]  Gather exhaustive list of current dependencies + versions
-- [ ]  List out new deps and plan for API server tech
+- [x]  Gather exhaustive list of current dependencies + versions
+- [x]  List out new deps and plan for API server tech
 - [ ]  List out longer-term API server options
 
 ## Add Testing infrastructure with CI/CD
 
 At this point, it might be worthwhile to set up testing infrastructure so that we can add tests on existing behavior before doing a more significant refactor
+
+
 
 ## Refactor Project Code
 

@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "",
   "license": "ISC",
+  "scripts": {
+    "start": "nodemon ./app.js"
+  },
   "dependencies": {
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
@@ -20,6 +23,7 @@
     "cross-spawn": "4.0.0",
     "express-session": "^1.13.0",
     "mongoose": "^4.4.19",
+    "nodemon": "^2.0.4",
     "npm-run-all": "^2.1.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0"

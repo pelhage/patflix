@@ -84,4 +84,4 @@ const Index = () => (
   </ErrorBoundary>
 )
 //
-ReactDOM.render(<Index />, document.querySelector('.container'))
+ReactDOM.render(<Index />, document.getElementById('root'))
