@@ -1,0 +1,9 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - cd client && docker build -t pelhage/patflix -f Dockerfile.dev .
+
+script:
+  - docker run pelhage/patflix npm run test
