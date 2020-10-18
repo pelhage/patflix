@@ -11,4 +11,5 @@ RUN npm run build
 # default command of ngninx container runs
 # the server
 FROM nginx
+EXPOSE 80
 COPY --from=builder /app/dist /usr/share/nginx/html
