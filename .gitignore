@@ -3,3 +3,4 @@ config.js
 dist
 dist/app.js
 dist/app.js.map
+.env
