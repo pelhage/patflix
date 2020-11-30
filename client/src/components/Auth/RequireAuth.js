@@ -1,18 +1,19 @@
 import { connect } from 'react-redux'
 import React from 'react'
 import PropTypes from 'prop-types'
+import history from '../../routing/history'
 
 export default function (ComposedComponent) {
   class Authentication extends React.Component {
     componentWillMount() {
       if (!this.props.authenticated) {
-        this.context.router.push('/signin')
+        history.push('/signin')
       }
     }
 
     componentWillUpdate() {
       if (!this.props.authenticated) {
-        this.context.router.push('/signin')
+        history.push('/signin')
       }
     }
 
