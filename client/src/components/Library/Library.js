@@ -4,46 +4,31 @@ import PropTypes from 'prop-types'
 import Hero from './Hero'
 import VideoRows from './VideoRows'
 
-class Library extends React.Component {
-  constructor(props) {
-    super(props)
-    this.renderHero = this.renderHero.bind(this)
-    this.renderVideoRows = this.renderVideoRows.bind(this)
-  }
+const Library = ({ videos, featured, categories, onVideoClick, isPublic }) => {
+  const shouldShowHero = featured && featured.length
+  const shouldShowVideoRows = videos && Object.keys(videos).length
 
-  renderHero() {
-    const { videos, featured } = this.props
-    if (featured && featured.length) {
-      return (
-        <div>
-          <Hero videos={videos} featured={featured} />
-        </div>
-      )
-    }
-  }
-
-  renderVideoRows() {
-    const { videos, categories, onVideoClick, isPublic } = this.props
-    if (videos && Object.keys(videos).length) {
-      return (
-        <VideoRows
-          videos={videos}
-          categories={categories}
-          onVideoClick={onVideoClick}
-          isPublic={isPublic}
-        />
-      )
-    }
-  }
-
-  render() {
-    return (
+  return (
+    <div>
       <div>
-        <div>{this.renderHero()}</div>
-        <div>{this.renderVideoRows()}</div>
+        {shouldShowHero && (
+          <div>
+            <Hero videos={videos} featured={featured} />
+          </div>
+        )}
       </div>
-    )
-  }
+      <div>
+        {shouldShowVideoRows && (
+          <VideoRows
+            videos={videos}
+            categories={categories}
+            onVideoClick={onVideoClick}
+            isPublic={isPublic}
+          />
+        )}
+      </div>
+    </div>
+  )
 }
 
 Library.propTypes = {

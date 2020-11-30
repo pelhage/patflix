@@ -1,5 +1,7 @@
 @import 'mixins/_media-queries.scss';
-
+#root {
+  width: 100%;
+}
 .contain {
   display: flex;
   width: 100%;

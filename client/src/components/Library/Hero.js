@@ -14,27 +14,24 @@ const settings = {
   autoplay: false,
 }
 
-const Hero = (props) => {
-  const { videos, featured } = props
-  return (
-    <div className="hero-wrapper">
-      <Slider {...settings}>
-        {featured.map((videoId, index) => {
-          const { youtubeId, description } = videos[videoId]
-          return (
-            <div key={index + videoId}>
-              <HeroSlide
-                key={index + videoId}
-                youtubeId={youtubeId}
-                description={description}
-              />
-            </div>
-          )
-        })}
-      </Slider>
-    </div>
-  )
-}
+const Hero = ({ videos, featured }) => (
+  <div className="hero-wrapper">
+    <Slider {...settings}>
+      {featured.map((videoId, index) => {
+        const { youtubeId, description } = videos[videoId]
+        return (
+          <div key={index + videoId}>
+            <HeroSlide
+              key={index + videoId}
+              youtubeId={youtubeId}
+              description={description}
+            />
+          </div>
+        )
+      })}
+    </Slider>
+  </div>
+)
 
 Hero.propTypes = {
   videos: PropTypes.object.isRequired,
