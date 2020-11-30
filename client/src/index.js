@@ -1,5 +1,6 @@
 // React Library
 import React from 'react'
+require('./scss/style.scss')
 import ReactDOM from 'react-dom'
 // Redux + Router Libraries
 import { Provider } from 'react-redux'

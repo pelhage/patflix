@@ -57,12 +57,25 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.scss$/i,
+        include: [paths.appSass],
+        use: [
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+          // Compiles Sass to CSS
+          'sass-loader',
+        ],
+      },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src/index.html'
-    })
+      template: 'src/index.html',
+      inject: true,
+    }),
     // new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' })
   ],
 }
