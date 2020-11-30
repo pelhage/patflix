@@ -22,7 +22,7 @@
     "bcrypt-nodejs": "0.0.3",
     "cross-spawn": "4.0.0",
     "express-session": "^1.13.0",
-    "mongoose": "^4.4.19",
+    "mongoose": "^5.7.5",
     "nodemon": "^2.0.4",
     "npm-run-all": "^2.1.1",
     "passport": "^0.3.2",
