@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import * as actions from '../../actions'
+import * as actions from '../state/actions'
 
-import { FormLabel, FormFieldset, Input } from '../Form'
+import { FormLabel, FormFieldset, Input } from '../components/Form'
 
 function SignUpContainer(props) {
   console.log({ props })

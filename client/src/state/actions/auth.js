@@ -2,7 +2,7 @@ import axios from 'axios'
 import { AUTH_USER, DEAUTH_USER, AUTH_ERROR } from './types'
 
 // Dependency libraries
-import history from '../routing/history'
+import history from '../../routing/history'
 // Import the url of our API
 import API_URL from './api'
 

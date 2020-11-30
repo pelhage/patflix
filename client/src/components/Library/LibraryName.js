@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { connect } from 'react-redux'
-import * as actions from '../../actions'
+import * as actions from '../../state/actions'
 import { Input } from '../Form'
 
 class LibraryName extends React.Component {

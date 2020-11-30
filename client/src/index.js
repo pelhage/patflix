@@ -9,19 +9,24 @@ import { Switch, Route } from 'react-router'
 import { BrowserRouter as Router } from 'react-router-dom'
 import reduxThunk from 'redux-thunk'
 // Actions + Reducers
-import { AUTH_USER } from './actions/types'
-import reducers from './reducers'
+import { AUTH_USER } from './state/actions/types'
+import reducers from './state/reducers'
 // HOC for authentication
 import requireAuth from './components/Auth/RequireAuth'
 
 // All Components for Patflix
-import App from './components/App'
+import App from './components/Layout'
 
-import { Libraries, DeleteLib } from './components/Libraries'
-import { Dashboard } from './components/Dashboard'
-import { About, Welcome } from './components/Pages'
-import { SignIn, SignUp, SignOut } from './components/Auth'
-import { Playback, ViewLib } from './components/Library'
+import Libraries from './pages/Libraries'
+import DeleteLib from './pages/DeleteLib'
+import Dashboard from './pages/Dashboard'
+import About from './pages/About'
+import Welcome from './pages/Welcome'
+import SignIn from './pages/SignIn'
+import SignUp from './pages/SignUp'
+import SignOut from './pages/SignOut'
+import Playback from './pages/Playback'
+import ViewLib from './pages/ViewLib'
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
 const store = createStoreWithMiddleware(reducers)
