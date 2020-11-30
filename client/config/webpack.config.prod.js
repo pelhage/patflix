@@ -26,7 +26,7 @@ module.exports = {
     path: paths.appBuild,
     filename: '[name].js',
     chunkFilename: '[name].chunk.js',
-    // publicPath: publicPath,
+    publicPath: publicPath,
   },
   resolve: {
     extensions: ['.js'],
