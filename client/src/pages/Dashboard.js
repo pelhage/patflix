@@ -1,14 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import * as actions from '../../actions'
+import * as actions from '../state/actions'
 
-import VideoUpload from '../VideoUploader/VideoUpload'
-import VideoAdd from '../VideoUploader/VideoAdd'
-import VideoRemove from '../VideoUploader/VideoRemove'
+import VideoUpload from '../components/VideoUploader/VideoUpload'
+import VideoAdd from '../components/VideoUploader/VideoAdd'
+import VideoRemove from '../components/VideoUploader/VideoRemove'
 
-import LibraryName from '../Library/LibraryName'
-import LibrarySave from '../Library/LibrarySave'
-import Preview from '../Library/Preview'
+import LibraryName from '../components/Library/LibraryName'
+import LibrarySave from '../components/Library/LibrarySave'
+import Preview from '../components/Library/Preview'
 
 class Dashboard extends React.Component {
   // Initialize data if we don't already have any

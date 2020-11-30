@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import * as actions from '../../actions'
+import * as actions from '../state/actions'
 // Components
-import LibrariesPlaceholder from './LibrariesPlaceholder'
-import LibraryRow from './LibraryRow'
+import LibrariesPlaceholder from '../components/Libraries/LibrariesPlaceholder'
+import LibraryRow from '../components/Libraries/LibraryRow'
 
 class Libraries extends React.Component {
   constructor(props) {

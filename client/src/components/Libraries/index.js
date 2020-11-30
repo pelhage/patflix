@@ -1,3 +1,3 @@
-export { default as Libraries } from './Libraries'
-export { default as DeleteLib } from './DeleteLib'
+export { default as Libraries } from '../../pages/Libraries'
+export { default as DeleteLib } from '../../pages/DeleteLib'
 //
