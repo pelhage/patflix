@@ -45,4 +45,6 @@ class Dashboard extends React.Component {
   }
 }
 
-export default connect(null, actions)(Dashboard)
+const ConnectedDashboard = connect(null, actions)(Dashboard)
+
+export default ConnectedDashboard

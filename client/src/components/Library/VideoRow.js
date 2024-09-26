@@ -3,40 +3,30 @@ import PropTypes from 'prop-types'
 import Slider from 'react-slick'
 import Video from './Video'
 
-class VideoRow extends React.Component {
-  constructor(props) {
-    super(props)
-    this.renderVideos = this.renderVideos.bind(this)
+const VideoRow = (props) => {
+  const onVideoClick = (videoId, youtubeId) => {
+    props.onVideoClick(videoId, youtubeId)
   }
 
-  onVideoClick(videoId, youtubeId) {
-    this.props.onVideoClick(videoId, youtubeId)
-  }
-
-  renderVideos() {
-    const { videos } = this.props
+  const renderVideos = () => {
+    const { videos } = props
     return videos.map((video, index) => {
       const { youtubeId, videoId, description } = video
       return (
-        <div
-          key={index}
-          onClick={this.onVideoClick.bind(this, videoId, youtubeId)}
-        >
+        <div key={index} onClick={onVideoClick.bind(this, videoId, youtubeId)}>
           <Video youtubeId={youtubeId} description={description} />
         </div>
       )
     }, this)
   }
 
-  render() {
-    const { settings, videos, category, isPublic } = this.props
-    return (
-      <div className="row">
-        <span className="video-category">{category}</span>
-        <Slider {...settings}>{this.renderVideos()}</Slider>
-      </div>
-    )
-  }
+  const { settings, videos, category, isPublic } = props
+  return (
+    <div className="row">
+      <span className="video-category">{category}</span>
+      <Slider {...settings}>{renderVideos()}</Slider>
+    </div>
+  )
 }
 
 VideoRow.propTypes = {

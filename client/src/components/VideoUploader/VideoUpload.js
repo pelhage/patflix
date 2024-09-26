@@ -1,40 +1,52 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import * as actions from '../../state/actions'
+import nyan from './nyan.svg'
+import { Form, TextArea, FormFieldset, FormLabel } from '../Form'
 
-/* Component Dependencies */
-import { Form } from '../Form'
+import { VideoUrl, VideoFeatured, VideoCategories } from '.'
 
-import {
-  VideoUrl,
-  VideoDescription,
-  VideoFeatured,
-  VideoCategories,
-  VideoThumbnail,
-} from '.'
+const VideoDescription = ({ description, onUserInput }) => (
+  <FormFieldset>
+    <FormLabel>Description</FormLabel>
+    <p>Write a short summary of what this video is about.</p>
+    <TextArea name="description" value={description} onChange={onUserInput} />
+  </FormFieldset>
+)
+VideoDescription.propTypes = {
+  description: PropTypes.string,
+  onUserInput: PropTypes.func.isRequired,
+}
+
+const hasValidUrl = (url) => {
+  if (url) {
+    const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
+    const match = url.match(regExp)
+    return match && match[2].length === 11
+  }
+}
+
+const isValidVideo = (video) => {
+  const { url } = video
+  return hasValidUrl(url)
+}
+
+const VideoThumbnail = ({ videoId }) => {
+  const imgUrl = videoId ? `http://img.youtube.com/vi/${videoId}/0.jpg` : nyan
+  return (
+    <div>
+      <img className="tile__img" src={imgUrl} role="presentation" />
+    </div>
+  )
+}
+VideoThumbnail.propTypes = {
+  videoId: PropTypes.string,
+}
 
 class VideoUpload extends React.Component {
-  constructor(props) {
-    super(props)
-    // Bind member functions
-    this.handleFormSubmit = this.handleFormSubmit.bind(this)
-    this.updateCurrentLib = this.updateCurrentLib.bind(this)
-    this.handleInputChange = this.handleInputChange.bind(this)
-    this.handleFeaturedCheck = this.handleFeaturedCheck.bind(this)
-    this.handleCategoryInput = this.handleCategoryInput.bind(this)
-  }
-
-  // Helper methods
-  hasValidUrl(url) {
-    if (url) {
-      const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
-      const match = url.match(regExp)
-      return match && match[2].length === 11
-    }
-  }
-
-  extractId(url) {
-    if (this.hasValidUrl(url)) {
+  extractId = (url) => {
+    if (hasValidUrl(url)) {
       const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
       const match = url.match(regExp)
       return match[2]
@@ -42,27 +54,22 @@ class VideoUpload extends React.Component {
     return ''
   }
 
-  isValidVideo(video) {
-    const { url } = video
-    return this.hasValidUrl(url)
-  }
-
-  handleFormSubmit() {
+  handleFormSubmit = () => {
     this.props.createLibrary(this.props.currentLib)
   }
 
-  updateCurrentLib() {
+  updateCurrentLib = () => {
     this.props.updateCurrentLib()
   }
 
-  handleInputChange(e) {
+  handleInputChange = (e) => {
     const { currentVideo } = this.props
     const { name, value } = e.target
     const updatedVideo = {
       ...currentVideo,
       [name]: value,
     }
-    const isValid = this.isValidVideo(updatedVideo)
+    const isValid = isValidVideo(updatedVideo)
 
     if (name === 'url') {
       updatedVideo.youtubeId = this.extractId(value)
@@ -74,7 +81,7 @@ class VideoUpload extends React.Component {
     })
   }
 
-  handleFeaturedCheck() {
+  handleFeaturedCheck = () => {
     const isChecked = !this.props.currentVideo.isFeatured
     const { currentVideo } = this.props
     this.props.updateCurrentVideo({
@@ -83,7 +90,7 @@ class VideoUpload extends React.Component {
     })
   }
 
-  handleCategoryInput(categories) {
+  handleCategoryInput = (categories) => {
     this.props.updateCurrentVideo({
       ...this.props.currentVideo,
       categories,
@@ -117,11 +124,9 @@ class VideoUpload extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    currentVideo: state.libraries.currentVideo,
-    currentLib: state.libraries.currentLib,
-  }
-}
+const mapStateToProps = (state) => ({
+  currentVideo: state.libraries.currentVideo,
+  currentLib: state.libraries.currentLib,
+})
 
 export default connect(mapStateToProps, actions)(VideoUpload)

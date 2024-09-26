@@ -2,17 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import VideoRow from './VideoRow'
 
-class VideoRows extends React.Component {
-  constructor(props) {
-    super(props)
-    this.renderVideoRows = this.renderVideoRows.bind(this)
-  }
-
+const VideoRows = (props) => {
   // @TODO: clearly need to simplify this sorting method.....
   // For each category, create a categorizedVideoRow by
   // checking entire library for the category per video
-  renderVideoRows() {
-    const { videos, categories, onVideoClick, isPublic } = this.props
+  const renderVideoRows = () => {
+    const { videos, categories, onVideoClick, isPublic } = props
     const VideoRowsArr = []
 
     const settings = {
@@ -69,9 +64,7 @@ class VideoRows extends React.Component {
     return VideoRowsArr
   }
 
-  render() {
-    return <div>{this.renderVideoRows()}</div>
-  }
+  return <div>{renderVideoRows()}</div>
 }
 
 VideoRows.propTypes = {
